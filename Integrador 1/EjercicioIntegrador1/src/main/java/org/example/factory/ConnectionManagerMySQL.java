@@ -1,13 +1,14 @@
 package org.example.factory;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
 public final class ConnectionManagerMySQL {
     private Connection conex;
-    private static final String URL = "completar";
+    private static final String URL = "jdbc:mysql://localhost:3306/ecommerce";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "secret";
 
     // Creo una instancia de mi Manejador de Conexiones
     private static volatile ConnectionManagerMySQL instance = new ConnectionManagerMySQL();
@@ -39,6 +40,21 @@ public final class ConnectionManagerMySQL {
             }
         }
         return instance;
+    }
+
+    public Connection getConex() {
+        return this.conex;
+    }
+
+    public void closeConn() {
+        if (this.conex != null) {
+            try {
+                this.conex.close();
+                this.conex = null;
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
 }

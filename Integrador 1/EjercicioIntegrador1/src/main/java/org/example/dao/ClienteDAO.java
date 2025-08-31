@@ -3,9 +3,11 @@ package org.example.dao;
 import org.example.entity.Cliente;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 public interface ClienteDAO {
     List<Cliente> findAllByMaxFacturacion();
     void add() throws IOException;
+    void createTable() throws SQLException;
 }

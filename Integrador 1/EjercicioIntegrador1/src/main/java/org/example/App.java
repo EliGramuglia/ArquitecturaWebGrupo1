@@ -4,6 +4,7 @@ import org.example.dao.ClienteDAO;
 import org.example.dao.impl.ClienteDAOImpl;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -12,11 +13,12 @@ import java.util.ArrayList;
  */
 public class App 
 {
-    public static void main( String[] args ) throws IOException {
+    public static void main( String[] args ) throws IOException, SQLException {
 
         ClienteDAO clienteDAO = new ClienteDAOImpl(new ArrayList<>());
 
         clienteDAO.add();
+        clienteDAO.createTable();
 
     }
 }
