@@ -8,7 +8,7 @@ public final class ConnectionManagerMySQL {
     private Connection conex;
     private static final String URL = "jdbc:mysql://localhost:3306/ecommerce";
     private static final String USER = "root";
-    private static final String PASSWORD = "secret";
+    private static final String PASSWORD = "1234";
 
     // Creo una instancia de mi Manejador de Conexiones
     private static volatile ConnectionManagerMySQL instance = new ConnectionManagerMySQL();
@@ -21,6 +21,7 @@ public final class ConnectionManagerMySQL {
             Class.forName("com.mysql.cj.jdbc.Driver");
             this.conex = java.sql.DriverManager.getConnection(URL, USER, PASSWORD);
             System.out.println("Conexión establecida con MySQL!");
+            conex.setAutoCommit(false);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Driver no encontrado", e);
         } catch (SQLException e) {

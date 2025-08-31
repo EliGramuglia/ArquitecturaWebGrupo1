@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ClienteDAO {
-    List<Cliente> findAllByMaxFacturacion();
+    List<Cliente> findAllByMaxFacturacion() throws SQLException;
     void add() throws IOException;
     void createTable() throws SQLException;
 }
