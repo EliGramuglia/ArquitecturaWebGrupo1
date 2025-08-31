@@ -36,5 +36,12 @@
       <version>1.18.38</version>
     </dependency>
 
+    <!--Dependencia para levantar csv-->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-csv</artifactId>
+      <version>1.14.1</version>
+    </dependency>
+
   </dependencies>
 </project>
