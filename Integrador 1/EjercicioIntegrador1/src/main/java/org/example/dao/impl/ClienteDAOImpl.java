@@ -109,6 +109,10 @@ public class ClienteDAOImpl implements ClienteDAO {
 
     // LEER UN CLIENTE
     public Cliente findByIdCliente(int idCliente) throws SQLException {
+        if (idCliente <= 0) {
+            throw new IllegalArgumentException("El id debe ser un número mayor a 0");
+        }
+
         String sql = "SELECT * FROM cliente WHERE idCliente = ?"; // placeholders para evitar inyecciones sql
         ResultSet rs = null; // funciona como cursor
         Cliente clienteById = null;
@@ -122,8 +126,14 @@ public class ClienteDAOImpl implements ClienteDAO {
                         rs.getString("nombre"),
                         rs.getString("email")
                 );
+            } else { // si no trae nada, lo informo
+                System.out.println("No existe cliente con id " + idCliente);
             }
+        } catch (SQLException e) { // por si falla la bdd
+            e.printStackTrace();
+            throw new SQLException("Error al buscar cliente con id " + idCliente, e);
         }
+
         //System.out.println(clienteById.getNombre());
         return clienteById;
     }

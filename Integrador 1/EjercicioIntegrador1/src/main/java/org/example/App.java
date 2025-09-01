@@ -26,6 +26,10 @@ public class App
         //Obtener un cliente por ID
         clienteDAO.findByIdCliente(clienteParaEditar.getIdCliente());
         clienteDAO.findByIdCliente(5);
+        //clienteDAO.findByIdCliente(0);
+        //clienteDAO.findByIdCliente(800);
+
+
 
 
 
