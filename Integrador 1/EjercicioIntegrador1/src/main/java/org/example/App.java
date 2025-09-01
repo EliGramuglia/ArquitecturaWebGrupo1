@@ -18,18 +18,24 @@ public class App
         //clienteDAO.createTable();
         //clienteDAO.add(); // Agrega los cvs
 
-
-        //Editando cliente que ya existe
+        //Editar cliente existente
         Cliente clienteParaEditar = new Cliente(1, "adas lala", "asd@gmail");
         clienteDAO.updateClient(clienteParaEditar);
 
         //Obtener un cliente por ID
-        clienteDAO.findByIdCliente(clienteParaEditar.getIdCliente());
-        clienteDAO.findByIdCliente(5);
-        //clienteDAO.findByIdCliente(0);
-        //clienteDAO.findByIdCliente(800);
+        clienteDAO.findByIdClient(clienteParaEditar.getIdCliente());
+        clienteDAO.findByIdClient(5);
+        //clienteDAO.findByIdClient(0);
+        //clienteDAO.findByIdClient(800);
 
+        //Eliminar un cliente por ID
+        //clienteDAO.deleteByIdClient(99);
 
+        //Listar todos los clientes
+        List<Cliente> clientesList = clienteDAO.findAllClients();
+        for (Cliente c: clientesList){
+            System.out.println(c.getNombre());
+        }
 
 
 

@@ -49,10 +49,10 @@ public class ClienteDAOImpl implements ClienteDAO {
 
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
         rs = statement.executeQuery();
-        while(rs.next()) {
+        while (rs.next()) {
             Cliente cliente = new Cliente(rs.getInt("idCliente"),
-                                            rs.getString("nombre"),
-                                            rs.getString("email"));
+                    rs.getString("nombre"),
+                    rs.getString("email"));
             listClientes.add(cliente);
         }
         return listClientes;
@@ -95,6 +95,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         }
     }
 
+
     // EDITAR UN CLIENTE
     public void updateClient(Cliente c) throws SQLException {
         String sql = "UPDATE cliente SET nombre = ?, email = ? WHERE idCliente = ?";
@@ -107,8 +108,9 @@ public class ClienteDAOImpl implements ClienteDAO {
         }
     }
 
-    // LEER UN CLIENTE
-    public Cliente findByIdCliente(int idCliente) throws SQLException {
+
+    // OBTENER UN CLIENTE
+    public Cliente findByIdClient(int idCliente) throws SQLException {
         if (idCliente <= 0) {
             throw new IllegalArgumentException("El id debe ser un número mayor a 0");
         }
@@ -118,9 +120,9 @@ public class ClienteDAOImpl implements ClienteDAO {
         Cliente clienteById = null;
 
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) { // prepara la consulta
-            statement.setInt(1, idCliente); // asigna el valor real
+            statement.setInt(1, idCliente); // asigna el valor real (en el placeholder 1)
             rs = statement.executeQuery(); // ejecuta la query
-            if(rs.next()){ // si trajo algo
+            if (rs.next()) { // si trajo algo
                 clienteById = new Cliente( // guardo los valores en la variable que voy a devolver
                         rs.getInt("idCliente"),
                         rs.getString("nombre"),
@@ -139,10 +141,47 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
 
+    // LISTAR TODOS LOS CLIENTES
+    public List<Cliente> findAllClients() throws SQLException {
+        List<Cliente> listaClientes = new ArrayList<>();
+        ResultSet rs = null;
+        String sql = "SELECT * FROM cliente";
 
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
+            rs = statement.executeQuery();
+            while (rs.next()) {
+                Cliente cliente = new Cliente(rs.getInt("idCliente"),
+                        rs.getString("nombre"),
+                        rs.getString("email"));
+                listaClientes.add(cliente);
+            }
+        }
+        return listaClientes;
+    }
 
 
     // ELIMINAR UN CLIENTE
+    public void deleteByIdClient(int idCliente) throws SQLException {
+        if (idCliente <= 0) {
+            throw new IllegalArgumentException("El id debe ser un número mayor a 0");
+        }
+
+        String sql = "DELETE FROM cliente WHERE idCliente = ?";
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
+            statement.setInt(1, idCliente);
+            int filasEliminadas = statement.executeUpdate();
+            conn.getConex().commit(); // confirma los cambios
+
+            if (filasEliminadas > 0) {
+                System.out.println("Cliente eliminado!");
+            } else {
+                System.out.println("No existe cliente con ese id");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("Error al eliminar cliente con id " + idCliente, e);
+        }
+    }
 
 
 }
