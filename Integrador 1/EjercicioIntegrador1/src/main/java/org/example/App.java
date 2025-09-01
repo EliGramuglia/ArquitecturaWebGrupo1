@@ -16,13 +16,18 @@ public class App
         ClienteDAO clienteDAO = new ClienteDAOImpl(new ArrayList<>());
 
         //clienteDAO.createTable();
-        clienteDAO.add();
+        //clienteDAO.add(); // Agrega los cvs
 
-        /*List<Cliente> lista = clienteDAO.findAllByMaxFacturacion();
 
-        for (Cliente cliente : lista) {
-            System.out.println(cliente.getNombre());
-        }*/
+        //Editando cliente que ya existe
+        Cliente clienteParaEditar = new Cliente(1, "adas lala", "asd@gmail");
+        clienteDAO.updateClient(clienteParaEditar);
+
+        //Obtener un cliente por ID
+        clienteDAO.findByIdCliente(clienteParaEditar.getIdCliente());
+        clienteDAO.findByIdCliente(5);
+
+
 
 
     }

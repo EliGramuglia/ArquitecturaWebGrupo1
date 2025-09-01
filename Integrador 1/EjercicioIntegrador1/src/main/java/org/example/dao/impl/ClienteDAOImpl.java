@@ -59,10 +59,9 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
 
-    /* Método para levantar archivo clientes.csv  */
+    /* Método para leer y cargar los archivos cvs en la tabla de la bdd */
     @Override
     public void add() throws IOException {
-
         try (CSVParser client = CSVFormat.DEFAULT.builder()
                 .setHeader()                 // interpreta la primera fila como header
                 .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
@@ -97,8 +96,47 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
     // EDITAR UN CLIENTE
+    public void updateClient(Cliente c) throws SQLException {
+        String sql = "UPDATE cliente SET nombre = ?, email = ? WHERE idCliente = ?";
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
+            statement.setString(1, c.getNombre());
+            statement.setString(2, c.getEmail());
+            statement.setInt(3, c.getIdCliente());
+            statement.executeUpdate();
+            conn.getConex().commit();
+        }
+    }
+
+    // LEER UN CLIENTE
+    public Cliente findByIdCliente(int idCliente) throws SQLException {
+        String sql = "SELECT * FROM cliente WHERE idCliente = ?"; // placeholders para evitar inyecciones sql
+        ResultSet rs = null; // funciona como cursor
+        Cliente clienteById = null;
+
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) { // prepara la consulta
+            statement.setInt(1, idCliente); // asigna el valor real
+            rs = statement.executeQuery(); // ejecuta la query
+            if(rs.next()){ // si trajo algo
+                clienteById = new Cliente( // guardo los valores en la variable que voy a devolver
+                        rs.getInt("idCliente"),
+                        rs.getString("nombre"),
+                        rs.getString("email")
+                );
+            }
+        }
+        //System.out.println(clienteById.getNombre());
+        return clienteById;
+    }
+
+
+
+
 
     // ELIMINAR UN CLIENTE
 
 
 }
+
+
+/* FALTA PODER CERRAR LA CONEXION CADA VEZ QUE SE EJECUTA UNA FUNCIONALIDAD NUEVA,
+Y QUE PUEDA VOLVERSE A ABRIR */

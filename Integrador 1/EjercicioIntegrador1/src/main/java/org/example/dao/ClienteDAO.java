@@ -10,4 +10,6 @@ public interface ClienteDAO {
     List<Cliente> findAllByMaxFacturacion() throws SQLException;
     void add() throws IOException;
     void createTable() throws SQLException;
+    void updateClient(Cliente c) throws SQLException;
+    Cliente findByIdCliente(int id) throws SQLException;
 }
