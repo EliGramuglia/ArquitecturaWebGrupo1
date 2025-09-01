@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class ClienteDAOImpl implements ClienteDAO {
-
     private ConnectionManagerMySQL conn;
     private final List<Cliente> listClientes;
 
@@ -27,6 +26,21 @@ public class ClienteDAOImpl implements ClienteDAO {
         this.conn = ConnectionManagerMySQL.getInstance();
     }
 
+    /* Método para crear la tabla Cliente */
+    public void createTable() throws SQLException {
+        String sql = "CREATE TABLE IF NOT EXISTS cliente ( " +
+                "idCliente INT, " +
+                "nombre VARCHAR(500), " +
+                "email VARCHAR(150), " +
+                "PRIMARY KEY (idCliente)) ";
+        PreparedStatement statement = conn.getConex().prepareStatement(sql);
+        statement.execute();
+        conn.getConex().commit();
+        /*ConnectionManagerMySQL.getInstance().closeConn();*/
+    }
+
+
+    /* Función que retorne el producto que más recaudó */
     @Override
     public List<Cliente> findAllByMaxFacturacion() throws SQLException {
         String sql = "SELECT * FROM cliente";
@@ -44,6 +58,8 @@ public class ClienteDAOImpl implements ClienteDAO {
         return listClientes;
     }
 
+
+    /* Método para levantar archivo clientes.csv  */
     @Override
     public void add() throws IOException {
 
@@ -66,18 +82,9 @@ public class ClienteDAOImpl implements ClienteDAO {
         }
     }
 
-    public void createTable() throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS cliente ( " +
-                "idCliente INT, " +
-                "nombre VARCHAR(500), " +
-                "email VARCHAR(150), " +
-                "PRIMARY KEY (idCliente)) ";
-        PreparedStatement statement = conn.getConex().prepareStatement(sql);
-        statement.execute();
-        conn.getConex().commit();
-        /*ConnectionManagerMySQL.getInstance().closeConn();*/
-    }
+    /* ------------------------------ CRUD ------------------------------ */
 
+    // AGREGAR UN CLIENTE
     private void insert(Cliente c) throws SQLException {
         String sql = "INSERT INTO cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
@@ -88,6 +95,10 @@ public class ClienteDAOImpl implements ClienteDAO {
             conn.getConex().commit();
         }
     }
+
+    // EDITAR UN CLIENTE
+
+    // ELIMINAR UN CLIENTE
 
 
 }

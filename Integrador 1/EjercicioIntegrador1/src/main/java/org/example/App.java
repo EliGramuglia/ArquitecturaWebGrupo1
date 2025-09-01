@@ -15,14 +15,14 @@ public class App
     public static void main( String[] args ) throws IOException, SQLException {
         ClienteDAO clienteDAO = new ClienteDAOImpl(new ArrayList<>());
 
-        clienteDAO.createTable();
+        //clienteDAO.createTable();
         clienteDAO.add();
 
-        List<Cliente> lista = clienteDAO.findAllByMaxFacturacion();
+        /*List<Cliente> lista = clienteDAO.findAllByMaxFacturacion();
 
         for (Cliente cliente : lista) {
             System.out.println(cliente.getNombre());
-        }
+        }*/
 
 
     }

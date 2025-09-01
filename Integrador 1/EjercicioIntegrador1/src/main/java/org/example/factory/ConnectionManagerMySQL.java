@@ -6,9 +6,9 @@ import java.sql.SQLException;
 
 public final class ConnectionManagerMySQL {
     private Connection conex;
-    private static final String URL = "jdbc:mysql://localhost:3306/ecommerce";
+    private static final String URL = "jdbc:mysql://localhost:3306/Entregable1";
     private static final String USER = "root";
-    private static final String PASSWORD = "1234";
+    private static final String PASSWORD = "";
 
     // Creo una instancia de mi Manejador de Conexiones
     private static volatile ConnectionManagerMySQL instance = new ConnectionManagerMySQL();
