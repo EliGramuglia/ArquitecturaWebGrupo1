@@ -12,4 +12,6 @@ public class Cliente {
     private String nombre;
     private String email;
 
+    public Cliente(int idCliente, String nombre, String email) {
+    }
 }
