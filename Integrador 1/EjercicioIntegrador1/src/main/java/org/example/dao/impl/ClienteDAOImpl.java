@@ -40,19 +40,23 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
 
-    /* Función que retorne el producto que más recaudó */
+    /* Función que retorna una lista de clientes que facturo mas de forma ordenada */
     @Override
     public List<Cliente> findAllByMaxFacturacion() throws SQLException {
-        String sql = "SELECT * FROM cliente";
+        String sql = "SELECT c.idCliente, c.nombre AS nombreCliente, SUM(fp.cantidad * p.valor) AS totalFacturado " +
+                "FROM clientes c " +
+                "JOIN facturas f ON c.idCliente = f.idCliente " +
+                "JOIN facturas_productos fp ON f.idFactura = fp.idFactura" +
+                "JOIN productos p ON fp.idProducto = p.idProducto" +
+                "GROUP BY c.idCliente, c.nombre" +
+                "ORDER BY totalFacturado DESC;";
         ResultSet rs = null;
         List<Cliente> listClientes = new ArrayList<>();
 
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
         rs = statement.executeQuery();
         while (rs.next()) {
-            Cliente cliente = new Cliente(rs.getInt("idCliente"),
-                    rs.getString("nombre"),
-                    rs.getString("email"));
+            Cliente cliente = findByIdClient(rs.getInt("idCliente"));
             listClientes.add(cliente);
         }
         return listClientes;
