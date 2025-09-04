@@ -8,8 +8,8 @@ import lombok.*;
 @ToString
 public class FacturaProducto {
 
+    private Integer idFactura;
     private Integer idProducto;
-    private String nombre;
-    private Float valor;
+    private Integer cantidad;
 
 }
