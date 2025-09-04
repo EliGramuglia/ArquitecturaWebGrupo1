@@ -1,7 +1,9 @@
 package org.example;
 
 import org.example.dao.ClienteDAO;
+import org.example.dao.FacturaDAO;
 import org.example.dao.impl.ClienteDAOImpl;
+import org.example.dao.impl.FacturaDAOImpl;
 import org.example.entity.Cliente;
 
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.List;
 public class App 
 {
     public static void main( String[] args ) throws IOException, SQLException {
-        ClienteDAO clienteDAO = new ClienteDAOImpl(new ArrayList<>());
+/*        ClienteDAO clienteDAO = new ClienteDAOImpl();
 
         //clienteDAO.createTable();
         //clienteDAO.add(); // Agrega los cvs
@@ -42,8 +44,15 @@ public class App
             System.out.println(c.getNombre());
         }
 
+        // Retorna una lista de clientes, ordenada de forma descendente, segun su facturación
+        clienteDAO.findAllByMaxFacturacion();
+*/
 
+    /* ----------------------------------- FACTURA ---------------------------------- */
+        FacturaDAO facturaDAO = new FacturaDAOImpl();
 
-
+        //Cliente cli = new Cliente(99, "Mari", "mariaslda@sakjdkaj");
+        //facturaDAO.createTable();
+        facturaDAO.add();
     }
 }

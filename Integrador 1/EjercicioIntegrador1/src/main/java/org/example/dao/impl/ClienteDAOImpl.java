@@ -9,7 +9,6 @@ import org.example.factory.ConnectionManagerMySQL;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,10 +18,8 @@ import java.util.Objects;
 
 public class ClienteDAOImpl implements ClienteDAO {
     private ConnectionManagerMySQL conn;
-    private final List<Cliente> listClientes;
 
-    public ClienteDAOImpl(List<Cliente> listClientes) {
-        this.listClientes = listClientes;
+    public ClienteDAOImpl() {
         this.conn = ConnectionManagerMySQL.getInstance();
     }
 
@@ -40,21 +37,20 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
 
-    /* Función que retorna una lista de clientes que facturo mas de forma ordenada */
+    /* Función que retorna una lista de clientes, ordenada de forma descendente, segun su facturación */
     @Override
     public List<Cliente> findAllByMaxFacturacion() throws SQLException {
         String sql = "SELECT c.idCliente, c.nombre AS nombreCliente, SUM(fp.cantidad * p.valor) AS totalFacturado " +
-                "FROM clientes c " +
-                "JOIN facturas f ON c.idCliente = f.idCliente " +
-                "JOIN facturas_productos fp ON f.idFactura = fp.idFactura" +
-                "JOIN productos p ON fp.idProducto = p.idProducto" +
-                "GROUP BY c.idCliente, c.nombre" +
+                "FROM cliente c " +
+                "JOIN factura f ON c.idCliente = f.idCliente " +
+                "JOIN factura_producto fp ON f.idFactura = fp.idFactura " +
+                "JOIN producto p ON fp.idProducto = p.idProducto " +
+                "GROUP BY c.idCliente, c.nombre " +
                 "ORDER BY totalFacturado DESC;";
-        ResultSet rs = null;
         List<Cliente> listClientes = new ArrayList<>();
 
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
-        rs = statement.executeQuery();
+        ResultSet rs = statement.executeQuery();
         while (rs.next()) {
             Cliente cliente = findByIdClient(rs.getInt("idCliente"));
             listClientes.add(cliente);
