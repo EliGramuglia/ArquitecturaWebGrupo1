@@ -84,7 +84,8 @@ public class ClienteDAOImpl implements ClienteDAO {
     /* ------------------------------ CRUD ------------------------------ */
 
     // AGREGAR UN CLIENTE
-    private void insert(Cliente c) throws SQLException {
+    @Override
+    public void insert(Cliente c) throws SQLException {
         String sql = "INSERT INTO cliente (idCliente, nombre, email) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, c.getIdCliente());
@@ -111,17 +112,16 @@ public class ClienteDAOImpl implements ClienteDAO {
 
     // OBTENER UN CLIENTE
     public Cliente findByIdClient(int idCliente) throws SQLException {
-        if (idCliente <= 0) {
+        /*if (idCliente <= 0) {
             throw new IllegalArgumentException("El id debe ser un número mayor a 0");
-        }
+        }*/
 
         String sql = "SELECT * FROM cliente WHERE idCliente = ?"; // placeholders para evitar inyecciones sql
-        ResultSet rs = null; // funciona como cursor
         Cliente clienteById = null;
 
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) { // prepara la consulta
             statement.setInt(1, idCliente); // asigna el valor real (en el placeholder 1)
-            rs = statement.executeQuery(); // ejecuta la query
+            ResultSet rs = statement.executeQuery(); // ejecuta la query
             if (rs.next()) { // si trajo algo
                 clienteById = new Cliente( // guardo los valores en la variable que voy a devolver
                         rs.getInt("idCliente"),
@@ -136,7 +136,6 @@ public class ClienteDAOImpl implements ClienteDAO {
             throw new SQLException("Error al buscar cliente con id " + idCliente, e);
         }
 
-        //System.out.println(clienteById.getNombre());
         return clienteById;
     }
 
@@ -144,11 +143,10 @@ public class ClienteDAOImpl implements ClienteDAO {
     // LISTAR TODOS LOS CLIENTES
     public List<Cliente> findAllClients() throws SQLException {
         List<Cliente> listaClientes = new ArrayList<>();
-        ResultSet rs = null;
         String sql = "SELECT * FROM cliente";
 
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
-            rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Cliente cliente = new Cliente(rs.getInt("idCliente"),
                         rs.getString("nombre"),
@@ -162,9 +160,9 @@ public class ClienteDAOImpl implements ClienteDAO {
 
     // ELIMINAR UN CLIENTE
     public void deleteByIdClient(int idCliente) throws SQLException {
-        if (idCliente <= 0) {
+        /*if (idCliente <= 0) {
             throw new IllegalArgumentException("El id debe ser un número mayor a 0");
-        }
+        }*/
 
         String sql = "DELETE FROM cliente WHERE idCliente = ?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
@@ -185,7 +183,3 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 
 }
-
-
-/* FALTA PODER CERRAR LA CONEXION CADA VEZ QUE SE EJECUTA UNA FUNCIONALIDAD NUEVA,
-Y QUE PUEDA VOLVERSE A ABRIR */

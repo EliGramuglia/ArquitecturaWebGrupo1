@@ -14,4 +14,5 @@ public interface ClienteDAO {
     Cliente findByIdClient(int id) throws SQLException;
     void deleteByIdClient(int id) throws SQLException;
     List<Cliente> findAllClients() throws SQLException;
+    void insert(Cliente c) throws SQLException;
 }

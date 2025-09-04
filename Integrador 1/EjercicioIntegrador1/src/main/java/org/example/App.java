@@ -18,13 +18,18 @@ public class App
         //clienteDAO.createTable();
         //clienteDAO.add(); // Agrega los cvs
 
+        // Agregar un cliente nuevo
+        Cliente cli = new Cliente(99, "Mari", "mariaslda@sakjdkaj");
+        clienteDAO.insert(cli);
+
         //Editar cliente existente
-        Cliente clienteParaEditar = new Cliente(1, "adas lala", "asd@gmail");
-        clienteDAO.updateClient(clienteParaEditar);
+        Cliente clienteParaEditar = new Cliente(1, "Fran", "sdfa@gmail");
+        //clienteDAO.updateClient(clienteParaEditar);
 
         //Obtener un cliente por ID
-        clienteDAO.findByIdClient(clienteParaEditar.getIdCliente());
-        clienteDAO.findByIdClient(5);
+        Cliente clienteMostrar = clienteDAO.findByIdClient(clienteParaEditar.getIdCliente());
+        System.out.println(clienteMostrar.getNombre());
+        //clienteDAO.findByIdClient(5);
         //clienteDAO.findByIdClient(0);
         //clienteDAO.findByIdClient(800);
 
