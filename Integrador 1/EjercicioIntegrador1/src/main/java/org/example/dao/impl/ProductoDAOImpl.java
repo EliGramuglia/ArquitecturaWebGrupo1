@@ -3,7 +3,6 @@ package org.example.dao.impl;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
-import org.example.entity.Cliente;
 import org.example.entity.Producto;
 import org.example.factory.ConnectionManagerMySQL;
 
