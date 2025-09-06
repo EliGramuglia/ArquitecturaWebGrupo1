@@ -15,7 +15,14 @@ import java.util.List;
 public class App 
 {
     public static void main( String[] args ) throws IOException, SQLException {
-/*        ClienteDAO clienteDAO = new ClienteDAOImpl();
+
+        /*DAOFactory factory = new MySQLDAOFactory();
+        ClienteDAO cliente = factory.createClienteDAO();
+        ProductoDAO producto = factory.createProductoDAO();*/
+
+
+
+        /*        ClienteDAO clienteDAO = new ClienteDAOImpl();
 
         //clienteDAO.createTable();
         //clienteDAO.add(); // Agrega los cvs

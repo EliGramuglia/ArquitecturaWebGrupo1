@@ -1,6 +1,10 @@
 package org.example.factory;
+import org.example.dao.ClienteDAO;
+import org.example.dao.ProductoDAO;
+import org.example.dao.impl.ClienteDAOImpl;
+import org.example.dao.impl.ProductoDAOImpl;
+
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
 
