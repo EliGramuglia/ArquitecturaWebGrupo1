@@ -11,10 +11,9 @@ public interface FacturaDAO {
     void createTable() throws SQLException;
     void add() throws IOException;
     void insert(Factura f) throws SQLException;
-    void updateFactura(Factura f) throws SQLException;
-    void deleteByIdFactura(Factura f) throws SQLException;
-    List<Factura> findAllFacturas() throws SQLException;
+    void update(Factura f) throws SQLException;
+    void deleteById(Factura f) throws SQLException;
+    List<Factura> findAll() throws SQLException;
     Factura findById(int id) throws SQLException;
-
 
 }

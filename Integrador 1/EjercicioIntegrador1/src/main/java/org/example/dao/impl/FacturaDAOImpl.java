@@ -25,6 +25,7 @@ public class FacturaDAOImpl implements FacturaDAO {
     }
 
     /* Método para crear la tabla Factura */
+    @Override
     public void createTable() throws SQLException {
         String sql="CREATE TABLE IF NOT EXISTS factura (" +
                 "idFactura INT, " +
@@ -77,9 +78,9 @@ public class FacturaDAOImpl implements FacturaDAO {
         }
     }
 
-
     // EDITAR UNA FACTURA
-    public void updateFactura(Factura f) throws SQLException {
+    @Override
+    public void update(Factura f) throws SQLException {
         String sql = "UPDATE factura SET idCliente = ? WHERE idFactura = ?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, f.getIdCliente());
@@ -88,7 +89,6 @@ public class FacturaDAOImpl implements FacturaDAO {
             conn.getConex().commit();
         }
     }
-
 
     // OBTENER UNA FACTURA
     @Override
@@ -115,9 +115,9 @@ public class FacturaDAOImpl implements FacturaDAO {
         return facturaById;
     }
 
-
     // LISTAR TODAS LAS FACTURAS
-    public List<Factura> findAllFacturas() throws SQLException {
+    @Override
+    public List<Factura> findAll() throws SQLException {
         List<Factura> listaFacturas = new ArrayList<>();
         String sql = "SELECT * FROM factura";
 
@@ -132,9 +132,9 @@ public class FacturaDAOImpl implements FacturaDAO {
         return listaFacturas;
     }
 
-
     // ELIMINAR UNA FACTURA
-    public void deleteByIdFactura(Factura f) throws SQLException {
+    @Override
+    public void deleteById(Factura f) throws SQLException {
         String sql = "DELETE FROM factura WHERE idFactura = ?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, f.getIdFactura());

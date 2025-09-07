@@ -3,6 +3,7 @@ package org.example.dao.impl;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.example.dao.FacturaProductoDAO;
 import org.example.entity.FacturaProducto;
 import org.example.factory.ConnectionManagerMySQL;
 
@@ -15,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class FacturaProductoDAOImpl {
+public class FacturaProductoDAOImpl implements FacturaProductoDAO {
     private ConnectionManagerMySQL conn;
 
     public FacturaProductoDAOImpl() {
         this.conn= ConnectionManagerMySQL.getInstance();
     }
 
+    @Override
     public void createTable() throws SQLException {
         String sql="CREATE TABLE IF NOT EXISTS facturaproducto (" +
                 "idFactura INT, " +
@@ -39,6 +41,7 @@ public class FacturaProductoDAOImpl {
         conn.getConex().commit();
     }
 
+    @Override
     public void add() throws IOException {
         try (CSVParser facturaProduct = CSVFormat.DEFAULT.builder()
                 .setHeader()                 // interpreta la primera fila como header
@@ -62,8 +65,8 @@ public class FacturaProductoDAOImpl {
 
     /* ------------------------------ CRUD ------------------------------ */
 
-
-    private void insert(FacturaProducto fp) throws SQLException {
+    @Override
+    public void insert(FacturaProducto fp) throws SQLException {
         String sql = "INSERT INTO factura-producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, fp.getIdFactura());
@@ -74,6 +77,7 @@ public class FacturaProductoDAOImpl {
         }
     }
 
+    @Override
     public void update(FacturaProducto fp) throws SQLException {
         String sql = "UPDATE factura-producto SET cantidad=? WHERE idFactura=? AND idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
@@ -85,7 +89,8 @@ public class FacturaProductoDAOImpl {
         }
     }
 
-    public void deleteByIdProductoIdFactura(FacturaProducto fp) throws SQLException {
+    @Override
+    public void deleteById(FacturaProducto fp) throws SQLException {
         String sql = "DELETE FROM factura-producto WHERE idFactura=? AND idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, fp.getIdFactura());
@@ -95,6 +100,7 @@ public class FacturaProductoDAOImpl {
         }
     }
 
+    @Override
     public List<FacturaProducto> findAll() throws SQLException {
         String sql = "SELECT * FROM factura-producto";
         List<FacturaProducto> listFacturasProductos = new ArrayList<>();
@@ -111,7 +117,10 @@ public class FacturaProductoDAOImpl {
         }
         return listFacturasProductos;
     }
+
+
 //busco por idProducto
+@Override
     public FacturaProducto findByIdProducto(int idProducto) throws SQLException {
         String sql = "SELECT * FROM factura-producto WHERE idProducto=?";
         FacturaProducto productoById = null;
@@ -132,7 +141,10 @@ public class FacturaProductoDAOImpl {
         }
         return productoById;
     }
+
+
     // busco por idFactura
+    @Override
     public FacturaProducto findByIdfactura(int idFactura) throws SQLException {
         String sql = "SELECT * FROM factura-producto WHERE idFactura=?";
         FacturaProducto facturaById = null;

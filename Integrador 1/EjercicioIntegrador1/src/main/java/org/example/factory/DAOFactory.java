@@ -2,8 +2,8 @@ package org.example.factory;
 
 import org.example.dao.ClienteDAO;
 import org.example.dao.FacturaDAO;
-import org.example.dao.FacturaProductoDAO;
 import org.example.dao.ProductoDAO;
+import org.example.dao.impl.ProductoDAOImpl;
 import org.example.repository.MySQLDAOFactory;
 
 // Fábrica de fábricas
@@ -31,6 +31,5 @@ public abstract class DAOFactory {
     public abstract ClienteDAO createClienteDAO();
     public abstract ProductoDAO createProductoDAO();
     public abstract FacturaDAO createFacturaDAO();
-    public abstract FacturaProductoDAO createProductoDAO();
 
 }

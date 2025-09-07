@@ -3,6 +3,7 @@ package org.example.dao.impl;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.example.dao.ProductoDAO;
 import org.example.entity.Producto;
 import org.example.factory.ConnectionManagerMySQL;
 
@@ -15,13 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class ProductoDAOImpl {
+public class ProductoDAOImpl implements ProductoDAO {
     private ConnectionManagerMySQL conn;
 
-    public ProductoDAOImpl() {
-        this.conn= ConnectionManagerMySQL.getInstance();
+    public ProductoDAOImpl(ConnectionManagerMySQL conn) {
+        this.conn = conn;
     }
 
+    @Override
     public void createTable() throws SQLException {
         String sql="CREATE TABLE IF NOT EXISTS productos (" +
                 "idProducto INT, " +
@@ -33,6 +35,7 @@ public class ProductoDAOImpl {
         conn.getConex().commit();
     }
 
+    @Override
     public void add() throws IOException {
         try (CSVParser product = CSVFormat.DEFAULT.builder()
                 .setHeader()                 // interpreta la primera fila como header
@@ -53,6 +56,7 @@ public class ProductoDAOImpl {
         }
     }
 
+    @Override
     public Producto findProductMaxFacturacion() throws SQLException {
         String sql = "SELECT p.idProducto, SUM(t.cantidadProducto * p.valor) AS total_recaudado " +
                 "FROM factura-productos fp " +
@@ -64,7 +68,7 @@ public class ProductoDAOImpl {
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {
-                productoById = findByIdProducto(rs.getInt("idProducto")
+                productoById = findById(rs.getInt("idProducto")
                 );
             }else{
                 System.out.println("No se encontraron productos: ");
@@ -78,8 +82,8 @@ public class ProductoDAOImpl {
 
     /* ------------------------------ CRUD ------------------------------ */
 
-
-    private void insert(Producto p) throws SQLException {
+    @Override
+    public void insert(Producto p) throws SQLException {
         String sql = "INSERT INTO productos (idProducto, nombre, valor) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, p.getIdProducto());
@@ -90,6 +94,7 @@ public class ProductoDAOImpl {
         }
     }
 
+    @Override
     public void update(Producto p) throws SQLException {
         String sql = "UPDATE productos SET nombre=?, valor=? WHERE idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
@@ -101,7 +106,8 @@ public class ProductoDAOImpl {
         }
     }
 
-    public void deleteByIdProducto(Producto p) throws SQLException {
+    @Override
+    public void deleteById(Producto p) throws SQLException {
         String sql = "DELETE FROM productos WHERE idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, p.getIdProducto());
@@ -110,6 +116,7 @@ public class ProductoDAOImpl {
         }
     }
 
+    @Override
     public List<Producto> findAll() throws SQLException {
         String sql = "SELECT * FROM productos";
         //ResultSet rs = null;
@@ -128,7 +135,8 @@ public class ProductoDAOImpl {
         return listProductos;
     }
 
-    public Producto findByIdProducto(int idProducto) throws SQLException {
+    @Override
+    public Producto findById(int idProducto) throws SQLException {
         String sql = "SELECT * FROM productos WHERE idProducto=?";
         ResultSet rs = null;
         Producto productoById = null;

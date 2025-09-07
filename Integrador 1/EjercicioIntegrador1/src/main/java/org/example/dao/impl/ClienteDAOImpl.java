@@ -24,6 +24,7 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
     /* Método para crear la tabla Cliente */
+    @Override
     public void createTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS cliente ( " +
                 "idCliente INT, " +
@@ -52,7 +53,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
         ResultSet rs = statement.executeQuery();
         while (rs.next()) {
-            Cliente cliente = findByIdClient(rs.getInt("idCliente"));
+            Cliente cliente = findById(rs.getInt("idCliente"));
             listClientes.add(cliente);
         }
         return listClientes;
@@ -98,7 +99,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 
     // EDITAR UN CLIENTE
-    public void updateClient(Cliente c) throws SQLException {
+    @Override
+    public void update(Cliente c) throws SQLException {
         String sql = "UPDATE cliente SET nombre = ?, email = ? WHERE idCliente = ?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setString(1, c.getNombre());
@@ -111,7 +113,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 
     // OBTENER UN CLIENTE
-    public Cliente findByIdClient(int idCliente) throws SQLException {
+    @Override
+    public Cliente findById(int idCliente) throws SQLException {
         /*if (idCliente <= 0) {
             throw new IllegalArgumentException("El id debe ser un número mayor a 0");
         }*/
@@ -141,7 +144,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 
     // LISTAR TODOS LOS CLIENTES
-    public List<Cliente> findAllClients() throws SQLException {
+    @Override
+    public List<Cliente> findAll() throws SQLException {
         List<Cliente> listaClientes = new ArrayList<>();
         String sql = "SELECT * FROM cliente";
 
@@ -159,7 +163,8 @@ public class ClienteDAOImpl implements ClienteDAO {
 
 
     // ELIMINAR UN CLIENTE
-    public void deleteByIdClient(int idCliente) throws SQLException {
+    @Override
+    public void deleteById(int idCliente) throws SQLException {
         /*if (idCliente <= 0) {
             throw new IllegalArgumentException("El id debe ser un número mayor a 0");
         }*/

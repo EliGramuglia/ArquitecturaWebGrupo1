@@ -1,8 +1,8 @@
 package org.example.repository;
 
 import org.example.dao.FacturaDAO;
-import org.example.dao.ProductoDAO;
 import org.example.dao.impl.ClienteDAOImpl;
+import org.example.dao.impl.ProductoDAOImpl;
 import org.example.factory.ConnectionManagerMySQL;
 import org.example.factory.DAOFactory;
 
@@ -20,8 +20,8 @@ public class MySQLDAOFactory extends DAOFactory {
     }
 
     @Override
-    public ProductoDAO createProductoDAO() {
-        return null;
+    public ProductoDAOImpl createProductoDAO() {
+        return new ProductoDAOImpl(conn);
     }
 
     @Override
