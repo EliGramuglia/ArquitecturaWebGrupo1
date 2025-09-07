@@ -35,7 +35,7 @@ public class App {
         //clienteDAO.createTable();
         //facturaDAO.createTable();
         //productoDAO.createTable();
-        //facturaDAO.createTable();
+        //facturaProductoDAO.createTable();
 
 
         /* ------------------------------- CRUD CLIENTE ------------------------------ */
@@ -97,7 +97,10 @@ public class App {
 */
 
         /* --------------------------------- CRUD PRODUCTO -------------------------------- */
+        //productoDAO.add();
 
 
+        /* ----------------------------- CRUD FACTURA-PRODUCTO ---------------------------- */
+        //facturaProductoDAO.add();
     }
 }

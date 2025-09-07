@@ -25,11 +25,11 @@ public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
     public void createTable() throws SQLException {
-        String sql="CREATE TABLE IF NOT EXISTS productos (" +
-                "idProducto INT, " +
-                "nombre VARCHAR(45)" +
+        String sql="CREATE TABLE IF NOT EXISTS producto (" +
+                "idProducto INT PRIMARY KEY, " +
+                "nombre VARCHAR(45)," +
                 "valor FLOAT " +
-                "PRIMARY KEY (idProducto))";
+                ")";
         PreparedStatement statement= conn.getConex().prepareStatement(sql);
         statement.execute();
         conn.getConex().commit();
@@ -84,7 +84,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
     public void insert(Producto p) throws SQLException {
-        String sql = "INSERT INTO productos (idProducto, nombre, valor) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO producto (idProducto, nombre, valor) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, p.getIdProducto());
             statement.setString(2, p.getNombre());
@@ -96,7 +96,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
     public void update(Producto p) throws SQLException {
-        String sql = "UPDATE productos SET nombre=?, valor=? WHERE idProducto=?";
+        String sql = "UPDATE producto SET nombre=?, valor=? WHERE idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setString(1, p.getNombre());
             statement.setFloat(2, p.getValor());
@@ -108,7 +108,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
     public void deleteById(Producto p) throws SQLException {
-        String sql = "DELETE FROM productos WHERE idProducto=?";
+        String sql = "DELETE FROM producto WHERE idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, p.getIdProducto());
             statement.executeUpdate();
@@ -118,7 +118,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
     public List<Producto> findAll() throws SQLException {
-        String sql = "SELECT * FROM productos";
+        String sql = "SELECT * FROM producto";
         //ResultSet rs = null;
         List<Producto> listProductos = new ArrayList<>();
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
@@ -137,7 +137,7 @@ public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
     public Producto findById(int idProducto) throws SQLException {
-        String sql = "SELECT * FROM productos WHERE idProducto=?";
+        String sql = "SELECT * FROM producto WHERE idProducto=?";
         ResultSet rs = null;
         Producto productoById = null;
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {

@@ -25,17 +25,14 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
 
     @Override
     public void createTable() throws SQLException {
-        String sql="CREATE TABLE IF NOT EXISTS facturaproducto (" +
+        String sql = "CREATE TABLE IF NOT EXISTS facturaproducto (" +
                 "idFactura INT, " +
-                "idProducto INT" +
-                "cantidad INT " +
-                "PRIMARY KEY (idFactura, idProducto) " +
-                "CONSTRAINT fk_factura_producto_factura " +
-                "FOREIGN KEY (idFactura) " +
-                "REFERENCES Factura(idFactura) " +
-                "CONSTRAINT fk_factura_producto_producto " +
-                "FOREIGN KEY (idProducto) " +
-                "REFERENCES Producto(idProducto) )";
+                "idProducto INT, " +
+                "cantidad INT, " +
+                "PRIMARY KEY (idFactura, idProducto), " +
+                "CONSTRAINT fk_factura_producto_factura FOREIGN KEY (idFactura) REFERENCES factura(idFactura), " +
+                "CONSTRAINT fk_factura_producto_producto FOREIGN KEY (idProducto) REFERENCES producto(idProducto)" +
+                ")";
         PreparedStatement statement= conn.getConex().prepareStatement(sql);
         statement.execute();
         conn.getConex().commit();
@@ -67,10 +64,10 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
 
     @Override
     public void insert(FacturaProducto fp) throws SQLException {
-        String sql = "INSERT INTO factura-producto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO facturaproducto (idFactura, idProducto, cantidad) VALUES (?, ?, ?)";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, fp.getIdFactura());
-            statement.setInt(1, fp.getIdProducto());
+            statement.setInt(2, fp.getIdProducto());
             statement.setInt(3, fp.getCantidad());
             statement.executeUpdate();
             conn.getConex().commit();
@@ -79,7 +76,7 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
 
     @Override
     public void update(FacturaProducto fp) throws SQLException {
-        String sql = "UPDATE factura-producto SET cantidad=? WHERE idFactura=? AND idProducto=?";
+        String sql = "UPDATE facturaproducto SET cantidad=? WHERE idFactura=? AND idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, fp.getCantidad());
             statement.setInt(2, fp.getIdFactura());
@@ -91,7 +88,7 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
 
     @Override
     public void deleteById(FacturaProducto fp) throws SQLException {
-        String sql = "DELETE FROM factura-producto WHERE idFactura=? AND idProducto=?";
+        String sql = "DELETE FROM facturaproducto WHERE idFactura=? AND idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, fp.getIdFactura());
             statement.setInt(1, fp.getIdProducto());
@@ -102,7 +99,7 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
 
     @Override
     public List<FacturaProducto> findAll() throws SQLException {
-        String sql = "SELECT * FROM factura-producto";
+        String sql = "SELECT * FROM facturaproducto";
         List<FacturaProducto> listFacturasProductos = new ArrayList<>();
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
         ResultSet rs = statement.executeQuery();
@@ -122,7 +119,7 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
 //busco por idProducto
 @Override
     public FacturaProducto findByIdProducto(int idProducto) throws SQLException {
-        String sql = "SELECT * FROM factura-producto WHERE idProducto=?";
+        String sql = "SELECT * FROM facturaproducto WHERE idProducto=?";
         FacturaProducto productoById = null;
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, idProducto);
@@ -146,7 +143,7 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
     // busco por idFactura
     @Override
     public FacturaProducto findByIdfactura(int idFactura) throws SQLException {
-        String sql = "SELECT * FROM factura-producto WHERE idFactura=?";
+        String sql = "SELECT * FROM facturaproducto WHERE idFactura=?";
         FacturaProducto facturaById = null;
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, idFactura);
