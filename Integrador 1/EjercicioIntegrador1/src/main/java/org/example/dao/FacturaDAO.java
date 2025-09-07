@@ -12,7 +12,7 @@ public interface FacturaDAO {
     void add() throws IOException;
     void insert(Factura f) throws SQLException;
     void update(Factura f) throws SQLException;
-    void deleteById(Factura f) throws SQLException;
+    void deleteById(int f) throws SQLException;
     List<Factura> findAll() throws SQLException;
     Factura findById(int id) throws SQLException;
 

@@ -33,7 +33,7 @@ public class FacturaDAOImpl implements FacturaDAO {
                 "CONSTRAINT fk_factura_cliente " +
                 "FOREIGN KEY (idCliente) " +
                 "REFERENCES cliente(idCliente) " +
-                "ON DELETE CASCADE" +
+                "ON DELETE CASCADE" +   // Si borro un cliente, se tienen que borrar sus facturas asociadas
                 ")";
 
         PreparedStatement statement= conn.getConex().prepareStatement(sql);
@@ -110,7 +110,7 @@ public class FacturaDAOImpl implements FacturaDAO {
             e.printStackTrace();
             throw new SQLException("Error al buscar la factura con id " + idFactura, e);
         }
-
+        //System.out.println(facturaById.getIdCliente());
         return facturaById;
     }
 
@@ -118,13 +118,13 @@ public class FacturaDAOImpl implements FacturaDAO {
     @Override
     public List<Factura> findAll() throws SQLException {
         List<Factura> listaFacturas = new ArrayList<>();
-        String sql = "SELECT * FROM factura";
+        String sql = "SELECT * FROM factura ORDER BY idFactura";
 
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
                 Factura factura = new Factura(rs.getInt("idFactura"),
-                        rs.getInt("idFactura"));
+                        rs.getInt("idCliente"));
                 listaFacturas.add(factura);
             }
         }
@@ -133,10 +133,10 @@ public class FacturaDAOImpl implements FacturaDAO {
 
     // ELIMINAR UNA FACTURA
     @Override
-    public void deleteById(Factura f) throws SQLException {
+    public void deleteById(int idFactura) throws SQLException {
         String sql = "DELETE FROM factura WHERE idFactura = ?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
-            statement.setInt(1, f.getIdFactura());
+            statement.setInt(1, idFactura);
             int filasEliminadas = statement.executeUpdate();
             conn.getConex().commit(); // confirma los cambios
 
@@ -147,7 +147,7 @@ public class FacturaDAOImpl implements FacturaDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new SQLException("Error al eliminar factura con id " + f.getIdFactura(), e);
+            throw new SQLException("Error al eliminar factura con id " + idFactura, e);
         }
     }
 
