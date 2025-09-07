@@ -19,8 +19,8 @@ import java.util.Objects;
 public class FacturaProductoDAOImpl implements FacturaProductoDAO {
     private ConnectionManagerMySQL conn;
 
-    public FacturaProductoDAOImpl() {
-        this.conn= ConnectionManagerMySQL.getInstance();
+    public FacturaProductoDAOImpl(ConnectionManagerMySQL conn) {
+        this.conn = conn;
     }
 
     @Override

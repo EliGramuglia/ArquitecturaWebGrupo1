@@ -4,7 +4,6 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.example.dao.FacturaDAO;
-import org.example.entity.Cliente;
 import org.example.entity.Factura;
 import org.example.factory.ConnectionManagerMySQL;
 
@@ -20,8 +19,8 @@ import java.util.Objects;
 public class FacturaDAOImpl implements FacturaDAO {
     private ConnectionManagerMySQL conn;
 
-    public FacturaDAOImpl() {
-        this.conn= ConnectionManagerMySQL.getInstance();
+    public FacturaDAOImpl(ConnectionManagerMySQL conn) {
+        this.conn = conn;
     }
 
     /* Método para crear la tabla Factura */

@@ -56,10 +56,10 @@ public class App
 */
 
     /* ----------------------------------- FACTURA ---------------------------------- */
-        FacturaDAO facturaDAO = new FacturaDAOImpl();
+
 
         //Cliente cli = new Cliente(99, "Mari", "mariaslda@sakjdkaj");
         //facturaDAO.createTable();
-        facturaDAO.add();
+       // facturaDAO.add();
     }
 }

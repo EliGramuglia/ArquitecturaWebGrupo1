@@ -1,7 +1,10 @@
 package org.example.repository;
 
 import org.example.dao.FacturaDAO;
+import org.example.dao.FacturaProductoDAO;
 import org.example.dao.impl.ClienteDAOImpl;
+import org.example.dao.impl.FacturaDAOImpl;
+import org.example.dao.impl.FacturaProductoDAOImpl;
 import org.example.dao.impl.ProductoDAOImpl;
 import org.example.factory.ConnectionManagerMySQL;
 import org.example.factory.DAOFactory;
@@ -26,7 +29,12 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public FacturaDAO createFacturaDAO() {
-        return null;
+        return new FacturaDAOImpl(conn);
+    }
+
+    @Override
+    public FacturaProductoDAO createFacturaProductoDAO() {
+        return new FacturaProductoDAOImpl(conn);
     }
 
 
