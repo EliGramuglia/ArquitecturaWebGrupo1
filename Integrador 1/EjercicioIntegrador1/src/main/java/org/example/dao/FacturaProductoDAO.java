@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface FacturaProductoDAO {
-    void createTable() throws SQLException;
-    void add() throws IOException;
     void insert(FacturaProducto fp) throws SQLException;
     void update(FacturaProducto fp) throws SQLException;
     void deleteById(FacturaProducto fp) throws SQLException;
