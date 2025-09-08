@@ -20,5 +20,7 @@ public class Producto {
         this.nombre = nombre;
         this.valor = valor;
     }
-
+    public String toStringTotalRecaudado() {
+        return "ID Producto: " + idProducto + ", Total recaudado: " + totalRecaudado;
+    }
 }

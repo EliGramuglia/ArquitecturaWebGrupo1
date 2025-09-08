@@ -71,7 +71,7 @@ public class DBUtils {
 
    // ----------------FacturaProducto-----------
 
-   public void createTableFacturaProducto() throws SQLException {
+   public static void createTableFacturaProducto() throws SQLException {
        String sql = "CREATE TABLE IF NOT EXISTS facturaproducto (" +
                "idFactura INT, " +
                "idProducto INT, " +
@@ -111,7 +111,7 @@ public class DBUtils {
     //--------Producto-------
 
 
-    public void createTableProducto() throws SQLException {
+    public static void createTableProducto() throws SQLException {
         String sql="CREATE TABLE IF NOT EXISTS producto (" +
                 "idProducto INT PRIMARY KEY, " +
                 "nombre VARCHAR(45)," +
@@ -146,7 +146,7 @@ public class DBUtils {
     //-----------Factura--------
     /* Método para crear la tabla Factura */
 
-    public void createTableFactura() throws SQLException {
+    public static void createTableFactura() throws SQLException {
         String sql="CREATE TABLE IF NOT EXISTS factura (" +
                 "idFactura INT, " +
                 "idCliente INT, " +

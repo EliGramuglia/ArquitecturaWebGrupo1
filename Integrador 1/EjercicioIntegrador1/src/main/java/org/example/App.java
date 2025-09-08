@@ -33,10 +33,10 @@ public class App {
 
         /* ---------------------------- CREACIÓN DE TABLAS --------------------------- */
         DBUtils.createTableCliente();
-      /*  DBUtils.createTableFactura();
+        DBUtils.createTableFactura();
         DBUtils.createTableProducto();
         DBUtils.createTableFacturaProducto();
-*/
+
 
         /* ------------------------------- CRUD CLIENTE ------------------------------ */
        // Agrega los cvs
@@ -104,7 +104,7 @@ public class App {
         /* --------------------------------- CRUD PRODUCTO -------------------------------- */
         //productoDAO.add();
         //System.out.println(productoDAO.findProductMaxFacturacion());
-        //System.out.println(productoDAO.findProductMaxFacturacion().toStringIdTotal());
+        System.out.println(productoDAO.findProductMaxFacturacion().toStringTotalRecaudado());
         /* ----------------------------- CRUD FACTURA-PRODUCTO ---------------------------- */
         //facturaProductoDAO.add();
     }
