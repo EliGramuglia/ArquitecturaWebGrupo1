@@ -30,8 +30,10 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
                 "idProducto INT, " +
                 "cantidad INT, " +
                 "PRIMARY KEY (idFactura, idProducto), " +
-                "CONSTRAINT fk_factura_producto_factura FOREIGN KEY (idFactura) REFERENCES factura(idFactura), " +
-                "CONSTRAINT fk_factura_producto_producto FOREIGN KEY (idProducto) REFERENCES producto(idProducto)" +
+                "CONSTRAINT fk_factura_producto_factura FOREIGN KEY (idFactura) REFERENCES factura(idFactura) " +
+                "ON DELETE CASCADE, " +
+                "CONSTRAINT fk_factura_producto_producto FOREIGN KEY (idProducto) REFERENCES producto(idProducto) "+
+                "ON DELETE CASCADE" +   // Si borro un producto, se tienen que borrar sus facturas asociadas
                 ")";
         PreparedStatement statement= conn.getConex().prepareStatement(sql);
         statement.execute();

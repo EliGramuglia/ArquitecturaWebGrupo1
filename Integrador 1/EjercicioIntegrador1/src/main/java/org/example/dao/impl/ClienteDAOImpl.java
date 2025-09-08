@@ -44,7 +44,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         String sql = "SELECT c.idCliente, c.nombre AS nombreCliente, SUM(fp.cantidad * p.valor) AS totalFacturado " +
                 "FROM cliente c " +
                 "JOIN factura f ON c.idCliente = f.idCliente " +
-                "JOIN factura_producto fp ON f.idFactura = fp.idFactura " +
+                "JOIN facturaproducto fp ON f.idFactura = fp.idFactura " +
                 "JOIN producto p ON fp.idProducto = p.idProducto " +
                 "GROUP BY c.idCliente, c.nombre " +
                 "ORDER BY totalFacturado DESC;";
@@ -54,6 +54,7 @@ public class ClienteDAOImpl implements ClienteDAO {
         ResultSet rs = statement.executeQuery();
         while (rs.next()) {
             Cliente cliente = findById(rs.getInt("idCliente"));
+            cliente.setTotalFacturado(rs.getFloat("totalFacturado"));
             listClientes.add(cliente);
         }
         return listClientes;

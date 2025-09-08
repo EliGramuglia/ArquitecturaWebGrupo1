@@ -32,17 +32,17 @@ public class App {
         FacturaProductoDAO facturaProductoDAO = factory.createFacturaProductoDAO();
 
         /* ---------------------------- CREACIÓN DE TABLAS --------------------------- */
-        //clienteDAO.createTable();
-        //facturaDAO.createTable();
-        //productoDAO.createTable();
-        //facturaProductoDAO.createTable();
+        clienteDAO.createTable();
+        facturaDAO.createTable();
+        productoDAO.createTable();
+        facturaProductoDAO.createTable();
 
 
         /* ------------------------------- CRUD CLIENTE ------------------------------ */
-/*        // Agrega los cvs
-        //clienteDAO.add();
+       // Agrega los cvs
+       // clienteDAO.add();
 
-        // Agregar un cliente nuevo
+        /*// Agregar un cliente nuevo
         clienteDAO.insert(new Cliente(101, "Eli", "mariaslda@sakjdkaj"));
 
         // Editar cliente existente
@@ -68,11 +68,16 @@ public class App {
         // Retorna una lista de clientes, ordenada de forma descendente, segun su facturación
         //clienteDAO.findAllByMaxFacturacion();
 
+    System.out.println("cliente por orden de facturacion : ");
+        List<Cliente> clientes = clienteDAO.findAllByMaxFacturacion();
+        for(Cliente c:clientes){
+        System.out.println("idCliente: " + c.getIdCliente()+ ", nombre: " + c.getNombre()+ ", total facturado: " + c.getTotalFacturado());
+    }
 
     /* --------------------------------- CRUD FACTURA -------------------------------- */
        // Agrega los cvs
-/*        facturaDAO.add();
-
+       // facturaDAO.add();
+/*
         // Agregar una nueva factura
         facturaDAO.insert(new Factura(512, 1));
 
@@ -98,8 +103,8 @@ public class App {
 
         /* --------------------------------- CRUD PRODUCTO -------------------------------- */
         //productoDAO.add();
-
-
+        //System.out.println(productoDAO.findProductMaxFacturacion());
+        //System.out.println(productoDAO.findProductMaxFacturacion().toStringIdTotal());
         /* ----------------------------- CRUD FACTURA-PRODUCTO ---------------------------- */
         //facturaProductoDAO.add();
     }

@@ -58,18 +58,19 @@ public class ProductoDAOImpl implements ProductoDAO {
 
     @Override
     public Producto findProductMaxFacturacion() throws SQLException {
-        String sql = "SELECT p.idProducto, SUM(t.cantidadProducto * p.valor) AS total_recaudado " +
-                "FROM factura-productos fp " +
-                "JOIN productos p ON fp.idProducto = p.idProducto " +
+        String sql = "SELECT p.idProducto, SUM(fp.cantidad * p.valor) AS total_recaudado " +
+                "FROM facturaproducto fp " +
+                "JOIN producto p ON fp.idProducto = p.idProducto " +
                 "GROUP BY p.idProducto " +
-                "ORDER BY total_recaudado DESC" +
+                "ORDER BY total_recaudado DESC " +
                 "LIMIT 1;";
         Producto productoById = null;
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {
-                productoById = findById(rs.getInt("idProducto")
-                );
+                productoById = findById(rs.getInt("idProducto"));
+                productoById.setTotalRecaudado(rs.getFloat("total_recaudado"));
+
             }else{
                 System.out.println("No se encontraron productos: ");
             }
