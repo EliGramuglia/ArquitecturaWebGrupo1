@@ -18,9 +18,17 @@ import java.util.Objects;
 
 public class FacturaDAOImpl implements FacturaDAO {
     private ConnectionManagerMySQL conn;
+    private static FacturaDAOImpl instance;
 
     public FacturaDAOImpl(ConnectionManagerMySQL conn) {
         this.conn = conn;
+    }
+
+    public static FacturaDAOImpl getInstance(ConnectionManagerMySQL conn) {
+        if(instance == null) {
+            instance = new FacturaDAOImpl(conn);
+        }
+        return instance;
     }
 
     /* Método para crear la tabla Factura */

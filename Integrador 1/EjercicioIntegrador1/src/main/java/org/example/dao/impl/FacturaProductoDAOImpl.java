@@ -18,9 +18,17 @@ import java.util.Objects;
 
 public class FacturaProductoDAOImpl implements FacturaProductoDAO {
     private ConnectionManagerMySQL conn;
+    private static FacturaProductoDAOImpl instance;
 
     public FacturaProductoDAOImpl(ConnectionManagerMySQL conn) {
         this.conn = conn;
+    }
+
+    public static FacturaProductoDAOImpl getInstance(ConnectionManagerMySQL conn) {
+        if(instance == null) {
+            instance = new FacturaProductoDAOImpl(conn);
+        }
+        return instance;
     }
 
     @Override

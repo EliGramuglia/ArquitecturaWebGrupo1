@@ -18,23 +18,17 @@ import java.util.Objects;
 
 public class ClienteDAOImpl implements ClienteDAO {
     private ConnectionManagerMySQL conn;
+    private static ClienteDAOImpl instance;
 
-    public ClienteDAOImpl(ConnectionManagerMySQL conn) {
+    private ClienteDAOImpl(ConnectionManagerMySQL conn) {
         this.conn = conn;
     }
 
-    /* Método para crear la tabla Cliente */
-    @Override
-    public void createTable() throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS cliente ( " +
-                "idCliente INT, " +
-                "nombre VARCHAR(500), " +
-                "email VARCHAR(150), " +
-                "PRIMARY KEY (idCliente)) ";
-        PreparedStatement statement = conn.getConex().prepareStatement(sql);
-        statement.execute();
-        conn.getConex().commit();
-        /*ConnectionManagerMySQL.getInstance().closeConn();*/
+    public static ClienteDAOImpl getInstance(ConnectionManagerMySQL conn) {
+        if(instance == null) {
+            instance = new ClienteDAOImpl(conn);
+        }
+        return instance;
     }
 
 
@@ -61,27 +55,6 @@ public class ClienteDAOImpl implements ClienteDAO {
     }
 
 
-    /* Método para leer y cargar los archivos cvs en la tabla de la bdd */
-    @Override
-    public void add() throws IOException {
-        try (CSVParser client = CSVFormat.DEFAULT.builder()
-                .setHeader()                 // interpreta la primera fila como header
-                .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
-                .build()
-                .parse(new InputStreamReader(Objects.requireNonNull(ClienteDAOImpl.class.getResourceAsStream("/clientes.csv"))))) {
-
-            for (CSVRecord record : client) {
-                String id = record.get("idCliente");
-                String nombre = record.get("nombre");
-                String email = record.get("email");
-
-                Cliente cliente = new Cliente(Integer.valueOf(id), nombre, email);
-                insert(cliente);  // cambia el método insert para recibir un solo Cliente
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     /* ------------------------------ CRUD ------------------------------ */
 

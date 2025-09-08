@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.factory;
 
 import org.example.dao.FacturaDAO;
 import org.example.dao.FacturaProductoDAO;
@@ -6,8 +6,6 @@ import org.example.dao.impl.ClienteDAOImpl;
 import org.example.dao.impl.FacturaDAOImpl;
 import org.example.dao.impl.FacturaProductoDAOImpl;
 import org.example.dao.impl.ProductoDAOImpl;
-import org.example.factory.ConnectionManagerMySQL;
-import org.example.factory.DAOFactory;
 
 // Fábrica concreta
 public class MySQLDAOFactory extends DAOFactory {
@@ -19,23 +17,22 @@ public class MySQLDAOFactory extends DAOFactory {
 
     @Override
     public ClienteDAOImpl createClienteDAO() {
-        return new ClienteDAOImpl(conn);
+        return ClienteDAOImpl.getInstance(conn);
     }
 
     @Override
     public ProductoDAOImpl createProductoDAO() {
-        return new ProductoDAOImpl(conn);
+        return ProductoDAOImpl.getInstance(conn);
     }
 
     @Override
     public FacturaDAO createFacturaDAO() {
-        return new FacturaDAOImpl(conn);
+        return FacturaDAOImpl.getInstance(conn);
     }
 
     @Override
     public FacturaProductoDAO createFacturaProductoDAO() {
-        return new FacturaProductoDAOImpl(conn);
+        return FacturaProductoDAOImpl.getInstance(conn);
     }
-
 
 }

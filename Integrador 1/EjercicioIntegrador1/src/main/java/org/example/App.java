@@ -4,18 +4,11 @@ import org.example.dao.ClienteDAO;
 import org.example.dao.FacturaDAO;
 import org.example.dao.FacturaProductoDAO;
 import org.example.dao.ProductoDAO;
-import org.example.dao.impl.ClienteDAOImpl;
-import org.example.dao.impl.FacturaDAOImpl;
-import org.example.entity.Cliente;
-import org.example.entity.Factura;
 import org.example.factory.DAOFactory;
 import org.example.factory.DBType;
-import org.example.repository.MySQLDAOFactory;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class App {
