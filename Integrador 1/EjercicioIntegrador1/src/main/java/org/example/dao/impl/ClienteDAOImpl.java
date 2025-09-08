@@ -18,9 +18,17 @@ import java.util.Objects;
 
 public class ClienteDAOImpl implements ClienteDAO {
     private ConnectionManagerMySQL conn;
+    private static ClienteDAOImpl instance;
 
-    public ClienteDAOImpl(ConnectionManagerMySQL conn) {
+    private ClienteDAOImpl(ConnectionManagerMySQL conn) {
         this.conn = conn;
+    }
+
+    public static ClienteDAOImpl getInstance(ConnectionManagerMySQL conn) {
+        if(instance == null) {
+            instance = new ClienteDAOImpl(conn);
+        }
+        return instance;
     }
 
     /* Método para crear la tabla Cliente */

@@ -18,9 +18,17 @@ import java.util.Objects;
 
 public class ProductoDAOImpl implements ProductoDAO {
     private ConnectionManagerMySQL conn;
+    private static ProductoDAOImpl instance;
 
     public ProductoDAOImpl(ConnectionManagerMySQL conn) {
         this.conn = conn;
+    }
+
+    public static ProductoDAOImpl getInstance(ConnectionManagerMySQL conn) {
+        if(instance == null) {
+            instance = new ProductoDAOImpl(conn);
+        }
+        return instance;
     }
 
     @Override
