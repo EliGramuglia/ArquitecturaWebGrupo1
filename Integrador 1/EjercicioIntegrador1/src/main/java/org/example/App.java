@@ -4,17 +4,24 @@ import org.example.dao.ClienteDAO;
 import org.example.dao.FacturaDAO;
 import org.example.dao.FacturaProductoDAO;
 import org.example.dao.ProductoDAO;
+import org.example.entity.Cliente;
+import org.example.factory.ConnectionManagerMySQL;
 import org.example.factory.DAOFactory;
 import org.example.factory.DBType;
+import org.example.utils.DBUtils;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.List;
 
 
 public class App {
 
     public static void main( String[] args ) throws IOException, SQLException {
+        ConnectionManagerMySQL connectionManager = ConnectionManagerMySQL.getInstance();
+        new DBUtils(connectionManager); // inicializa el static conn
 
+        DBUtils.createTableCliente();
         // Creo la fábrica concreta MySQL
         DAOFactory factory = DAOFactory.getInstance(DBType.MYSQL);
 
@@ -25,11 +32,11 @@ public class App {
         FacturaProductoDAO facturaProductoDAO = factory.createFacturaProductoDAO();
 
         /* ---------------------------- CREACIÓN DE TABLAS --------------------------- */
-        clienteDAO.createTable();
-        facturaDAO.createTable();
-        productoDAO.createTable();
-        facturaProductoDAO.createTable();
-
+        DBUtils.createTableCliente();
+      /*  DBUtils.createTableFactura();
+        DBUtils.createTableProducto();
+        DBUtils.createTableFacturaProducto();
+*/
 
         /* ------------------------------- CRUD CLIENTE ------------------------------ */
        // Agrega los cvs
@@ -61,7 +68,7 @@ public class App {
         // Retorna una lista de clientes, ordenada de forma descendente, segun su facturación
         //clienteDAO.findAllByMaxFacturacion();
 
-    System.out.println("cliente por orden de facturacion : ");
+  System.out.println("cliente por orden de facturacion : ");
         List<Cliente> clientes = clienteDAO.findAllByMaxFacturacion();
         for(Cliente c:clientes){
         System.out.println("idCliente: " + c.getIdCliente()+ ", nombre: " + c.getNombre()+ ", total facturado: " + c.getTotalFacturado());

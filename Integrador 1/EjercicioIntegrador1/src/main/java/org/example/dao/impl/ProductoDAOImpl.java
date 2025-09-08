@@ -31,38 +31,7 @@ public class ProductoDAOImpl implements ProductoDAO {
         return instance;
     }
 
-    @Override
-    public void createTable() throws SQLException {
-        String sql="CREATE TABLE IF NOT EXISTS producto (" +
-                "idProducto INT PRIMARY KEY, " +
-                "nombre VARCHAR(45)," +
-                "valor FLOAT " +
-                ")";
-        PreparedStatement statement= conn.getConex().prepareStatement(sql);
-        statement.execute();
-        conn.getConex().commit();
-    }
 
-    @Override
-    public void add() throws IOException {
-        try (CSVParser product = CSVFormat.DEFAULT.builder()
-                .setHeader()                 // interpreta la primera fila como header
-                .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
-                .build()
-                .parse(new InputStreamReader(Objects.requireNonNull(ProductoDAOImpl.class.getResourceAsStream("/productos.csv"))))) {
-
-            for (CSVRecord record : product) {
-                String id = record.get("idProducto");
-                String nombre = record.get("nombre");
-                String valor = record.get("valor");
-
-                Producto producto = new Producto(Integer.valueOf(id), nombre, Float.valueOf(valor));
-                insert(producto);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     @Override
     public Producto findProductMaxFacturacion() throws SQLException {

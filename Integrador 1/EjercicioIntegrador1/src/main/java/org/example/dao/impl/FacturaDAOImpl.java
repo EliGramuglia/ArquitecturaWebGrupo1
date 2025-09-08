@@ -31,45 +31,6 @@ public class FacturaDAOImpl implements FacturaDAO {
         return instance;
     }
 
-    /* Método para crear la tabla Factura */
-    @Override
-    public void createTable() throws SQLException {
-        String sql="CREATE TABLE IF NOT EXISTS factura (" +
-                "idFactura INT, " +
-                "idCliente INT, " +
-                "PRIMARY KEY (idFactura), " +
-                "CONSTRAINT fk_factura_cliente " +
-                "FOREIGN KEY (idCliente) " +
-                "REFERENCES cliente(idCliente) " +
-                "ON DELETE CASCADE" +   // Si borro un cliente, se tienen que borrar sus facturas asociadas
-                ")";
-
-        PreparedStatement statement= conn.getConex().prepareStatement(sql);
-        statement.execute();
-        conn.getConex().commit();
-    }
-
-
-    /* Método para leer y cargar los archivos cvs en la tabla de la bdd */
-    @Override
-    public void add() throws IOException {
-        try (CSVParser facturas = CSVFormat.DEFAULT.builder()
-                .setHeader()                 // interpreta la primera fila como header
-                .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
-                .build()
-                .parse(new InputStreamReader(Objects.requireNonNull(ClienteDAOImpl.class.getResourceAsStream("/facturas.csv"))))) {
-
-            for (CSVRecord record : facturas) {
-                String idFactura = record.get("idFactura");
-                String idCliente = record.get("idCliente");
-
-                Factura factura = new Factura(Integer.valueOf(idFactura), Integer.valueOf(idCliente));
-                insert(factura);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     /* ------------------------------ CRUD ------------------------------ */
 

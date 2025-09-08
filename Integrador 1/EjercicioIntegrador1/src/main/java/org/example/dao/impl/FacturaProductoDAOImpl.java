@@ -31,44 +31,6 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
         return instance;
     }
 
-    @Override
-    public void createTable() throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS facturaproducto (" +
-                "idFactura INT, " +
-                "idProducto INT, " +
-                "cantidad INT, " +
-                "PRIMARY KEY (idFactura, idProducto), " +
-                "CONSTRAINT fk_factura_producto_factura FOREIGN KEY (idFactura) REFERENCES factura(idFactura) " +
-                "ON DELETE CASCADE, " +
-                "CONSTRAINT fk_factura_producto_producto FOREIGN KEY (idProducto) REFERENCES producto(idProducto) "+
-                "ON DELETE CASCADE" +   // Si borro un producto, se tienen que borrar sus facturas asociadas
-                ")";
-        PreparedStatement statement= conn.getConex().prepareStatement(sql);
-        statement.execute();
-        conn.getConex().commit();
-    }
-
-    @Override
-    public void add() throws IOException {
-        try (CSVParser facturaProduct = CSVFormat.DEFAULT.builder()
-                .setHeader()                 // interpreta la primera fila como header
-                .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
-                .build()
-                .parse(new InputStreamReader(Objects.requireNonNull(ProductoDAOImpl.class.getResourceAsStream("/facturas-productos.csv"))))) {
-
-            for (CSVRecord record : facturaProduct) {
-                String idFactura = record.get("idFactura");
-                String idProducto = record.get("idProducto");
-                String cantidad = record.get("cantidad");
-
-                FacturaProducto facturaProducto = new FacturaProducto(Integer.valueOf(idFactura), Integer.valueOf(idProducto), Integer.valueOf(cantidad));
-                insert(facturaProducto);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
 
     /* ------------------------------ CRUD ------------------------------ */
 
