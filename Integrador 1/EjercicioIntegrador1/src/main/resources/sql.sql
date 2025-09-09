@@ -1,1 +1,1 @@
-SELECT  * FROM facturaproducto;
+SELECT * FROM producto

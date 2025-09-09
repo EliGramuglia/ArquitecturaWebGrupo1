@@ -32,7 +32,6 @@ public class ProductoDAOImpl implements ProductoDAO {
     }
 
 
-
     @Override
     public Producto findProductMaxFacturacion() throws SQLException {
         String sql = "SELECT p.idProducto, SUM(fp.cantidad * p.valor) AS total_recaudado " +
@@ -85,10 +84,10 @@ public class ProductoDAOImpl implements ProductoDAO {
     }
 
     @Override
-    public void deleteById(Producto p) throws SQLException {
+    public void deleteById(int p) throws SQLException {
         String sql = "DELETE FROM producto WHERE idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
-            statement.setInt(1, p.getIdProducto());
+            statement.setInt(1, p);
             statement.executeUpdate();
             conn.getConex().commit();
         }

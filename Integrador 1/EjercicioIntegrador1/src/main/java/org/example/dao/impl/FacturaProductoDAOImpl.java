@@ -63,7 +63,7 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
         String sql = "DELETE FROM facturaproducto WHERE idFactura=? AND idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, fp.getIdFactura());
-            statement.setInt(1, fp.getIdProducto());
+            statement.setInt(2, fp.getIdProducto());
             statement.executeUpdate();
             conn.getConex().commit();
         }

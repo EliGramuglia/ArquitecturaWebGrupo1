@@ -10,7 +10,7 @@ public interface ProductoDAO {
     Producto findProductMaxFacturacion() throws SQLException;
     void insert(Producto p) throws SQLException;
     void update(Producto p) throws SQLException;
-    void deleteById(Producto p) throws SQLException;
+    void deleteById(int p) throws SQLException;
     List<Producto> findAll() throws SQLException;
     Producto findById(int id) throws SQLException;
 

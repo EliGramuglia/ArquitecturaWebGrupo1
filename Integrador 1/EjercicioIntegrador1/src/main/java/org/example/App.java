@@ -5,6 +5,9 @@ import org.example.dao.FacturaDAO;
 import org.example.dao.FacturaProductoDAO;
 import org.example.dao.ProductoDAO;
 import org.example.entity.Cliente;
+import org.example.entity.Factura;
+import org.example.entity.FacturaProducto;
+import org.example.entity.Producto;
 import org.example.factory.ConnectionManagerMySQL;
 import org.example.factory.DAOFactory;
 import org.example.factory.DBType;
@@ -19,9 +22,8 @@ public class App {
 
     public static void main( String[] args ) throws IOException, SQLException {
         ConnectionManagerMySQL connectionManager = ConnectionManagerMySQL.getInstance();
-        new DBUtils(connectionManager); // inicializa el static conn
+        DBUtils dbUtils = new DBUtils(connectionManager); // inicializa el static conn
 
-        DBUtils.createTableCliente();
         // Creo la fábrica concreta MySQL
         DAOFactory factory = DAOFactory.getInstance(DBType.MYSQL);
 
@@ -32,17 +34,19 @@ public class App {
         FacturaProductoDAO facturaProductoDAO = factory.createFacturaProductoDAO();
 
         /* ---------------------------- CREACIÓN DE TABLAS --------------------------- */
-        DBUtils.createTableCliente();
-        DBUtils.createTableFactura();
-        DBUtils.createTableProducto();
-        DBUtils.createTableFacturaProducto();
+         DBUtils.createTableCliente();
+         DBUtils.createTableFactura();
+         DBUtils.createTableProducto();
+         DBUtils.createTableFacturaProducto();
 
+        /* --------------------------- CARGA DE ARCHIVOS CSV -------------------------- */
+         dbUtils.addCliente(clienteDAO);
+         dbUtils.addFactura(facturaDAO);
+         dbUtils.addProducto(productoDAO);
+         dbUtils.addFacturaProducto(facturaProductoDAO);
 
         /* ------------------------------- CRUD CLIENTE ------------------------------ */
-       // Agrega los cvs
-       // clienteDAO.add();
-
-        /*// Agregar un cliente nuevo
+        // Agregar un cliente nuevo
         clienteDAO.insert(new Cliente(101, "Eli", "mariaslda@sakjdkaj"));
 
         // Editar cliente existente
@@ -64,20 +68,15 @@ public class App {
         for (Cliente c: clientesList){
             System.out.println(c.getNombre());
         }
-*/
-        // Retorna una lista de clientes, ordenada de forma descendente, segun su facturación
-        //clienteDAO.findAllByMaxFacturacion();
 
-  System.out.println("cliente por orden de facturacion : ");
+        // Retorna una lista de clientes, ordenada de forma descendente, segun su facturación
         List<Cliente> clientes = clienteDAO.findAllByMaxFacturacion();
+        System.out.println("Cliente por orden de facturación: ");
         for(Cliente c:clientes){
-        System.out.println("idCliente: " + c.getIdCliente()+ ", nombre: " + c.getNombre()+ ", total facturado: " + c.getTotalFacturado());
-    }
+            System.out.println("idCliente: " + c.getIdCliente()+ ", Nombre: " + c.getNombre()+ ", Total facturado: " + c.getTotalFacturado());
+        }
 
     /* --------------------------------- CRUD FACTURA -------------------------------- */
-       // Agrega los cvs
-       // facturaDAO.add();
-/*
         // Agregar una nueva factura
         facturaDAO.insert(new Factura(512, 1));
 
@@ -88,7 +87,7 @@ public class App {
         // Obtener una factura por ID
         Factura faturaMostrar = facturaDAO.findById(facturaParaEditar.getIdFactura());
         System.out.println("Factura " + faturaMostrar.getIdFactura() + " pertenece al cliente " + faturaMostrar.getIdCliente());
-        facturaDAO.findById(5);
+        System.out.println(facturaDAO.findById(5));
 
         // Eliminar un cliente por ID
         facturaDAO.insert(new Factura(513, 1));
@@ -99,13 +98,42 @@ public class App {
         for (Factura f: facturasList){
             System.out.println("Factura " + f.getIdFactura() + " cliente " + f.getIdCliente());
         }
-*/
+
 
         /* --------------------------------- CRUD PRODUCTO -------------------------------- */
-        //productoDAO.add();
-        //System.out.println(productoDAO.findProductMaxFacturacion());
+        // Producto que más recaudó
+        // System.out.println(productoDAO.findProductMaxFacturacion()); // Imprime el toString por defecto (con todos los datos)
         System.out.println(productoDAO.findProductMaxFacturacion().toStringTotalRecaudado());
+
+        Producto pruebaProducto = new Producto(101, "Baggio", 5F);
+        productoDAO.insert(pruebaProducto);
+        productoDAO.update(new Producto(101, "Baggio", 6F));
+        productoDAO.deleteById(101);
+        System.out.println(productoDAO.findById(3));
+        List<Producto> productos = productoDAO.findAll();
+        for (Producto p: productos) {
+            System.out.println(p.getNombre());
+        }
+
         /* ----------------------------- CRUD FACTURA-PRODUCTO ---------------------------- */
-        //facturaProductoDAO.add();
+
+        Cliente clienteTest = new Cliente(999, "Cliente Test", "cliente@test.com");
+        clienteDAO.insert(clienteTest);
+        Factura facturaTest = new Factura(5000, clienteTest.getIdCliente());
+        facturaDAO.insert(facturaTest);
+        Producto productoTest = new Producto(3000, "Producto Test", 150.0f);
+        productoDAO.insert(productoTest);
+        FacturaProducto pruebaFP = new FacturaProducto(5000,3000,5);
+        facturaProductoDAO.insert(pruebaFP);
+        System.out.println("FacturaProducto insertado correctamente: "
+                + "Factura " + pruebaFP.getIdFactura()
+                + ", Producto " + pruebaFP.getIdProducto()
+                + ", Cantidad " + pruebaFP.getCantidad());
+        facturaProductoDAO.deleteById(pruebaFP);
+        facturaDAO.deleteById(facturaTest.getIdFactura());
+        productoDAO.deleteById(productoTest.getIdProducto());
+        clienteDAO.deleteById(clienteTest.getIdCliente());
+        facturaDAO.findById(5000);
+        System.out.println(8);
     }
 }

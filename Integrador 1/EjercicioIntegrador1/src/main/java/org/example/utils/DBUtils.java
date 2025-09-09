@@ -3,10 +3,12 @@ package org.example.utils;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.example.dao.ClienteDAO;
+import org.example.dao.FacturaDAO;
+import org.example.dao.FacturaProductoDAO;
+import org.example.dao.ProductoDAO;
 import org.example.dao.impl.ClienteDAOImpl;
 import org.example.dao.impl.ProductoDAOImpl;
-import org.example.dao.impl.FacturaDAOImpl;
-import org.example.dao.impl.FacturaProductoDAOImpl;
 import org.example.entity.Cliente;
 import org.example.entity.Factura;
 import org.example.entity.FacturaProducto;
@@ -21,17 +23,13 @@ import java.util.Objects;
 
 public class DBUtils {
     private static ConnectionManagerMySQL conn;
-    private ClienteDAOImpl clienteDAO;
-    private FacturaDAOImpl facturaDAO;
-    private ProductoDAOImpl productoDAO;
-    private FacturaProductoDAOImpl facturaProductoDAO;
 
     public DBUtils(ConnectionManagerMySQL conn) {
         DBUtils.conn = conn;
     }
 
 
-    /* Método para crear la tabla Cliente */
+    /* ---------------------------- CREACIÓN DE TABLAS --------------------------- */
     public static void createTableCliente() throws SQLException {
         if (conn == null) {
             throw new IllegalStateException("Conexión no inicializada");
@@ -46,10 +44,52 @@ public class DBUtils {
         conn.getConex().commit();
     }
 
+    public static void createTableFacturaProducto() throws SQLException {
+        String sql = "CREATE TABLE IF NOT EXISTS facturaproducto (" +
+                "idFactura INT, " +
+                "idProducto INT, " +
+                "cantidad INT, " +
+                "PRIMARY KEY (idFactura, idProducto), " +
+                "CONSTRAINT fk_factura_producto_factura FOREIGN KEY (idFactura) REFERENCES factura(idFactura) " +
+                "ON DELETE CASCADE, " +
+                "CONSTRAINT fk_factura_producto_producto FOREIGN KEY (idProducto) REFERENCES producto(idProducto) "+
+                "ON DELETE CASCADE" +   // Si borro un producto, se tienen que borrar sus facturas asociadas
+                ")";
+        PreparedStatement statement= conn.getConex().prepareStatement(sql);
+        statement.execute();
+        conn.getConex().commit();
+    }
+
+    public static void createTableProducto() throws SQLException {
+        String sql="CREATE TABLE IF NOT EXISTS producto (" +
+                "idProducto INT PRIMARY KEY, " +
+                "nombre VARCHAR(45)," +
+                "valor FLOAT " +
+                ")";
+        PreparedStatement statement= conn.getConex().prepareStatement(sql);
+        statement.execute();
+        conn.getConex().commit();
+    }
+
+    public static void createTableFactura() throws SQLException {
+        String sql="CREATE TABLE IF NOT EXISTS factura (" +
+                "idFactura INT, " +
+                "idCliente INT, " +
+                "PRIMARY KEY (idFactura), " +
+                "CONSTRAINT fk_factura_cliente " +
+                "FOREIGN KEY (idCliente) " +
+                "REFERENCES cliente(idCliente) " +
+                "ON DELETE CASCADE" +   // Si borro un cliente, se tienen que borrar sus facturas asociadas
+                ")";
+
+        PreparedStatement statement= conn.getConex().prepareStatement(sql);
+        statement.execute();
+        conn.getConex().commit();
+    }
 
 
-    /* Método para leer y cargar los archivos cvs en la tabla de la bdd */
-    public void addCliente() throws IOException {
+    /* ------------------------ MÉTODOS PARA CARGAR LOS CSV ----------------------- */
+    public void addCliente(ClienteDAO clienteDAO) throws IOException {
         try (CSVParser client = CSVFormat.DEFAULT.builder()
                 .setHeader()                 // interpreta la primera fila como header
                 .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
@@ -69,29 +109,10 @@ public class DBUtils {
         }
     }
 
-   // ----------------FacturaProducto-----------
-
-   public static void createTableFacturaProducto() throws SQLException {
-       String sql = "CREATE TABLE IF NOT EXISTS facturaproducto (" +
-               "idFactura INT, " +
-               "idProducto INT, " +
-               "cantidad INT, " +
-               "PRIMARY KEY (idFactura, idProducto), " +
-               "CONSTRAINT fk_factura_producto_factura FOREIGN KEY (idFactura) REFERENCES factura(idFactura) " +
-               "ON DELETE CASCADE, " +
-               "CONSTRAINT fk_factura_producto_producto FOREIGN KEY (idProducto) REFERENCES producto(idProducto) "+
-               "ON DELETE CASCADE" +   // Si borro un producto, se tienen que borrar sus facturas asociadas
-               ")";
-       PreparedStatement statement= conn.getConex().prepareStatement(sql);
-       statement.execute();
-       conn.getConex().commit();
-   }
-
-
-    public void addFacturaProducto() throws IOException {
+    public void addFacturaProducto(FacturaProductoDAO facturaProductoDAO) throws IOException {
         try (CSVParser facturaProduct = CSVFormat.DEFAULT.builder()
-                .setHeader()                 // interpreta la primera fila como header
-                .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
+                .setHeader()
+                .setSkipHeaderRecord(true)
                 .build()
                 .parse(new InputStreamReader(Objects.requireNonNull(ProductoDAOImpl.class.getResourceAsStream("/facturas-productos.csv"))))) {
 
@@ -108,25 +129,10 @@ public class DBUtils {
         }
     }
 
-    //--------Producto-------
-
-
-    public static void createTableProducto() throws SQLException {
-        String sql="CREATE TABLE IF NOT EXISTS producto (" +
-                "idProducto INT PRIMARY KEY, " +
-                "nombre VARCHAR(45)," +
-                "valor FLOAT " +
-                ")";
-        PreparedStatement statement= conn.getConex().prepareStatement(sql);
-        statement.execute();
-        conn.getConex().commit();
-    }
-
-
-    public void addProducto() throws IOException {
+    public void addProducto(ProductoDAO productoDAO) throws IOException {
         try (CSVParser product = CSVFormat.DEFAULT.builder()
-                .setHeader()                 // interpreta la primera fila como header
-                .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
+                .setHeader()
+                .setSkipHeaderRecord(true)
                 .build()
                 .parse(new InputStreamReader(Objects.requireNonNull(ProductoDAOImpl.class.getResourceAsStream("/productos.csv"))))) {
 
@@ -143,32 +149,10 @@ public class DBUtils {
         }
     }
 
-    //-----------Factura--------
-    /* Método para crear la tabla Factura */
-
-    public static void createTableFactura() throws SQLException {
-        String sql="CREATE TABLE IF NOT EXISTS factura (" +
-                "idFactura INT, " +
-                "idCliente INT, " +
-                "PRIMARY KEY (idFactura), " +
-                "CONSTRAINT fk_factura_cliente " +
-                "FOREIGN KEY (idCliente) " +
-                "REFERENCES cliente(idCliente) " +
-                "ON DELETE CASCADE" +   // Si borro un cliente, se tienen que borrar sus facturas asociadas
-                ")";
-
-        PreparedStatement statement= conn.getConex().prepareStatement(sql);
-        statement.execute();
-        conn.getConex().commit();
-    }
-
-
-    /* Método para leer y cargar los archivos cvs en la tabla de la bdd */
-
-    public void addFactura() throws IOException {
+    public void addFactura(FacturaDAO facturaDAO) throws IOException {
         try (CSVParser facturas = CSVFormat.DEFAULT.builder()
-                .setHeader()                 // interpreta la primera fila como header
-                .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
+                .setHeader()
+                .setSkipHeaderRecord(true)
                 .build()
                 .parse(new InputStreamReader(Objects.requireNonNull(ClienteDAOImpl.class.getResourceAsStream("/facturas.csv"))))) {
 
