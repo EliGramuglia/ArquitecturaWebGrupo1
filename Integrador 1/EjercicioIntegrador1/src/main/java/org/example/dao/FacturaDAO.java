@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface FacturaDAO {
     void insert(Factura f) throws SQLException;
+    void insertAll(List<Factura> f) throws SQLException;
     void update(Factura f) throws SQLException;
     void deleteById(int f) throws SQLException;
     List<Factura> findAll() throws SQLException;

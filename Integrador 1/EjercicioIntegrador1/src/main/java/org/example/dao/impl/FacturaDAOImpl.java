@@ -38,6 +38,20 @@ public class FacturaDAOImpl implements FacturaDAO {
         }
     }
 
+    @Override
+    public void insertAll(List<Factura> f) throws SQLException {
+        StringBuilder sql = new StringBuilder("INSERT INTO factura (idFactura, idCliente) VALUES ");
+        f.forEach(fa -> {
+            sql.append(String.format("(%s, %s), ", fa.getIdFactura(), fa.getIdCliente()));
+        });
+        StringBuilder sqlFinal = new StringBuilder(sql.substring(0, sql.length() - 2));
+        sqlFinal.append(";");
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sqlFinal.toString())) {
+            statement.executeUpdate();
+            conn.getConex().commit();
+        }
+    }
+
     // EDITAR UNA FACTURA
     @Override
     public void update(Factura f) throws SQLException {

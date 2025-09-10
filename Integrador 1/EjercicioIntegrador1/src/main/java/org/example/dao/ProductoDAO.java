@@ -9,6 +9,7 @@ import java.util.List;
 public interface ProductoDAO {
     Producto findProductMaxFacturacion() throws SQLException;
     void insert(Producto p) throws SQLException;
+    void insertAll(List<Producto> p) throws SQLException;
     void update(Producto p) throws SQLException;
     void deleteById(int p) throws SQLException;
     List<Producto> findAll() throws SQLException;

@@ -63,6 +63,20 @@ public class ClienteDAOImpl implements ClienteDAO {
         }
     }
 
+    @Override
+    public void insertAll(List<Cliente> c) throws SQLException {
+        StringBuilder sql = new StringBuilder("INSERT INTO cliente (idCliente, nombre, email) VALUES ");
+        c.forEach(cl -> {
+            sql.append(String.format("(%s, '%s', '%s'), ", cl.getIdCliente(), cl.getNombre(), cl.getEmail()));
+        });
+        StringBuilder sqlFinal = new StringBuilder(sql.substring(0, sql.length() - 2));
+        sqlFinal.append(";");
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sqlFinal.toString())) {
+            statement.executeUpdate();
+            conn.getConex().commit();
+        }
+    }
+
     // EDITAR UN CLIENTE
     @Override
     public void update(Cliente c) throws SQLException {

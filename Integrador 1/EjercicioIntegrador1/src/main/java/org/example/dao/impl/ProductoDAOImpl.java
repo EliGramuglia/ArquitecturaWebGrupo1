@@ -67,6 +67,20 @@ public class ProductoDAOImpl implements ProductoDAO {
     }
 
     @Override
+    public void insertAll(List<Producto> p) throws SQLException {
+        StringBuilder sql = new StringBuilder("INSERT INTO producto (idProducto, nombre, valor) VALUES ");
+        p.forEach(pr -> {
+            sql.append(String.format("(%s, '%s', %s), ", pr.getIdProducto(), pr.getNombre(), pr.getValor()));
+        });
+        StringBuilder sqlFinal = new StringBuilder(sql.substring(0, sql.length() - 2));
+        sqlFinal.append(";");
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sqlFinal.toString())) {
+            statement.executeUpdate();
+            conn.getConex().commit();
+        }
+    }
+
+    @Override
     public void update(Producto p) throws SQLException {
         String sql = "UPDATE producto SET nombre=?, valor=? WHERE idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {

@@ -39,6 +39,20 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
     }
 
     @Override
+    public void insertAll(List<FacturaProducto> fp) throws SQLException {
+        StringBuilder sql = new StringBuilder("INSERT INTO facturaproducto (idFactura, idProducto, cantidad) VALUES ");
+        fp.forEach(f -> {
+            sql.append(String.format("(%s, %s, %s), ", f.getIdFactura(), f.getIdProducto(), f.getCantidad()));
+        });
+        StringBuilder sqlFinal = new StringBuilder(sql.substring(0, sql.length() - 2));
+        sqlFinal.append(";");
+        try (PreparedStatement statement = conn.getConex().prepareStatement(sqlFinal.toString())) {
+            statement.executeUpdate();
+            conn.getConex().commit();
+        }
+    }
+
+    @Override
     public void update(FacturaProducto fp) throws SQLException {
         String sql = "UPDATE facturaproducto SET cantidad=? WHERE idFactura=? AND idProducto=?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {

@@ -19,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class DBUtils {
@@ -90,6 +92,7 @@ public class DBUtils {
 
     /* ------------------------ MÉTODOS PARA CARGAR LOS CSV ----------------------- */
     public void addCliente(ClienteDAO clienteDAO) throws IOException {
+        List<Cliente> listClientes = new ArrayList<>();
         try (CSVParser client = CSVFormat.DEFAULT.builder()
                 .setHeader()                 // interpreta la primera fila como header
                 .setSkipHeaderRecord(true)   // salta la fila de cabecera al iterar
@@ -101,15 +104,16 @@ public class DBUtils {
                 String nombre = record.get("nombre");
                 String email = record.get("email");
 
-                Cliente cliente = new Cliente(Integer.valueOf(id), nombre, email);
-                clienteDAO.insert(cliente);  // cambia el método insert para recibir un solo Cliente
+                listClientes.add(new Cliente(Integer.valueOf(id), nombre, email));
             }
+            clienteDAO.insertAll(listClientes);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void addFacturaProducto(FacturaProductoDAO facturaProductoDAO) throws IOException {
+        List<FacturaProducto> listaFacturasProducto = new ArrayList<>();
         try (CSVParser facturaProduct = CSVFormat.DEFAULT.builder()
                 .setHeader()
                 .setSkipHeaderRecord(true)
@@ -121,15 +125,16 @@ public class DBUtils {
                 String idProducto = record.get("idProducto");
                 String cantidad = record.get("cantidad");
 
-                FacturaProducto facturaProducto = new FacturaProducto(Integer.valueOf(idFactura), Integer.valueOf(idProducto), Integer.valueOf(cantidad));
-                facturaProductoDAO.insert(facturaProducto);
+                listaFacturasProducto.add(new FacturaProducto(Integer.valueOf(idFactura), Integer.valueOf(idProducto), Integer.valueOf(cantidad)));
             }
+            facturaProductoDAO.insertAll(listaFacturasProducto);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void addProducto(ProductoDAO productoDAO) throws IOException {
+        List<Producto> listaProductos = new ArrayList<>();
         try (CSVParser product = CSVFormat.DEFAULT.builder()
                 .setHeader()
                 .setSkipHeaderRecord(true)
@@ -141,15 +146,16 @@ public class DBUtils {
                 String nombre = record.get("nombre");
                 String valor = record.get("valor");
 
-                Producto producto = new Producto(Integer.valueOf(id), nombre, Float.valueOf(valor));
-                productoDAO.insert(producto);
+                listaProductos.add(new Producto(Integer.valueOf(id), nombre, Float.valueOf(valor)));
             }
+            productoDAO.insertAll(listaProductos);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
     public void addFactura(FacturaDAO facturaDAO) throws IOException {
+        List<Factura> listaFacturas = new ArrayList<>();
         try (CSVParser facturas = CSVFormat.DEFAULT.builder()
                 .setHeader()
                 .setSkipHeaderRecord(true)
@@ -160,9 +166,9 @@ public class DBUtils {
                 String idFactura = record.get("idFactura");
                 String idCliente = record.get("idCliente");
 
-                Factura factura = new Factura(Integer.valueOf(idFactura), Integer.valueOf(idCliente));
-                facturaDAO.insert(factura);
+                listaFacturas.add(new Factura(Integer.valueOf(idFactura), Integer.valueOf(idCliente)));
             }
+            facturaDAO.insertAll(listaFacturas);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

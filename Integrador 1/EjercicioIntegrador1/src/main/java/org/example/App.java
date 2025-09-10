@@ -34,106 +34,110 @@ public class App {
         FacturaProductoDAO facturaProductoDAO = factory.createFacturaProductoDAO();
 
         /* ---------------------------- CREACIÓN DE TABLAS --------------------------- */
-/*         DBUtils.createTableCliente();
-         DBUtils.createTableFactura();
-         DBUtils.createTableProducto();
-         DBUtils.createTableFacturaProducto();
-*/
+        DBUtils.createTableCliente();
+        DBUtils.createTableFactura();
+        DBUtils.createTableProducto();
+        DBUtils.createTableFacturaProducto();
+
         /* --------------------------- CARGA DE ARCHIVOS CSV -------------------------- */
-/*         dbUtils.addCliente(clienteDAO);
-         dbUtils.addFactura(facturaDAO);
-         dbUtils.addProducto(productoDAO);
-         dbUtils.addFacturaProducto(facturaProductoDAO);
-*/
-        /* ------------------------------- CRUD CLIENTE ------------------------------ */
-        // Agregar un cliente nuevo
-/*        clienteDAO.insert(new Cliente(101, "Eli", "mariaslda@sakjdkaj"));
+        dbUtils.addCliente(clienteDAO);
+        dbUtils.addFactura(facturaDAO);
+        dbUtils.addProducto(productoDAO);
+        dbUtils.addFacturaProducto(facturaProductoDAO);
 
-        // Editar cliente existente
-        Cliente clienteParaEditar = new Cliente(1, "Fran", "sdfa@gmail");
-        clienteDAO.update(clienteParaEditar);
+        // Producto que más recaudó
+        System.out.println(productoDAO.findProductMaxFacturacion().toStringTotalRecaudado());
 
-        // Obtener un cliente por ID
-        Cliente clienteMostrar = clienteDAO.findById(clienteParaEditar.getIdCliente());
-        System.out.println(clienteMostrar.getNombre());
-        //clienteDAO.findById(5);
-        //clienteDAO.findById(0);
-        //clienteDAO.findById(800);
-
-        // Eliminar un cliente por ID
-        //clienteDAO.deleteById(99);
-
-        // Listar todos los clientes
-        List<Cliente> clientesList = clienteDAO.findAll();
-        for (Cliente c: clientesList){
-            System.out.println(c.getNombre());
-        }
-*/
-/*        // Retorna una lista de clientes, ordenada de forma descendente, segun su facturación
+        // Retorna una lista de clientes, ordenada de forma descendente, segun su facturación
         List<Cliente> clientes = clienteDAO.findAllByMaxFacturacion();
         System.out.println("Cliente por orden de facturación: ");
         for(Cliente c:clientes){
             System.out.println("idCliente: " + c.getIdCliente()+ ", Nombre: " + c.getNombre()+ ", Total facturado: " + c.getTotalFacturado());
         }
-*/
-    /* --------------------------------- CRUD FACTURA -------------------------------- */
- /*       // Agregar una nueva factura
-        facturaDAO.insert(new Factura(512, 1));
 
-        // Editar una factura existente
-        Factura facturaParaEditar = new Factura(512, 2);
-        facturaDAO.update(facturaParaEditar);
-
-        // Obtener una factura por ID
-        Factura faturaMostrar = facturaDAO.findById(facturaParaEditar.getIdFactura());
-        System.out.println("Factura " + faturaMostrar.getIdFactura() + " pertenece al cliente " + faturaMostrar.getIdCliente());
-        System.out.println(facturaDAO.findById(5));
-
-        // Eliminar un cliente por ID
-        facturaDAO.insert(new Factura(513, 1));
-        facturaDAO.deleteById(513);
-
-        // Listar todos las facturas
-        List<Factura> facturasList = facturaDAO.findAll();
-        for (Factura f: facturasList){
-            System.out.println("Factura " + f.getIdFactura() + " cliente " + f.getIdCliente());
-        }
-
-
-        /* --------------------------------- CRUD PRODUCTO -------------------------------- */
-        // Producto que más recaudó
-        // System.out.println(productoDAO.findProductMaxFacturacion()); // Imprime el toString por defecto (con todos los datos)
-        System.out.println(productoDAO.findProductMaxFacturacion().toStringTotalRecaudado());
-
-/*        Producto pruebaProducto = new Producto(101, "Baggio", 5F);
-        productoDAO.insert(pruebaProducto);
-        productoDAO.update(new Producto(101, "Baggio", 6F));
-        productoDAO.deleteById(101);
-        System.out.println(productoDAO.findById(3));
-        List<Producto> productos = productoDAO.findAll();
-        for (Producto p: productos) {
-            System.out.println(p.getNombre());
-        }
-
-        /* ----------------------------- CRUD FACTURA-PRODUCTO ---------------------------- */
-
-/*        Cliente clienteTest = new Cliente(999, "Cliente Test", "cliente@test.com");
-        clienteDAO.insert(clienteTest);
-        Factura facturaTest = new Factura(5000, clienteTest.getIdCliente());
-        facturaDAO.insert(facturaTest);
-        Producto productoTest = new Producto(3000, "Producto Test", 150.0f);
-        productoDAO.insert(productoTest);
-        FacturaProducto pruebaFP = new FacturaProducto(5000,3000,5);
-        facturaProductoDAO.insert(pruebaFP);
-        System.out.println("FacturaProducto insertado correctamente: "
-                + "Factura " + pruebaFP.getIdFactura()
-                + ", Producto " + pruebaFP.getIdProducto()
-                + ", Cantidad " + pruebaFP.getCantidad());
-        facturaProductoDAO.deleteById(pruebaFP);
-        facturaDAO.deleteById(facturaTest.getIdFactura());
-        productoDAO.deleteById(productoTest.getIdProducto());
-        clienteDAO.deleteById(clienteTest.getIdCliente());
-        facturaDAO.findById(5000);
-        System.out.println(8);*/
+//        /* ------------------------------- CRUD CLIENTE ------------------------------ */
+//        // Agregar un cliente nuevo
+//        clienteDAO.insert(new Cliente(101, "Eli", "mariaslda@sakjdkaj"));
+//
+//        // Editar cliente existente
+//        Cliente clienteParaEditar = new Cliente(1, "Fran", "sdfa@gmail");
+//        clienteDAO.update(clienteParaEditar);
+//
+//        // Obtener un cliente por ID
+//        Cliente clienteMostrar = clienteDAO.findById(clienteParaEditar.getIdCliente());
+//        System.out.println(clienteMostrar.getNombre());
+//        //clienteDAO.findById(5);
+//        //clienteDAO.findById(0);
+//        //clienteDAO.findById(800);
+//
+//        // Eliminar un cliente por ID
+//        //clienteDAO.deleteById(99);
+//
+//        // Listar todos los clientes
+//        List<Cliente> clientesList = clienteDAO.findAll();
+//        for (Cliente c: clientesList){
+//            System.out.println(c.getNombre());
+//        }
+//
+//
+//    /* --------------------------------- CRUD FACTURA -------------------------------- */
+//      // Agregar una nueva factura
+//        facturaDAO.insert(new Factura(512, 1));
+//
+//        // Editar una factura existente
+//        Factura facturaParaEditar = new Factura(512, 2);
+//        facturaDAO.update(facturaParaEditar);
+//
+//        // Obtener una factura por ID
+//        Factura faturaMostrar = facturaDAO.findById(facturaParaEditar.getIdFactura());
+//        System.out.println("Factura " + faturaMostrar.getIdFactura() + " pertenece al cliente " + faturaMostrar.getIdCliente());
+//        System.out.println(facturaDAO.findById(5));
+//
+//        // Eliminar un cliente por ID
+//        facturaDAO.insert(new Factura(513, 1));
+//        facturaDAO.deleteById(513);
+//
+//        // Listar todos las facturas
+//        List<Factura> facturasList = facturaDAO.findAll();
+//        for (Factura f: facturasList){
+//            System.out.println("Factura " + f.getIdFactura() + " cliente " + f.getIdCliente());
+//        }
+//
+//
+//        /* --------------------------------- CRUD PRODUCTO -------------------------------- */
+//        // Producto que más recaudó
+//        // System.out.println(productoDAO.findProductMaxFacturacion()); // Imprime el toString por defecto (con todos los datos)
+//
+//
+//        Producto pruebaProducto = new Producto(101, "Baggio", 5F);
+//        productoDAO.insert(pruebaProducto);
+//        productoDAO.update(new Producto(101, "Baggio", 6F));
+//        productoDAO.deleteById(101);
+//        System.out.println(productoDAO.findById(3));
+//        List<Producto> productos = productoDAO.findAll();
+//        for (Producto p: productos) {
+//            System.out.println(p.getNombre());
+//        }
+//
+//        /* ----------------------------- CRUD FACTURA-PRODUCTO ---------------------------- */
+//
+//        Cliente clienteTest = new Cliente(999, "Cliente Test", "cliente@test.com");
+//        clienteDAO.insert(clienteTest);
+//        Factura facturaTest = new Factura(5000, clienteTest.getIdCliente());
+//        facturaDAO.insert(facturaTest);
+//        Producto productoTest = new Producto(3000, "Producto Test", 150.0f);
+//        productoDAO.insert(productoTest);
+//        FacturaProducto pruebaFP = new FacturaProducto(5000,3000,5);
+//        facturaProductoDAO.insert(pruebaFP);
+//        System.out.println("FacturaProducto insertado correctamente: "
+//                + "Factura " + pruebaFP.getIdFactura()
+//                + ", Producto " + pruebaFP.getIdProducto()
+//                + ", Cantidad " + pruebaFP.getCantidad());
+//        facturaProductoDAO.deleteById(pruebaFP);
+//        facturaDAO.deleteById(facturaTest.getIdFactura());
+//        productoDAO.deleteById(productoTest.getIdProducto());
+//        clienteDAO.deleteById(clienteTest.getIdCliente());
+//        facturaDAO.findById(5000);
+//        System.out.println(8);
     }
 }

@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface FacturaProductoDAO {
     void insert(FacturaProducto fp) throws SQLException;
+    void insertAll(List<FacturaProducto> fp) throws SQLException;
     void update(FacturaProducto fp) throws SQLException;
     void deleteById(FacturaProducto fp) throws SQLException;
     List<FacturaProducto> findAll() throws SQLException;
