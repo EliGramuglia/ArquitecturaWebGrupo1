@@ -13,14 +13,14 @@ public class Producto {
     private Float valor;
     private Float totalRecaudado;
 
-    public Producto(int idProducto) {
-    }
     public Producto(int idProducto, String nombre, Float valor) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.valor = valor;
     }
+
     public String toStringTotalRecaudado() {
         return "ID Producto: " + idProducto + ", Total recaudado: " + totalRecaudado;
     }
+
 }

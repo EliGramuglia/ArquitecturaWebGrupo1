@@ -19,4 +19,10 @@ public class Cliente {
         this.email = email;
     }
 
+    public Cliente(Integer idCliente, String nombre, Float totalFacturado) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+        this.totalFacturado = totalFacturado;
+    }
+
 }

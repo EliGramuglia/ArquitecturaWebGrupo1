@@ -1,20 +1,13 @@
 package org.example.dao.impl;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.example.dao.FacturaProductoDAO;
 import org.example.entity.FacturaProducto;
 import org.example.factory.ConnectionManagerMySQL;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FacturaProductoDAOImpl implements FacturaProductoDAO {
     private ConnectionManagerMySQL conn;
@@ -30,7 +23,6 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
         }
         return instance;
     }
-
 
     /* ------------------------------ CRUD ------------------------------ */
 
@@ -87,7 +79,6 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
         return listFacturasProductos;
     }
 
-
 //busco por idProducto
 @Override
     public FacturaProducto findByIdProducto(int idProducto) throws SQLException {
@@ -110,7 +101,6 @@ public class FacturaProductoDAOImpl implements FacturaProductoDAO {
         }
         return productoById;
     }
-
 
     // busco por idFactura
     @Override

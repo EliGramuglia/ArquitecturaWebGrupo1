@@ -1,20 +1,13 @@
 package org.example.dao.impl;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.example.dao.ClienteDAO;
 import org.example.entity.Cliente;
 import org.example.factory.ConnectionManagerMySQL;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ClienteDAOImpl implements ClienteDAO {
     private ConnectionManagerMySQL conn;
@@ -31,7 +24,6 @@ public class ClienteDAOImpl implements ClienteDAO {
         return instance;
     }
 
-
     /* Función que retorna una lista de clientes, ordenada de forma descendente, segun su facturación */
     @Override
     public List<Cliente> findAllByMaxFacturacion() throws SQLException {
@@ -47,14 +39,14 @@ public class ClienteDAOImpl implements ClienteDAO {
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
         ResultSet rs = statement.executeQuery();
         while (rs.next()) {
-            Cliente cliente = findById(rs.getInt("idCliente"));
-            cliente.setTotalFacturado(rs.getFloat("totalFacturado"));
-            listClientes.add(cliente);
+            listClientes.add(new Cliente(
+                    rs.getInt("idCliente"),
+                    rs.getString("nombreCliente"),
+                    rs.getFloat("totalFacturado")
+            ));
         }
         return listClientes;
     }
-
-
 
     /* ------------------------------ CRUD ------------------------------ */
 
@@ -71,7 +63,6 @@ public class ClienteDAOImpl implements ClienteDAO {
         }
     }
 
-
     // EDITAR UN CLIENTE
     @Override
     public void update(Cliente c) throws SQLException {
@@ -85,14 +76,9 @@ public class ClienteDAOImpl implements ClienteDAO {
         }
     }
 
-
     // OBTENER UN CLIENTE
     @Override
     public Cliente findById(int idCliente) throws SQLException {
-        /*if (idCliente <= 0) {
-            throw new IllegalArgumentException("El id debe ser un número mayor a 0");
-        }*/
-
         String sql = "SELECT * FROM cliente WHERE idCliente = ?"; // placeholders para evitar inyecciones sql
         Cliente clienteById = null;
 
@@ -116,7 +102,6 @@ public class ClienteDAOImpl implements ClienteDAO {
         return clienteById;
     }
 
-
     // LISTAR TODOS LOS CLIENTES
     @Override
     public List<Cliente> findAll() throws SQLException {
@@ -135,14 +120,9 @@ public class ClienteDAOImpl implements ClienteDAO {
         return listaClientes;
     }
 
-
     // ELIMINAR UN CLIENTE
     @Override
     public void deleteById(int idCliente) throws SQLException {
-        /*if (idCliente <= 0) {
-            throw new IllegalArgumentException("El id debe ser un número mayor a 0");
-        }*/
-
         String sql = "DELETE FROM cliente WHERE idCliente = ?";
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, idCliente);
@@ -159,6 +139,5 @@ public class ClienteDAOImpl implements ClienteDAO {
             throw new SQLException("Error al eliminar cliente con id " + idCliente, e);
         }
     }
-
 
 }

@@ -1,22 +1,16 @@
 package org.example.dao.impl;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.example.dao.ProductoDAO;
 import org.example.entity.Producto;
 import org.example.factory.ConnectionManagerMySQL;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class ProductoDAOImpl implements ProductoDAO {
+
     private ConnectionManagerMySQL conn;
     private static ProductoDAOImpl instance;
 
@@ -31,22 +25,24 @@ public class ProductoDAOImpl implements ProductoDAO {
         return instance;
     }
 
-
     @Override
     public Producto findProductMaxFacturacion() throws SQLException {
-        String sql = "SELECT p.idProducto, SUM(fp.cantidad * p.valor) AS total_recaudado " +
+        String sql = "SELECT p.*, SUM(fp.cantidad * p.valor) AS totalRecaudado " +
                 "FROM facturaproducto fp " +
                 "JOIN producto p ON fp.idProducto = p.idProducto " +
                 "GROUP BY p.idProducto " +
-                "ORDER BY total_recaudado DESC " +
+                "ORDER BY totalRecaudado DESC " +
                 "LIMIT 1;";
         Producto productoById = null;
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {
-                productoById = findById(rs.getInt("idProducto"));
-                productoById.setTotalRecaudado(rs.getFloat("total_recaudado"));
-
+                productoById = new Producto(
+                        rs.getInt("idProducto"),
+                        rs.getString("nombre"),
+                        rs.getFloat("valor"),
+                        rs.getFloat("totalRecaudado")
+                        );
             }else{
                 System.out.println("No se encontraron productos: ");
             }
@@ -55,7 +51,6 @@ public class ProductoDAOImpl implements ProductoDAO {
         }
         return productoById;
     }
-
 
     /* ------------------------------ CRUD ------------------------------ */
 
@@ -96,7 +91,6 @@ public class ProductoDAOImpl implements ProductoDAO {
     @Override
     public List<Producto> findAll() throws SQLException {
         String sql = "SELECT * FROM producto";
-        //ResultSet rs = null;
         List<Producto> listProductos = new ArrayList<>();
         PreparedStatement statement = conn.getConex().prepareStatement(sql);
         ResultSet rs = statement.executeQuery();
@@ -115,11 +109,10 @@ public class ProductoDAOImpl implements ProductoDAO {
     @Override
     public Producto findById(int idProducto) throws SQLException {
         String sql = "SELECT * FROM producto WHERE idProducto=?";
-        ResultSet rs = null;
         Producto productoById = null;
         try (PreparedStatement statement = conn.getConex().prepareStatement(sql)) {
             statement.setInt(1, idProducto);
-            rs = statement.executeQuery();
+            ResultSet rs = statement.executeQuery();
             if(rs.next()) {
                 productoById = new Producto(
                         rs.getInt("idProducto"),

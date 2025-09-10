@@ -1,20 +1,13 @@
 package org.example.dao.impl;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVParser;
-import org.apache.commons.csv.CSVRecord;
 import org.example.dao.FacturaDAO;
 import org.example.entity.Factura;
 import org.example.factory.ConnectionManagerMySQL;
-
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FacturaDAOImpl implements FacturaDAO {
     private ConnectionManagerMySQL conn;
@@ -30,7 +23,6 @@ public class FacturaDAOImpl implements FacturaDAO {
         }
         return instance;
     }
-
 
     /* ------------------------------ CRUD ------------------------------ */
 
@@ -79,7 +71,6 @@ public class FacturaDAOImpl implements FacturaDAO {
             e.printStackTrace();
             throw new SQLException("Error al buscar la factura con id " + idFactura, e);
         }
-        //System.out.println(facturaById.getIdCliente());
         return facturaById;
     }
 
@@ -119,7 +110,5 @@ public class FacturaDAOImpl implements FacturaDAO {
             throw new SQLException("Error al eliminar factura con id " + idFactura, e);
         }
     }
-
-
 
 }
