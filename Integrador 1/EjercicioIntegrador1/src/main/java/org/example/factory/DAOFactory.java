@@ -16,7 +16,7 @@ public abstract class DAOFactory {
                 if (instance == null) {
                     switch (dbtype){
                         case MYSQL:
-                            instance = new MySQLDAOFactory();
+                            instance = MySQLDAOFactory.getInstance();
                             break;
                         default:
                             throw new IllegalArgumentException("Tipo de base de datos no soportado");

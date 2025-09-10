@@ -10,9 +10,17 @@ import org.example.dao.impl.ProductoDAOImpl;
 // Fábrica concreta
 public class MySQLDAOFactory extends DAOFactory {
     private ConnectionManagerMySQL conn; // Le pasa una conexion MySQL porque está dentro de la fábrica MySQL
+    private static MySQLDAOFactory instance;
 
-    public MySQLDAOFactory() {
+    private MySQLDAOFactory() {
         this.conn = ConnectionManagerMySQL.getInstance(); // Singleton
+    }
+
+    public static MySQLDAOFactory getInstance() {
+        if (instance == null) {
+            instance = new MySQLDAOFactory();
+        }
+        return instance;
     }
 
     @Override
