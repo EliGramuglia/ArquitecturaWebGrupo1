@@ -1,4 +1,12 @@
 package org.example.repository.impl;
 
-public class CarreraRepositoryImpl {
+import jakarta.persistence.EntityManager;
+import org.example.repository.CarreraRepository;
+
+public class CarreraRepositoryImpl implements CarreraRepository {
+    private EntityManager em;
+
+    public CarreraRepositoryImpl(EntityManager em) {
+        this.em = em;
+    }
 }

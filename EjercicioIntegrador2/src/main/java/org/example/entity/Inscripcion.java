@@ -2,6 +2,8 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDate;
+
 @Entity
 public class Inscripcion {
     @Id
@@ -11,5 +13,19 @@ public class Inscripcion {
     @Column
     private Integer antiguedad;
 
-    //Va a tener un estudiante y una carrea (crear relaciones)
+    @Column
+    private Carrera carrera;
+
+    @ManyToOne
+    @JoinColumn (nullable = false)
+    private Estudiante estudiante;
+
+    @Column
+    private LocalDate fechaInscripcion;
+
+    @Column
+    private LocalDate fechaFinal;
+
+    @Column
+    private boolean graduado;
 }

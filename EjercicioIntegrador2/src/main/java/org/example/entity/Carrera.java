@@ -3,6 +3,7 @@ package org.example.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.ToString;
+import java.util.List;
 
 @Getter
 @ToString
@@ -17,4 +18,7 @@ public class Carrera {
 
     @Column
     private Integer duracion;
+
+    @Column
+    private List<Estudiante> estudiantes;
 }

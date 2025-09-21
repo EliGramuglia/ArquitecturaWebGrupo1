@@ -14,10 +14,10 @@ public class Estudiante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer numLibreta; // libreta universitaria
 
-    @Column (nullable = false)
+    @Column
     private String nombre;
 
-    @Column (nullable = false)
+    @Column
     private String apellido;
 
     @Column
@@ -32,7 +32,7 @@ public class Estudiante {
     @Column (name = "ciudad_residencia")
     private String ciudadResidencia;
 
-    @OneToMany // Indicar quien es el dueño de la relación
+    @OneToMany (mappedBy = "Estudiante")
     private List<Inscripcion> inscripciones;
 
 
