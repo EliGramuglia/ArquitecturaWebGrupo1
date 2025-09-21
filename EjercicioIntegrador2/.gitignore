@@ -1,3 +1,6 @@
+# Ignorar toda la configuración de IntelliJ IDEA
+.idea/
+
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
