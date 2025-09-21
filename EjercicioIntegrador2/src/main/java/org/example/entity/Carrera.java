@@ -1,16 +1,20 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Carrera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "id_carrera")
     private Integer idCarrera;
 
     @Column
@@ -19,6 +23,8 @@ public class Carrera {
     @Column
     private Integer duracion;
 
-    @Column
-    private List<Estudiante> estudiantes;
+    @OneToMany (mappedBy = "idInscripcion") // Por defecto Lazy
+    private List<Inscripcion> alumnosInscriptos;
+
+
 }

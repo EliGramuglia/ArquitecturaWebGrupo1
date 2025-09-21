@@ -1,1 +1,1 @@
-SELECT * FROM
+SELECT * FROM estudiante

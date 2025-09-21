@@ -1,30 +1,35 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Inscripcion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "id_inscripcion")
     private Integer idInscripcion;
 
     @Column
     private Integer antiguedad;
 
-    @Column
+    @ManyToOne (fetch=FetchType.LAZY)
+    @JoinColumn (name = "id_carrera")
     private Carrera carrera;
 
-    @ManyToOne
-    @JoinColumn (nullable = false)
+    @ManyToOne (fetch=FetchType.LAZY)
+    @JoinColumn (name = "LU")
     private Estudiante estudiante;
 
-    @Column
+    @Column (name = "fecha_inscripcion")
     private LocalDate fechaInscripcion;
-
-    @Column
-    private LocalDate fechaFinal;
 
     @Column
     private boolean graduado;

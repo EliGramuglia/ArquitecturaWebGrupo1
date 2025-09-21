@@ -1,18 +1,21 @@
 package org.example.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Estudiante {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer numLibreta; // libreta universitaria
+    private Integer LU; // libreta universitaria
 
     @Column
     private String nombre;
@@ -20,7 +23,7 @@ public class Estudiante {
     @Column
     private String apellido;
 
-    @Column
+    @Column (name = "fecha_nacimiento")
     private LocalDate fechaNacimiento;
 
     @Column
@@ -32,9 +35,7 @@ public class Estudiante {
     @Column (name = "ciudad_residencia")
     private String ciudadResidencia;
 
-    @OneToMany (mappedBy = "Estudiante")
+    @OneToMany (mappedBy = "idInscripcion")
     private List<Inscripcion> inscripciones;
-
-
 
 }
