@@ -10,7 +10,7 @@ import lombok.ToString;
 public class Carrera {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Integer id;
+    private Integer idCarrera;
 
     @Column
     private String nombre;

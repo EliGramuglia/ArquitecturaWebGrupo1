@@ -14,10 +14,10 @@ public class Estudiante {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer numLibreta; // libreta universitaria
 
-    @Column
+    @Column (nullable = false)
     private String nombre;
 
-    @Column
+    @Column (nullable = false)
     private String apellido;
 
     @Column
