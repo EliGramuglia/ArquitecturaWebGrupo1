@@ -1,0 +1,12 @@
+version: "3"
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: entregable2-mysql
+    restart: always
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_ROOT_PASSWORD: ""
+      MYSQL_DATABASE: Entregable2
+    ports:
+      - "3306:3306"
