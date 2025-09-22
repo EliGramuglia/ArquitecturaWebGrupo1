@@ -35,7 +35,7 @@ public class Estudiante {
     @Column (name = "ciudad_residencia")
     private String ciudadResidencia;
 
-    @OneToMany (mappedBy = "idInscripcion")
+    @OneToMany (mappedBy = "estudiante")
     private List<Inscripcion> inscripciones;
 
 }

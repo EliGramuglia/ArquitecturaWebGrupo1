@@ -10,5 +10,6 @@ public interface EstudianteRepository {
     Estudiante findByLU(Integer id);
     void delete(Estudiante estudiante);
     List<EstudianteDTO> findAllOrderByDniAsc();
-
+    List<EstudianteDTO> findAllByGenero(String gene);
+    Estudiante findByNombre(String nom);
 }

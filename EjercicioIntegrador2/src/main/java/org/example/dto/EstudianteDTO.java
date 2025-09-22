@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 
 public class EstudianteDTO {
+    private Integer LU;
     private String nombre;
     private String apellido;
     private String genero;
@@ -18,6 +19,6 @@ public class EstudianteDTO {
     // consultar si debe devolver solo el dni ordenado o todos los datos del estudiante
     @Override
     public String toString() {
-        return nombre + " " + apellido + ", Género: " + genero +" Dni: " + dni;
+        return LU + " " + nombre + " " + apellido + ", Género: " + genero +" Dni: " + dni;
     }
 }

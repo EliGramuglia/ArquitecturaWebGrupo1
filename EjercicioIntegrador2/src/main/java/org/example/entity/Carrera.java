@@ -23,7 +23,7 @@ public class Carrera {
     @Column
     private Integer duracion;
 
-    @OneToMany (mappedBy = "idInscripcion") // Por defecto Lazy
+    @OneToMany (mappedBy = "carrera") // Por defecto Lazy
     private List<Inscripcion> alumnosInscriptos;
 
 

@@ -21,11 +21,11 @@ public class App {
         em.getTransaction().begin();
 
         // estudianteRepository tiene que ser singleton ? (tener un getInstance()...)
-        EstudianteRepository estudianteRepository = new EstudianteRepositoryImpl(em);
+        EstudianteRepository estudianteRepository = EstudianteRepositoryImpl.getInstance(em);
 
         // Dar de alta un estudiante
         Estudiante e1 = new Estudiante();
-
+/*
         e1.setNombre("Roberto");
         e1.setApellido("Lopez");
         e1.setFechaNacimiento(LocalDate.of(2000, 5, 21));
@@ -33,11 +33,11 @@ public class App {
         e1.setDni(121345);
         e1.setCiudadResidencia("Tandil");
 
-       // estudianteRepository.create(e1);
-
+        estudianteRepository.create(e1);
+*/
 
         Estudiante e2 = new Estudiante();
-
+/*
         e2.setNombre("Pepe");
         e2.setApellido("Lopez");
         e2.setFechaNacimiento(LocalDate.of(2000, 5, 21));
@@ -45,10 +45,10 @@ public class App {
         e2.setDni(255556);
         e2.setCiudadResidencia("Tandil");
 
-       // estudianteRepository.create(e2);
-
+        estudianteRepository.create(e2);
+*/
         Estudiante e3 = new Estudiante();
-
+/*
         e3.setNombre("Martita");
         e3.setApellido("Lopez");
         e3.setFechaNacimiento(LocalDate.of(2000, 5, 21));
@@ -56,9 +56,10 @@ public class App {
         e3.setDni(336987);
         e3.setCiudadResidencia("Tandil");
 
-       // estudianteRepository.create(e3);
-
+        //estudianteRepository.create(e3);
+*/
         Estudiante e4 = new Estudiante();
+        /*
         e4.setNombre("Martita");
         e4.setApellido("Lopez");
         e4.setFechaNacimiento(LocalDate.of(2000, 5, 21));
@@ -66,41 +67,37 @@ public class App {
         e4.setDni(102255);
         e4.setCiudadResidencia("Tandil");
 
-        estudianteRepository.create(e4);
-        estudianteRepository.findAllOrderByDniAsc().forEach(System.out::println);
+        //estudianteRepository.create(e4);
 
-
-
-
-
-
-
-
+         */
 /*
-        CarreraRepository carreraRepository = new CarreraRepositoryImpl(em);
+        //recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+        estudianteRepository.findAllOrderByDniAsc().forEach(System.out::println);
+        //recuperar un estudiante, en base a su número de libreta universitaria.
+
+        //recuperar todos los estudiantes, en base a su género.
+        estudianteRepository.findAllByGenero("Femenino").forEach(System.out::println);
+*/
+
+
+
+        CarreraRepository carreraRepository = CarreraRepositoryImpl.getInstance(em);
         Carrera c1 = new Carrera();
+        /*
         c1.setNombre("TUDAI");
         c1.setDuracion(2);
-        carreraRepository.create(c1);
-
+        //carreraRepository.create(c1);
+*/
 
         //matricular un estudiante en una carrera
-        InscripcionRepository inscripcionRepository = new InscripcionRepositoryImpl(em);
-        Inscripcion i1 = new Inscripcion();
+        InscripcionRepository inscripcionRepository = InscripcionRepositoryImpl.getInstance(em);
 
-        i1.setAntiguedad(0);
-        i1.setCarrera(c1);
-        i1.setEstudiante(e1);
-        i1.setGraduado(false);
-        i1.setFechaInscripcion(LocalDate.now());
-        inscripcionRepository.create(i1);
-*/
-        //recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+        inscripcionRepository.create("Pepe","TUDAI");
 
 
-        /** recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
-         d) recuperar un estudiante, en base a su número de libreta universitaria.
-         e) recuperar todos los estudiantes, en base a su género.
+
+
+        /**
          f) recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
          g) recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.*/
 
