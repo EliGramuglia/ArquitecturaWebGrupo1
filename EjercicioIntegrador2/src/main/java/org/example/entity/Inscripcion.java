@@ -21,11 +21,11 @@ public class Inscripcion {
     private Integer antiguedad;
 
     @ManyToOne (fetch=FetchType.LAZY)
-    @JoinColumn (name = "id_carrera")
+    @JoinColumn (name = "id_carrera", nullable = false)
     private Carrera carrera;
 
     @ManyToOne (fetch=FetchType.LAZY)
-    @JoinColumn (name = "LU")
+    @JoinColumn (name = "LU", nullable=false)
     private Estudiante estudiante;
 
     @Column (name = "fecha_inscripcion")

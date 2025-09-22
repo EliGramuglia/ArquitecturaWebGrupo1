@@ -1,6 +1,7 @@
 package org.example.repository.impl;
 
 import jakarta.persistence.EntityManager;
+import org.example.dto.EstudianteDTO;
 import org.example.entity.Estudiante;
 import org.example.repository.EstudianteRepository;
 import java.util.List;
@@ -42,7 +43,14 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         }
     }
 
-
+    @Override
+    public List<EstudianteDTO> findAllOrderByDniAsc() {
+        return em.createQuery(
+                "SELECT new org.example.dto.EstudianteDTO(e.nombre, e.apellido, e.genero, e.dni) " +
+                        "FROM Estudiante e ORDER BY e.dni ASC",
+                EstudianteDTO.class
+        ).getResultList();
+    }
 
 
 }
