@@ -1,50 +1,60 @@
 package org.example.repository.impl;
 
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import org.example.dto.EstudianteDTO;
 import org.example.entity.Estudiante;
 import org.example.repository.EstudianteRepository;
 import java.util.List;
 
-// Hay que encerrar los metodos en un bloque try-catch
 
 public class EstudianteRepositoryImpl implements EstudianteRepository {
-    private EntityManager em;
+    private EntityManagerFactory emf;
     private static EstudianteRepositoryImpl instance;
 
-    public EstudianteRepositoryImpl(EntityManager em) {
-        this.em = em;
+    private EstudianteRepositoryImpl(EntityManagerFactory emf) {
+        this.emf = emf;
     }
 
-    public static EstudianteRepositoryImpl getInstance(EntityManager em) {
+    public static EstudianteRepositoryImpl getInstance(EntityManagerFactory emf) {
         if(instance == null) {
-            instance = new EstudianteRepositoryImpl(em);
+            instance = new EstudianteRepositoryImpl(emf);
         }
         return instance;
     }
 
 
     /* --------------------------- CRUD --------------------------- */
-    // Create and update (preguntar si hay que dividirlo en dos metodos: crea y actualiza, o dejarlo asi)
     @Override
     public Estudiante create(Estudiante estudiante) {
-        if(estudiante.getLU() == null){
-            em.persist(estudiante);
-        } else {
-            em.merge(estudiante);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            if(estudiante.getLU() == null){
+                em.persist(estudiante);
+            } else {
+                em.merge(estudiante);
+            }
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
         }
-        return estudiante;
+            return estudiante;
     }
 
-    //recuperar un estudiante, en base a su número de libreta universitaria.
-    @Override
+    // Recuperar un estudiante, en base a su número de libreta universitaria.
+/*    @Override
     public Estudiante findByLU(Integer LU) {
         return em.find(Estudiante.class, LU);
-    }
+    }*/
 //query
     @Override
     public Estudiante findByNombre(String nom) {
+        EntityManager em = emf.createEntityManager();
         try {
             return em.createQuery(
                             "SELECT e FROM Estudiante e WHERE e.nombre = :nom", Estudiante.class)
@@ -52,10 +62,12 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
                     .getSingleResult();
         } catch (NoResultException e) {
             return null;
+        }   finally {
+            em.close();
         }
     }
 
-
+/*
     @Override
     public void delete(Estudiante estudiante) {
         if(em.contains(estudiante)){
@@ -84,6 +96,6 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         )
                 .setParameter("gene", gene)
                 .getResultList();
-    }
+    }*/
 
 }

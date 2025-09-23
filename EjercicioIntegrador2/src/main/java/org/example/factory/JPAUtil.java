@@ -17,6 +17,11 @@ public class JPAUtil {
         }
     }
 
+    // Para obtener la única instancia del EntityManagerFactory
+    public static EntityManagerFactory getEntityManagerFactory() {
+        return emf;
+    }
+
     // Para obtener un EntityManager en cualquier parte del código
     public static EntityManager getEntityManager() {
         return emf.createEntityManager();
