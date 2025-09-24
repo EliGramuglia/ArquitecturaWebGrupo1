@@ -1,13 +1,24 @@
 package org.example.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class CarreraDTO {
     private Integer idCarrera;
     private String nombre;
-    private Integer duracion;
+    private Long cantidadInscriptos;
 
+    public CarreraDTO(String nombre, Long cantidadInscriptos) {
+        this.nombre = nombre;
+        this.cantidadInscriptos = cantidadInscriptos;
+    }
 
     @Override
     public String toString() {
-        return idCarrera + " " + nombre + " " + duracion;
+        return nombre + " Cantidad de Inscriptos " + cantidadInscriptos;
     }
 }

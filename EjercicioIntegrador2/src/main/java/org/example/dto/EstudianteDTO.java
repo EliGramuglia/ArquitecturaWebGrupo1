@@ -3,11 +3,11 @@ package org.example.dto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class EstudianteDTO {
     private Integer LU;
     private String nombre;
@@ -16,7 +16,6 @@ public class EstudianteDTO {
     private Integer dni;
 
 
-    // consultar si debe devolver solo el dni ordenado o todos los datos del estudiante
     @Override
     public String toString() {
         return LU + " " + nombre + " " + apellido + ", Género: " + genero +" Dni: " + dni;

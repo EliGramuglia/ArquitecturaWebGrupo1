@@ -8,7 +8,6 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -38,4 +37,8 @@ public class Estudiante {
     @OneToMany (mappedBy = "estudiante")
     private List<Inscripcion> inscripciones;
 
+    @Override
+    public String toString() {
+        return LU + " " + nombre + " " + apellido + ", Género: " + genero +" Dni: " + dni;
+    }
 }

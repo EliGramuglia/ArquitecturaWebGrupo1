@@ -1,7 +1,6 @@
 package org.example.repository.impl;
 
 import jakarta.persistence.EntityManager;
-
 import jakarta.persistence.EntityManagerFactory;
 import org.example.entity.Carrera;
 import org.example.entity.Estudiante;
@@ -68,12 +67,19 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
             em.close();
         }
     }
-/*
-    @Override
-    public Inscripcion findById(Integer idInscripcion) {
-        return em.find(Inscripcion.class, idInscripcion);
-    }
 
+    // chequear este metodo
+    @Override
+    public Inscripcion findById(int idCarrera, int luEstudiante) {
+        EntityManager em = emf.createEntityManager();
+        try {
+            InscripcionId id = new InscripcionId(idCarrera, luEstudiante);
+            return em.find(Inscripcion.class, id);
+        } finally {
+            em.close();
+        }
+    }
+/*
     @Override
     public void delete(Inscripcion inscripcion) {
         if(em.contains(inscripcion)){

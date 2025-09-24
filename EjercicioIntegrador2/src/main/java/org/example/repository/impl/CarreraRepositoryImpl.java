@@ -4,9 +4,10 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
 import org.example.dto.CarreraDTO;
-import org.example.dto.EstudianteDTO;
 import org.example.entity.Carrera;
+import org.example.entity.Estudiante;
 import org.example.repository.CarreraRepository;
+import java.util.List;
 
 public class CarreraRepositoryImpl implements CarreraRepository {
     private EntityManagerFactory emf;
@@ -45,12 +46,17 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         return carrera;
     }
 
- /*   // Hay que hacer el find por cada uno de los atributos ???
     @Override
     public Carrera findById(Integer idCarrera) {
-        return em.find(Carrera.class, idCarrera);
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.find(Carrera.class, idCarrera);
+        }  finally {
+            em.close();
+        }
     }
-*/
+
+    @Override
     public Carrera findByNombre(String nom) {
         EntityManager em = emf.createEntityManager();
         try {
@@ -59,19 +65,44 @@ public class CarreraRepositoryImpl implements CarreraRepository {
                     .setParameter("nom", nom)
                     .getSingleResult();
         } catch (NoResultException e) {
-            return null; // o lanzar excepción según tu lógica
+            return null;
         }  finally {
-            em.close(); // Siempre cerramos el em
+            em.close();
         }
     }
 
-
-/*    @Override
+    @Override
     public void delete(Carrera carrera) {
-        if(em.contains(carrera)){
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            if (!em.contains(carrera)) {
+                em.merge(carrera);
+            }
             em.remove(carrera);
-        } else {
-            em.merge(carrera);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
         }
-    }*/
+    }
+
+    // Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
+    @Override
+    public List<CarreraDTO> finCarreraOrderByCantInscriptos() {
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.createQuery(
+                    "SELECT new org.example.dto.CarreraDTO(c.nombre, COUNT(i)) " +
+                            "FROM Carrera c JOIN c.alumnosInscriptos i "+
+                            "GROUP BY c.nombre " +
+                            "ORDER BY COUNT(i) DESC",
+                            CarreraDTO.class
+            ).getResultList();
+        } finally {
+            em.close();
+        }
+    }
 }

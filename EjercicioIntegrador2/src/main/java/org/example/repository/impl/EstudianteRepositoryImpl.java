@@ -47,11 +47,18 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
     }
 
     // Recuperar un estudiante, en base a su número de libreta universitaria.
-/*    @Override
+    @Override
     public Estudiante findByLU(Integer LU) {
-        return em.find(Estudiante.class, LU);
-    }*/
-//query
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.find(Estudiante.class, LU);
+        }  finally {
+            em.close();
+        }
+    }
+
+    // Recuperar un estudiante, en base a su nombre
+    // Find solo busca por PK, por lo que hay que hacer nuna query con JPQL
     @Override
     public Estudiante findByNombre(String nom) {
         EntityManager em = emf.createEntityManager();
@@ -67,35 +74,55 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         }
     }
 
-/*
     @Override
     public void delete(Estudiante estudiante) {
-        if(em.contains(estudiante)){
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+            if (!em.contains(estudiante)) {
+                em.merge(estudiante);
+            }
             em.remove(estudiante);
-        } else {
-            em.merge(estudiante);
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
         }
     }
-    //recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple.
+
+    // Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple:
+    // Se los ordena por DNI de forma ascendente
     @Override
     public List<EstudianteDTO> findAllOrderByDniAsc() {
-        return em.createQuery(
-                "SELECT new org.example.dto.EstudianteDTO(e.LU, e.nombre, e.apellido, e.genero, e.dni) " +
-                        "FROM Estudiante e ORDER BY e.dni ASC",
-                EstudianteDTO.class
-        ).getResultList();
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.createQuery(
+                    "SELECT new org.example.dto.EstudianteDTO(e.LU, e.nombre, e.apellido, e.genero, e.dni) " +
+                            "FROM Estudiante e ORDER BY e.dni ASC",
+                    EstudianteDTO.class
+            ).getResultList();
+        } finally {
+            em.close();
+        }
     }
 
-    //recuperar todos los estudiantes, en base a su género.
+    // Recuperar todos los estudiantes, en base a su género.
     @Override
     public List<EstudianteDTO> findAllByGenero(String gene) {
-        return em.createQuery(
-                "SELECT new org.example.dto.EstudianteDTO(e.LU, e.nombre, e.apellido, e.genero, e.dni) " +
-                        "FROM Estudiante e WHERE e.genero = :gene",
-                EstudianteDTO.class
-        )
-                .setParameter("gene", gene)
-                .getResultList();
-    }*/
+        EntityManager em = emf.createEntityManager();
+        try {
+            return em.createQuery(
+                            "SELECT new org.example.dto.EstudianteDTO(e.LU, e.nombre, e.apellido, e.genero, e.dni) " +
+                                    "FROM Estudiante e WHERE e.genero = :gene",
+                            EstudianteDTO.class
+                    )
+                    .setParameter("gene", gene)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
 
 }
