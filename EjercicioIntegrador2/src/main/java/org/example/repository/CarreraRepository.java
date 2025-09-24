@@ -8,8 +8,7 @@ import java.util.List;
 public interface CarreraRepository {
     Carrera create(Carrera carrera);
     Carrera findById(Integer idCarrera);
-    void delete(Carrera carrera);
-    Carrera findByNombre(String nom);
-    List<CarreraDTO> finCarreraOrderByCantInscriptos();
+    void delete(Integer idCarrera);
+    List<CarreraDTO> findCarreraOrderByCantInscriptos();
 
 }

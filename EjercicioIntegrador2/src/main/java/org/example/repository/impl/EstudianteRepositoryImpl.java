@@ -3,6 +3,7 @@ package org.example.repository.impl;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.NoResultException;
+import org.example.dto.EstudianteCarreraDTO;
 import org.example.dto.EstudianteDTO;
 import org.example.entity.Estudiante;
 import org.example.repository.EstudianteRepository;
@@ -57,32 +58,17 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         }
     }
 
-    // Recuperar un estudiante, en base a su nombre
-    // Find solo busca por PK, por lo que hay que hacer nuna query con JPQL
     @Override
-    public Estudiante findByNombre(String nom) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            return em.createQuery(
-                            "SELECT e FROM Estudiante e WHERE e.nombre = :nom", Estudiante.class)
-                    .setParameter("nom", nom)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }   finally {
-            em.close();
-        }
-    }
-
-    @Override
-    public void delete(Estudiante estudiante) {
+    public void delete(Integer LU) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            if (!em.contains(estudiante)) {
-                em.merge(estudiante);
+
+            Estudiante estudiante = em.find(Estudiante.class, LU);
+            if (estudiante != null) {
+                em.remove(estudiante);
             }
-            em.remove(estudiante);
+
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
@@ -119,6 +105,24 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
                             EstudianteDTO.class
                     )
                     .setParameter("gene", gene)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    // Recuperar los estudiantes de una determinada carrera, filtrado por ciudad de residencia.
+    @Override
+    public List<EstudianteCarreraDTO> findAllEstudianteByCarreraAndCiudad(String nombreCarrera, String ciudad) {
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.createQuery("SELECT new org.example.dto.EstudianteCarreraDTO(e.LU, e.nombre, e.apellido, e.ciudadResidencia, c.nombre) "+
+                                    "FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c "+
+                                    "WHERE c.nombre = :carrera AND e.ciudadResidencia =:ciudad",
+                                    EstudianteCarreraDTO.class
+            )
+            .setParameter("carrera", nombreCarrera)
+                    .setParameter("ciudad", ciudad)
                     .getResultList();
         } finally {
             em.close();

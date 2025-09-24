@@ -56,30 +56,18 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         }
     }
 
-    @Override
-    public Carrera findByNombre(String nom) {
-        EntityManager em = emf.createEntityManager();
-        try {
-            return em.createQuery(
-                            "SELECT c FROM Carrera c WHERE c.nombre = :nom", Carrera.class)
-                    .setParameter("nom", nom)
-                    .getSingleResult();
-        } catch (NoResultException e) {
-            return null;
-        }  finally {
-            em.close();
-        }
-    }
 
     @Override
-    public void delete(Carrera carrera) {
+    public void delete(Integer idCarrera) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
-            if (!em.contains(carrera)) {
-                em.merge(carrera);
+
+            Carrera carrera = em.find(Carrera.class, idCarrera);
+            if (carrera != null) {
+                em.remove(carrera);
             }
-            em.remove(carrera);
+
             em.getTransaction().commit();
         } catch (Exception ex) {
             em.getTransaction().rollback();
@@ -91,7 +79,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
 
     // Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
     @Override
-    public List<CarreraDTO> finCarreraOrderByCantInscriptos() {
+    public List<CarreraDTO> findCarreraOrderByCantInscriptos() {
         EntityManager em = emf.createEntityManager();
         try{
             return em.createQuery(

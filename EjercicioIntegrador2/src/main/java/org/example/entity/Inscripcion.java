@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = {"carrera", "estudiante"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -18,7 +18,6 @@ public class Inscripcion {
     @Column
     private Integer antiguedad;
     //calcular con fechainscripcion
-
 
     @MapsId("idCarrera") // vincula la parte carreraId del embeddable con Carrera.id
     @ManyToOne (fetch=FetchType.LAZY)

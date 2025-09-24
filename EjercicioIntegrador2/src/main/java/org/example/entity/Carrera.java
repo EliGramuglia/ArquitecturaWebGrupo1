@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
+@ToString(exclude = "alumnosInscriptos")
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -23,7 +23,7 @@ public class Carrera {
     @Column
     private Integer duracion;
 
-    @OneToMany (mappedBy = "carrera") // Por defecto Lazy
+    @OneToMany (mappedBy = "carrera", cascade = CascadeType.REMOVE, orphanRemoval = true) // Por defecto Lazy
     private List<Inscripcion> alumnosInscriptos;
 
 

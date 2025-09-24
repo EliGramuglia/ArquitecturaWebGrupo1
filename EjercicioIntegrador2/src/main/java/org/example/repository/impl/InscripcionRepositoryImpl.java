@@ -31,21 +31,19 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
 
 
     /* --------------------------- CRUD --------------------------- */
-    @Override
-    public Inscripcion create( String nombreEstudiante, String nombreCarrera ) {
+   /* @Override
+    public Inscripcion create(Integer dniEstudiante, String nombreCarrera) {
         EntityManager em = emf.createEntityManager();
         Inscripcion inscripcion = null;
         try {
             em.getTransaction().begin();
 
-            //Estudiante e = estudiante.findByNombre(nombreEstudiante); // venian de otra sesión de entityManager, y Hibernate no te deja acceder porque ya finalizo
-            //Carrera c = carrera.findByNombre(nombreCarrera);
-            Estudiante e = em.createQuery("SELECT e FROM Estudiante e WHERE e.nombre=:nom", Estudiante.class)
-                    .setParameter("nom", "Pepe")
+            Estudiante e = em.createQuery("SELECT e FROM Estudiante e WHERE e.dni=:dni", Estudiante.class)
+                    .setParameter("dni", dniEstudiante)
                     .getSingleResult();
 
             Carrera c = em.createQuery("SELECT c FROM Carrera c WHERE c.nombre=:nom", Carrera.class)
-                    .setParameter("nom", "TUDAI")
+                    .setParameter("nom", nombreCarrera)
                     .getSingleResult();
 
             inscripcion = new Inscripcion();
@@ -66,26 +64,69 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
         } finally {
             em.close();
         }
+    }*/
+
+    @Override
+    public Inscripcion create(Estudiante e, Carrera c) {
+        EntityManager em = emf.createEntityManager();
+        Inscripcion inscripcion = new Inscripcion();
+        InscripcionId insId = new InscripcionId();
+        inscripcion.setCarrera(c);
+        inscripcion.setEstudiante(e);
+        inscripcion.setFechaInscripcion(LocalDate.now());
+        insId.setLU(e.getLU());
+        insId.setIdCarrera(c.getIdCarrera());
+
+        inscripcion.setIdInscripcion(insId);
+        try {
+            em.getTransaction().begin();
+            if(c.getIdCarrera() == null && e.getLU() == null){
+                em.persist(inscripcion);
+            } else {
+                em.merge(inscripcion);
+            }
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
+        }
+        return inscripcion;
     }
 
-    // chequear este metodo
+
+
     @Override
     public Inscripcion findById(int idCarrera, int luEstudiante) {
         EntityManager em = emf.createEntityManager();
         try {
-            InscripcionId id = new InscripcionId(idCarrera, luEstudiante);
+            InscripcionId id = new InscripcionId(luEstudiante, idCarrera);
             return em.find(Inscripcion.class, id);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
         } finally {
             em.close();
         }
     }
-/*
+
     @Override
     public void delete(Inscripcion inscripcion) {
-        if(em.contains(inscripcion)){
-            em.remove(inscripcion);
-        } else {
-            em.merge(inscripcion);
+        EntityManager em = emf.createEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            Inscripcion ins = em.find(Inscripcion.class, inscripcion.getIdInscripcion());
+            if (ins != null) {
+                em.remove(ins);
+            }
+
+            em.getTransaction().commit();
+        } catch (Exception ex) {
+            em.getTransaction().rollback();
+            throw ex;
+        } finally {
+            em.close();
         }
-    }*/
+    }
 }

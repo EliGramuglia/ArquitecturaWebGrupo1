@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManagerFactory;
 import org.example.entity.Carrera;
 import org.example.entity.Estudiante;
 import org.example.entity.Inscripcion;
+import org.example.entity.InscripcionId;
 import org.example.factory.JPAUtil;
 import org.example.repository.CarreraRepository;
 import org.example.repository.EstudianteRepository;
@@ -23,7 +24,7 @@ public class App {
         CarreraRepository carreraRepository = CarreraRepositoryImpl.getInstance(emf);
         InscripcionRepository inscripcionRepository = InscripcionRepositoryImpl.getInstance(emf);
 
-        // A) Dar de alta un estudiante
+
 /*        Estudiante e1 = new Estudiante();
         e1.setNombre("Roberto");
         e1.setApellido("Lopez");
@@ -44,7 +45,7 @@ public class App {
 
         Estudiante e3 = new Estudiante();
         e3.setNombre("Martita");
-        e3.setApellido("Lopez");
+        e3.setApellido("Sanchez");
         e3.setFechaNacimiento(LocalDate.of(2000, 5, 21));
         e3.setGenero("Femenino");
         e3.setDni(336987);
@@ -55,7 +56,7 @@ public class App {
         e4.setNombre("Olga");
         e4.setApellido("Garcia");
         e4.setFechaNacimiento(LocalDate.of(2000, 5, 21));
-        e4.setGenero("Masculino");
+        e4.setGenero("Femenino");
         e4.setDni(102255);
         e4.setCiudadResidencia("Tandil");
         estudianteRepository.create(e4);
@@ -71,17 +72,19 @@ public class App {
         c2.setDuracion(5);
         carreraRepository.create(c2);
 
-        //inscripcionRepository.create("Roberto","TUDAI");
-        //inscripcionRepository.create("Martita","INGENIERIA EN SISTEMAS");
-        //inscripcionRepository.create("Olga","TUDAI");
+        inscripcionRepository.create(336987,"INGENIERIA EN SISTEMAS");
+        inscripcionRepository.create(255556,"TUDAI");
+        inscripcionRepository.create(102255,"TUDAI");
 */
-        //inscripcionRepository.findById(param, param);
+
         /* --------------------------- CONSIGNAS --------------------------- */
         // A) Dar de alta un estudiante
         // estudianteRepository.create(e1);
 
         // B) Matricular un estudiante en una carrera
-        // inscripcionRepository.create("Pepe","TUDAI");
+        // Estudiante e55 = estudianteRepository.findByLU(1);
+        // Carrera c55 = carreraRepository.findById(1);
+        // inscripcionRepository.create(e55,c55);
 
         // C) Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple:
         // por DNI de forma ascendente (menor a mayor)
@@ -95,7 +98,21 @@ public class App {
         // estudianteRepository.findAllByGenero("Femenino").forEach(System.out::println);
 
         // F) Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos.
-        carreraRepository.finCarreraOrderByCantInscriptos().forEach(System.out::println);
+        // carreraRepository.findCarreraOrderByCantInscriptos().forEach(System.out::println);
+
+        // G) Recuperar los estudiantes de una determinada carrera, filtrando por ciudad de residencia.
+        // estudianteRepository.findAllEstudianteByCarreraAndCiudad("TUDAI", "Tandil").forEach(System.out::println);
+
+
+
+        /* --------------------------- PRUEBAS DEL CRUD --------------------------- */
+        // estudianteRepository.delete(2);
+        // System.out.println(carreraRepository.findById(1));
+        // carreraRepository.delete(2);
+        // System.out.println(inscripcionRepository.findById(1, 4)); // CONSULTAR SI TENGO QUE TRAERME AL ESTUDAINTE Y SU CARRERA
+        /*Inscripcion inscripcionABorrar = inscripcionRepository.findById(1,1);
+        inscripcionRepository.delete(inscripcionABorrar);*/
+
     }
 }
 

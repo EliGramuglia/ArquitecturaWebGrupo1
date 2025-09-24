@@ -34,7 +34,7 @@ public class Estudiante {
     @Column (name = "ciudad_residencia")
     private String ciudadResidencia;
 
-    @OneToMany (mappedBy = "estudiante")
+    @OneToMany (mappedBy = "estudiante", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Inscripcion> inscripciones;
 
     @Override
