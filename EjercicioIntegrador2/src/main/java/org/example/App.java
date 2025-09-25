@@ -2,6 +2,7 @@ package org.example;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import org.example.dto.ReporteDTO;
 import org.example.entity.Carrera;
 import org.example.entity.Estudiante;
 import org.example.entity.Inscripcion;
@@ -103,7 +104,16 @@ public class App {
         // G) Recuperar los estudiantes de una determinada carrera, filtrando por ciudad de residencia.
         // estudianteRepository.findAllEstudianteByCarreraAndCiudad("TUDAI", "Tandil").forEach(System.out::println);
 
-
+        // 3) Generar reporte de carreras
+        /*System.out.println("REPORTE DE CARRERAS");
+        for (ReporteDTO r : reporte) {
+            System.out.println(
+                    "Carrera: " + r.getCarrera() +
+                            " | Año: " + r.getAnio() +
+                            " | Inscriptos: " + r.getInscriptos() +
+                            " | Egresados: " + r.getEgresados()
+            );
+        }*/
 
         /* --------------------------- PRUEBAS DEL CRUD --------------------------- */
         // estudianteRepository.delete(2);
