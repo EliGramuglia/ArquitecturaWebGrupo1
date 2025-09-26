@@ -95,8 +95,6 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
         return inscripcion;
     }
 
-
-
     @Override
     public Inscripcion findById(int idCarrera, int luEstudiante) {
         EntityManager em = emf.createEntityManager();

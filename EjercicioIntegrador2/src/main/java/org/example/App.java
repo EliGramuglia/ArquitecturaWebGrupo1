@@ -26,7 +26,7 @@ public class App {
         InscripcionRepository inscripcionRepository = InscripcionRepositoryImpl.getInstance(emf);
 
 
-/*        Estudiante e1 = new Estudiante();
+        /*Estudiante e1 = new Estudiante();
         e1.setNombre("Roberto");
         e1.setApellido("Lopez");
         e1.setFechaNacimiento(LocalDate.of(2000, 5, 21));
@@ -73,19 +73,29 @@ public class App {
         c2.setDuracion(5);
         carreraRepository.create(c2);
 
-        inscripcionRepository.create(336987,"INGENIERIA EN SISTEMAS");
-        inscripcionRepository.create(255556,"TUDAI");
-        inscripcionRepository.create(102255,"TUDAI");
-*/
+        //inscripcionRepository.create(336987,"INGENIERIA EN SISTEMAS");
+
+        Estudiante e56 = estudianteRepository.findByLU(2);
+        Carrera c56 = carreraRepository.findById(1);
+        inscripcionRepository.create(e56,c56);
+
+        Estudiante e57 = estudianteRepository.findByLU(3);
+        Carrera c57 = carreraRepository.findById(2);
+        inscripcionRepository.create(e57,c57);
+
+        Estudiante e58 = estudianteRepository.findByLU(4);
+        Carrera c58 = carreraRepository.findById(2);
+        inscripcionRepository.create(e58,c58);*/
+
 
         /* --------------------------- CONSIGNAS --------------------------- */
         // A) Dar de alta un estudiante
-        // estudianteRepository.create(e1);
+         //estudianteRepository.create(e1);
 
         // B) Matricular un estudiante en una carrera
-        // Estudiante e55 = estudianteRepository.findByLU(1);
-        // Carrera c55 = carreraRepository.findById(1);
-        // inscripcionRepository.create(e55,c55);
+        /* Estudiante e55 = estudianteRepository.findByLU(1);
+         Carrera c55 = carreraRepository.findById(1);
+         inscripcionRepository.create(e55,c55);*/
 
         // C) Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple:
         // por DNI de forma ascendente (menor a mayor)
@@ -105,15 +115,7 @@ public class App {
         // estudianteRepository.findAllEstudianteByCarreraAndCiudad("TUDAI", "Tandil").forEach(System.out::println);
 
         // 3) Generar reporte de carreras
-        /*System.out.println("REPORTE DE CARRERAS");
-        for (ReporteDTO r : reporte) {
-            System.out.println(
-                    "Carrera: " + r.getCarrera() +
-                            " | Año: " + r.getAnio() +
-                            " | Inscriptos: " + r.getInscriptos() +
-                            " | Egresados: " + r.getEgresados()
-            );
-        }*/
+        carreraRepository.generarReporte().forEach(System.out::println);
 
         /* --------------------------- PRUEBAS DEL CRUD --------------------------- */
         // estudianteRepository.delete(2);

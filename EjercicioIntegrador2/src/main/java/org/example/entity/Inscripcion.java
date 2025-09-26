@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
@@ -34,4 +35,15 @@ public class Inscripcion {
 
     @Column
     private LocalDate fechaGraduacion; //si null no esta graduado
+
+    public Integer getAntiguedad() {
+        return (int) ChronoUnit.MONTHS.between(fechaInscripcion, LocalDate.now());
+    }
+
+    public void setFechaGraduacion(LocalDate fechaGraduacion) {
+        if(fechaGraduacion.isAfter(fechaInscripcion)) {
+            this.fechaGraduacion = fechaGraduacion;
+        }
+    }
+
 }

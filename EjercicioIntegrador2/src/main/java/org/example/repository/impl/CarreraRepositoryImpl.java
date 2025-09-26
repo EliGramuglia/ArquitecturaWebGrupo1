@@ -2,11 +2,9 @@ package org.example.repository.impl;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.NoResultException;
 import org.example.dto.CarreraDTO;
 import org.example.dto.ReporteDTO;
 import org.example.entity.Carrera;
-import org.example.entity.Estudiante;
 import org.example.repository.CarreraRepository;
 
 import java.util.ArrayList;
@@ -99,6 +97,7 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         }
     }
 
+    // Consultar si devolvemos cantidades o info de los estudiantes
     @Override
     public List<ReporteDTO> generarReporte() {
         EntityManager em = emf.createEntityManager();

@@ -3,7 +3,6 @@ package org.example.repository;
 import org.example.entity.Carrera;
 import org.example.entity.Estudiante;
 import org.example.entity.Inscripcion;
-import org.example.entity.InscripcionId;
 
 public interface InscripcionRepository {
     //Inscripcion create(Integer dniEstudiante, String nombreCarrera);
