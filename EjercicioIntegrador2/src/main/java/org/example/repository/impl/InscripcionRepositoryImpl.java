@@ -31,29 +31,17 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
 
 
     /* --------------------------- CRUD --------------------------- */
-   /* @Override
-    public Inscripcion create(Integer dniEstudiante, String nombreCarrera) {
+    @Override
+    public Inscripcion create(Integer idEstudiante, Integer idCarrera) {
         EntityManager em = emf.createEntityManager();
-        Inscripcion inscripcion = null;
         try {
             em.getTransaction().begin();
+            Estudiante e = em.find(Estudiante.class, idEstudiante);
+            Carrera c = em.find(Carrera.class, idCarrera);
 
-            Estudiante e = em.createQuery("SELECT e FROM Estudiante e WHERE e.dni=:dni", Estudiante.class)
-                    .setParameter("dni", dniEstudiante)
-                    .getSingleResult();
+            Inscripcion inscripcion = new Inscripcion(e, c);
 
-            Carrera c = em.createQuery("SELECT c FROM Carrera c WHERE c.nombre=:nom", Carrera.class)
-                    .setParameter("nom", nombreCarrera)
-                    .getSingleResult();
-
-            inscripcion = new Inscripcion();
-            inscripcion.setEstudiante(e);
-            inscripcion.setCarrera(c);
-            inscripcion.setFechaInscripcion(LocalDate.now());
-            inscripcion.setIdInscripcion(new InscripcionId(c.getIdCarrera(), e.getLU()));
-
-            em.persist(inscripcion); // persist directamente, merge no es necesario aquí
-
+            em.persist(inscripcion);
             em.getTransaction().commit();
             return inscripcion;
         } catch (Exception ex) {
@@ -64,35 +52,6 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
         } finally {
             em.close();
         }
-    }*/
-
-    @Override
-    public Inscripcion create(Estudiante e, Carrera c) {
-        EntityManager em = emf.createEntityManager();
-        Inscripcion inscripcion = new Inscripcion();
-        InscripcionId insId = new InscripcionId();
-        inscripcion.setCarrera(c);
-        inscripcion.setEstudiante(e);
-        inscripcion.setFechaInscripcion(LocalDate.now());
-        insId.setLU(e.getLU());
-        insId.setIdCarrera(c.getIdCarrera());
-
-        inscripcion.setIdInscripcion(insId);
-        try {
-            em.getTransaction().begin();
-            if(c.getIdCarrera() == null && e.getLU() == null){
-                em.persist(inscripcion);
-            } else {
-                em.merge(inscripcion);
-            }
-            em.getTransaction().commit();
-        } catch (Exception ex) {
-            em.getTransaction().rollback();
-            throw ex;
-        } finally {
-            em.close();
-        }
-        return inscripcion;
     }
 
     @Override

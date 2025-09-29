@@ -97,56 +97,41 @@ public class CarreraRepositoryImpl implements CarreraRepository {
         }
     }
 
-    // Consultar si devolvemos cantidades o info de los estudiantes
     @Override
     public List<ReporteDTO> generarReporte() {
         EntityManager em = emf.createEntityManager();
         try {
-            // Inscriptos por año
-            // Para cada carrera y año de inscripción, cuento cuántos registros hay. El último parámetro se pone en 0L porque todavía no tengo egresados
-            List<ReporteDTO> inscriptos = em.createQuery(
-                    "SELECT new org.example.dto.ReporteDTO(c.nombre, YEAR(i.fechaInscripcion), COUNT(i), 0L) " +
-                            "FROM Inscripcion i JOIN i.carrera c " +
-                            "GROUP BY c.nombre, YEAR(i.fechaInscripcion) " +
-                            "ORDER BY c.nombre ASC, YEAR(i.fechaInscripcion) ASC",
-                    ReporteDTO.class
-            ).getResultList();
+            String sql = "SELECT c.nombre AS carrera, " +
+                    "       YEAR(i.fecha_inscripcion) AS anio, " +
+                    "       COUNT(*) AS inscriptos, " +
+                    "       0 AS egresados " +
+                    "FROM Inscripcion i " +
+                    "JOIN Carrera c ON i.id_carrera = c.id_carrera " +
+                    "GROUP BY c.nombre, YEAR(i.fecha_inscripcion) " +
+                    "UNION " +
+                    "SELECT c.nombre AS carrera, " +
+                    "       YEAR(i.fecha_graduacion) AS anio, " +
+                    "       0 AS inscriptos, " +
+                    "       COUNT(*) AS egresados " +
+                    "FROM Inscripcion i " +
+                    "JOIN Carrera c ON i.id_carrera = c.id_carrera " +
+                    "WHERE i.fecha_graduacion IS NOT NULL " +
+                    "GROUP BY c.nombre, YEAR(i.fecha_graduacion) " +
+                    "ORDER BY carrera ASC, anio ASC";
 
-            // Egresados por año
-            /* Similar a la query anterior, pero ahora cuento las inscripciones con fecha de graduación no nula. El tercer parámetro se pone en 0L porque aún
-            no tengo inscriptos en esta query */
-            List<ReporteDTO> egresados = em.createQuery(
-                    "SELECT new org.example.dto.ReporteDTO(c.nombre, YEAR(i.fechaGraduacion), 0L, COUNT(i)) " +
-                            "FROM Inscripcion i JOIN i.carrera c " +
-                            "WHERE i.fechaGraduacion IS NOT NULL " +
-                            "GROUP BY c.nombre, YEAR(i.fechaGraduacion) " +
-                            "ORDER BY c.nombre ASC, YEAR(i.fechaGraduacion) ASC",
-                    ReporteDTO.class
-            ).getResultList();
+            List<Object[]> results = em.createNativeQuery(sql).getResultList();
 
-            // Combino resultados en un mapa donde la clave carrera_año
-            Map<String, ReporteDTO> reporteMap = new LinkedHashMap<>();
-
-            // Recorro la lista de inscriptos y los agrego al mapa. La clave permite identificar de manera única cada combinación carrera-año
-            for (ReporteDTO r : inscriptos) {
-                String key = r.getCarrera() + "_" + r.getAnio();
-                reporteMap.put(key, r);
+            // Mapeo manual al DTO
+            List<ReporteDTO> reporte = new ArrayList<>();
+            for (Object[] row : results) {
+                String carrera = (String) row[0];
+                Integer anio = ((Number) row[1]).intValue();
+                Long inscriptos = ((Number) row[2]).longValue();
+                Long egresados = ((Number) row[3]).longValue();
+                reporte.add(new ReporteDTO(carrera, anio, inscriptos, egresados));
             }
 
-            // Recorro la lista de egresados y los combino con los existentes en el mapa
-            for (ReporteDTO r : egresados) {
-                String key = r.getCarrera() + "_" + r.getAnio();
-                if (reporteMap.containsKey(key)) {
-                    // Si ya existe un registro para esa carrera y año, actualizo solo la cantidad de egresados
-                    ReporteDTO existente = reporteMap.get(key);
-                    existente.setEgresados(r.getEgresados()); // Modifico el objeto existente en el mapa directamente
-                } else {
-                    // Si no existe, agrego el registro de egresados como nuevo
-                    reporteMap.put(key, r);
-                }
-            }
-            // Convierto el mapa a lista para devolver la colección final de ReporteDTO. Cada elemento contiene carrera, año, cantidad de inscriptos y egresados
-            return new ArrayList<>(reporteMap.values());
+            return reporte;
         } finally {
             em.close();
         }

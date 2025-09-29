@@ -27,7 +27,7 @@ Este proyecto fue realizado en el marco de la asignatura "Arquitectura Web" en l
 ![Diagrama de Clases](./diagrams/diagrama_clases.png)
 
 ### Diagrama Entidad-Relación (DER)
-![Diagrama DER](./diagrams/diagrama_der.png)
+![Diagrama DER](./diagrams/registro_estudiantes.png)
 
 
 ## 🏗️ Patrones de diseño aplicados

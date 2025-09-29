@@ -5,9 +5,8 @@ import org.example.entity.Estudiante;
 import org.example.entity.Inscripcion;
 
 public interface InscripcionRepository {
-    //Inscripcion create(Integer dniEstudiante, String nombreCarrera);
+    Inscripcion create(Integer idEstudiante, Integer idCarrera);
     Inscripcion findById(int idCarrera, int luEstudiante);
     void delete(Inscripcion inscripcionId);
-    Inscripcion create(Estudiante e, Carrera c);
 
 }
