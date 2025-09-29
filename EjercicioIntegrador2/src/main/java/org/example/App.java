@@ -24,16 +24,16 @@ public class App {
         EstudianteRepository estudianteRepository = EstudianteRepositoryImpl.getInstance(emf);
         CarreraRepository carreraRepository = CarreraRepositoryImpl.getInstance(emf);
         InscripcionRepository inscripcionRepository = InscripcionRepositoryImpl.getInstance(emf);
+/*
 
-
-/*        Estudiante e1 = new Estudiante();
+        Estudiante e1 = new Estudiante();
         e1.setNombre("Roberto");
         e1.setApellido("Lopez");
         e1.setFechaNacimiento(LocalDate.of(2000, 5, 21));
         e1.setGenero("Masculino");
         e1.setDni(121345);
         e1.setCiudadResidencia("Tandil");
-
+        estudianteRepository.create(e1);
 
         Estudiante e2 = new Estudiante();
         e2.setNombre("Pepe");
@@ -78,13 +78,13 @@ public class App {
         /* --------------------------- CONSIGNAS --------------------------- */
         // A) Dar de alta un estudiante
         // estudianteRepository.create(e1);
-
+/*
         // B) Matricular un estudiante en una carrera
-        // inscripcionRepository.create(1,1);
-        // inscripcionRepository.create(2,2);
-        // inscripcionRepository.create(3,1);
-        // inscripcionRepository.create(4,1);
-
+         inscripcionRepository.create(1,1);
+         inscripcionRepository.create(2,2);
+         inscripcionRepository.create(3,1);
+         inscripcionRepository.create(4,1);
+*/
 
         // C) Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple:
         // por DNI de forma ascendente (menor a mayor)
@@ -104,15 +104,15 @@ public class App {
         // estudianteRepository.findAllEstudianteByCarreraAndCiudad("TUDAI", "Tandil").forEach(System.out::println);
 
         // 3) Generar reporte de carreras
-         carreraRepository.generarReporte().forEach(System.out::println);
+        carreraRepository.generarReporte().forEach(System.out::println);
 
         /* --------------------------- PRUEBAS DEL CRUD --------------------------- */
         // estudianteRepository.delete(2);
         // System.out.println(carreraRepository.findById(1));
         // carreraRepository.delete(2);
         // System.out.println(inscripcionRepository.findById(1, 4));
-        /*Inscripcion inscripcionABorrar = inscripcionRepository.findById(1,1);
-        inscripcionRepository.delete(inscripcionABorrar);*/
+       // Inscripcion inscripcionABorrar = inscripcionRepository.findById(1,1);
+       // inscripcionRepository.delete(inscripcionABorrar);*/
 
 
     }
