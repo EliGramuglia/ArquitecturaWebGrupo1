@@ -33,7 +33,7 @@ public class Inscripcion {
     @Column (name = "fecha_inscripcion")
     private LocalDate fechaInscripcion;
 
-    @Column
+    @Column (name = "fecha_graduacion")
     private LocalDate fechaGraduacion; //si null no esta graduado
 
     public Integer getAntiguedad() {
