@@ -104,7 +104,7 @@ public class App {
         // estudianteRepository.findAllEstudianteByCarreraAndCiudad("TUDAI", "Tandil").forEach(System.out::println);
 
         // 3) Generar reporte de carreras
-        // carreraRepository.generarReporte().forEach(System.out::println);
+         carreraRepository.generarReporte().forEach(System.out::println);
 
         /* --------------------------- PRUEBAS DEL CRUD --------------------------- */
         // estudianteRepository.delete(2);
