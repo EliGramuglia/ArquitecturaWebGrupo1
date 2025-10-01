@@ -104,13 +104,14 @@ public class CarreraRepositoryImpl implements CarreraRepository {
             String sql =
                     "SELECT c.nombre AS carrera, " +
                             "       anios.anio, " +
-                            "       SUM(CASE WHEN anios.tipo = 'I' THEN 1 ELSE 0 END) AS inscriptos, " +
+                            "       SUM(CASE WHEN anios.tipo = 'I' THEN 1 ELSE 0 END) AS inscriptos , " +
                             "       SUM(CASE WHEN anios.tipo = 'E' THEN 1 ELSE 0 END) AS egresados " +
                             "FROM Carrera c " +
                             "JOIN Inscripcion i ON i.id_carrera = c.id_carrera " +
                             "JOIN (" +
                             "       SELECT LU, id_carrera, YEAR(fecha_inscripcion) AS anio, 'I' AS tipo " +
                             "       FROM Inscripcion WHERE fecha_inscripcion IS NOT NULL " +
+                            "       AND fecha_graduacion IS NULL " +
                             "       UNION ALL " +
                             "       SELECT LU, id_carrera, YEAR(fecha_graduacion) AS anio, 'E' AS tipo " +
                             "       FROM Inscripcion WHERE fecha_graduacion IS NOT NULL " +
