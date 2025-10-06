@@ -27,4 +27,8 @@ public class Carrera {
     private List<Inscripcion> alumnosInscriptos;
 
 
+    public Carrera(String nombre, Integer duracion) {
+        this.nombre = nombre;
+        this.duracion = duracion;
+    }
 }

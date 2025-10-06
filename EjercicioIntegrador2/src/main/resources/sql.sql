@@ -1,1 +1,1 @@
-SELECT * FROM Inscripcion
+SELECT * from Inscripcion

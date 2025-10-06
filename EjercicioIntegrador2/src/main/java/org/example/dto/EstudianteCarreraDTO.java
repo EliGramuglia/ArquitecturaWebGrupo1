@@ -14,7 +14,7 @@ public class EstudianteCarreraDTO {
 
     @Override
     public String toString() {
-        return "Carrera " + carrera + " Ciudad de residencia: "+ ciudadResidencia +
+        return "Carrera " + carrera + ", Ciudad de residencia: "+ ciudadResidencia +
                "\n" + LU + " Alumno: " + nombre + " " + apellido + "\n";
     }
 }

@@ -7,7 +7,6 @@ import org.example.entity.Estudiante;
 import org.example.entity.Inscripcion;
 import org.example.entity.InscripcionId;
 import org.example.repository.InscripcionRepository;
-
 import java.time.LocalDate;
 
 public class InscripcionRepositoryImpl implements InscripcionRepository {
@@ -32,14 +31,18 @@ public class InscripcionRepositoryImpl implements InscripcionRepository {
 
     /* --------------------------- CRUD --------------------------- */
     @Override
-    public Inscripcion create(Integer idEstudiante, Integer idCarrera) {
+    public Inscripcion create(Integer idEstudiante, Integer idCarrera, LocalDate fechaInscripcion, LocalDate fechaGraduacion) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
             Estudiante e = em.find(Estudiante.class, idEstudiante);
             Carrera c = em.find(Carrera.class, idCarrera);
 
+            if (fechaInscripcion == null) fechaInscripcion = LocalDate.now();
+
             Inscripcion inscripcion = new Inscripcion(e, c);
+            inscripcion.setFechaInscripcion(fechaInscripcion);
+            inscripcion.setFechaGraduacion(fechaGraduacion);
 
             em.persist(inscripcion);
             em.getTransaction().commit();

@@ -18,6 +18,6 @@ public class EstudianteDTO {
 
     @Override
     public String toString() {
-        return LU + " " + nombre + " " + apellido + ", Género: " + genero +" Dni: " + dni;
+        return "Dni: " + dni + " " + nombre + " " + apellido + ", Género: " + genero + " LU: " + LU;
     }
 }

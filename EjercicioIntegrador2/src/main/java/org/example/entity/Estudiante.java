@@ -2,7 +2,6 @@ package org.example.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -13,8 +12,10 @@ import java.util.List;
 @Entity
 public class Estudiante {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer LU; // libreta universitaria
+    private Integer dni; // Id -> en los csv el dni es el ID
+
+    @Column (unique = true, nullable = false)
+    private Integer LU;
 
     @Column
     private String nombre;
@@ -28,9 +29,6 @@ public class Estudiante {
     @Column
     private String genero;
 
-    @Column
-    private Integer dni;
-
     @Column (name = "ciudad_residencia")
     private String ciudadResidencia;
 
@@ -39,6 +37,17 @@ public class Estudiante {
 
     @Override
     public String toString() {
-        return LU + " " + nombre + " " + apellido + ", Género: " + genero +" Dni: " + dni;
+        return dni + " " + nombre + " " + apellido + ", Género: " + genero +" LU: " + LU;
     }
+
+    public Estudiante(Integer dni, String nombre, String apellido, LocalDate fechaNacimiento, String genero, String ciudadResidencia, Integer LU) {
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.genero = genero;
+        this.dni = dni;
+        this.ciudadResidencia = ciudadResidencia;
+        this.LU = LU;
+    }
+
 }

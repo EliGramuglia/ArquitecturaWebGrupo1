@@ -15,7 +15,7 @@ import java.util.Objects;
 @Setter
 @Embeddable
 public class InscripcionId implements Serializable {
-    private Integer LU;
+    private Integer dni;
     private Integer idCarrera;
 
     @Override
@@ -24,12 +24,12 @@ public class InscripcionId implements Serializable {
         if (!(o instanceof InscripcionId)) return false;
         InscripcionId that = (InscripcionId) o;
         return Objects.equals(idCarrera, that.idCarrera) &&
-                Objects.equals(LU, that.LU);
+                Objects.equals(dni, that.dni);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(idCarrera, LU);
+        return Objects.hash(idCarrera, dni);
     }
 
 }

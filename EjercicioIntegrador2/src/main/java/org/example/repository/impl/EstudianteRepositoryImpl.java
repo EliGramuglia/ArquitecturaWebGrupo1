@@ -47,24 +47,24 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
             return estudiante;
     }
 
-    // Recuperar un estudiante, en base a su número de libreta universitaria.
+    // Recuperar un estudiante, en base a su dni (PK)
     @Override
-    public Estudiante findByLU(Integer LU) {
+    public Estudiante findByDni(Integer dni) {
         EntityManager em = emf.createEntityManager();
         try{
-            return em.find(Estudiante.class, LU);
+            return em.find(Estudiante.class, dni);
         }  finally {
             em.close();
         }
     }
 
     @Override
-    public void delete(Integer LU) {
+    public void delete(Integer dni) {
         EntityManager em = emf.createEntityManager();
         try {
             em.getTransaction().begin();
 
-            Estudiante estudiante = em.find(Estudiante.class, LU);
+            Estudiante estudiante = em.find(Estudiante.class, dni);
             if (estudiante != null) {
                 em.remove(estudiante);
             }
@@ -94,9 +94,25 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
         }
     }
 
+    // Recuperar un estudiante, en base a su número de libreta universitaria.
+    @Override
+    public Estudiante findByLU(Integer LU) {
+        EntityManager em = emf.createEntityManager();
+        try{
+            return em.createQuery(
+                    "SELECT e FROM Estudiante e WHERE e.LU = :lu", Estudiante.class)
+                    .setParameter("lu", LU)
+                    .getSingleResult();
+        } catch (NoResultException ex) {
+            return null;
+        } finally {
+            em.close();
+        }
+    }
+
     // Recuperar todos los estudiantes, en base a su género.
     @Override
-    public List<EstudianteDTO> findAllByGenero(String gene) {
+    public List<EstudianteDTO> findAllByGenero(String genero) {
         EntityManager em = emf.createEntityManager();
         try {
             return em.createQuery(
@@ -104,7 +120,7 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
                                     "FROM Estudiante e WHERE e.genero = :gene",
                             EstudianteDTO.class
                     )
-                    .setParameter("gene", gene)
+                    .setParameter("gene", genero)
                     .getResultList();
         } finally {
             em.close();
@@ -116,12 +132,12 @@ public class EstudianteRepositoryImpl implements EstudianteRepository {
     public List<EstudianteCarreraDTO> findAllEstudianteByCarreraAndCiudad(String nombreCarrera, String ciudad) {
         EntityManager em = emf.createEntityManager();
         try{
-            return em.createQuery("SELECT new org.example.dto.EstudianteCarreraDTO(e.LU, e.nombre, e.apellido, e.ciudadResidencia, c.nombre) "+
+            return em.createQuery(
+                    "SELECT new org.example.dto.EstudianteCarreraDTO(e.LU, e.nombre, e.apellido, e.ciudadResidencia, c.nombre) "+
                                     "FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c "+
-                                    "WHERE c.nombre = :carrera AND e.ciudadResidencia =:ciudad",
-                                    EstudianteCarreraDTO.class
-            )
-            .setParameter("carrera", nombreCarrera)
+                                    "WHERE c.nombre =:carrera AND e.ciudadResidencia =:ciudad",
+                                    EstudianteCarreraDTO.class)
+                    .setParameter("carrera", nombreCarrera)
                     .setParameter("ciudad", ciudad)
                     .getResultList();
         } finally {

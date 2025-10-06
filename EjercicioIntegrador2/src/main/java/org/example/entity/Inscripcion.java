@@ -21,9 +21,9 @@ public class Inscripcion {
     @JoinColumn (name = "id_carrera", nullable = false)
     private Carrera carrera;
 
-    @MapsId("LU")
+    @MapsId("dni")
     @ManyToOne (fetch=FetchType.LAZY)
-    @JoinColumn (name = "LU", nullable=false)
+    @JoinColumn (name = "dni", nullable=false)
     private Estudiante estudiante;
 
     @Column (name = "fecha_inscripcion")
@@ -34,7 +34,7 @@ public class Inscripcion {
 
 
     public void setFechaGraduacion(LocalDate fechaGraduacion) {
-        if(fechaGraduacion.isAfter(fechaInscripcion)) {
+        if(fechaGraduacion != null && fechaGraduacion.isAfter(fechaInscripcion)) {
             this.fechaGraduacion = fechaGraduacion;
         }
     }
@@ -42,8 +42,8 @@ public class Inscripcion {
     public Inscripcion(Estudiante e, Carrera c) {
         this.estudiante = e;
         this.carrera = c;
-        this.fechaInscripcion = LocalDate.now();
-        this.idInscripcion = new InscripcionId(e.getLU(), c.getIdCarrera());
+        this.idInscripcion = new InscripcionId(e.getDni(), c.getIdCarrera());
     }
+
 
 }

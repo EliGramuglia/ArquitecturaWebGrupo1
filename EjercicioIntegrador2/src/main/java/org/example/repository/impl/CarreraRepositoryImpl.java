@@ -6,11 +6,8 @@ import org.example.dto.CarreraDTO;
 import org.example.dto.ReporteDTO;
 import org.example.entity.Carrera;
 import org.example.repository.CarreraRepository;
-
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class CarreraRepositoryImpl implements CarreraRepository {
     private EntityManagerFactory emf;
