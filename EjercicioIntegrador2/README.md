@@ -24,7 +24,7 @@ Este proyecto fue realizado en el marco de la asignatura "Arquitectura Web" en l
 
 ## 📊 Diagramas
 ### Diagrama de Clases (UML)
-![Diagrama de Clases](./diagrams/diagrama_clases.png)
+![Diagrama de Clases](./diagrams/diagrama_uml.png)
 
 ### Diagrama Entidad-Relación (DER)
 ![Diagrama DER](./diagrams/registro_estudiantes.png)
