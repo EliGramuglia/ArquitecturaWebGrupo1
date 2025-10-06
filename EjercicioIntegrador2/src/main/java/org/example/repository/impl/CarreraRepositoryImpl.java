@@ -98,23 +98,23 @@ public class CarreraRepositoryImpl implements CarreraRepository {
     public List<ReporteDTO> generarReporte() {
         EntityManager em = emf.createEntityManager();
         try {
-            String sql = "SELECT c.nombre AS carrera, " +
-                    "       YEAR(i.fecha_inscripcion) AS anio, " +
-                    "       COUNT(*) AS inscriptos, " +
-                    "       0 AS egresados " +
-                    "FROM Inscripcion i " +
-                    "JOIN Carrera c ON i.id_carrera = c.id_carrera " +
-                    "GROUP BY c.nombre, YEAR(i.fecha_inscripcion) " +
-                    "UNION " +
+            String sql =
                     "SELECT c.nombre AS carrera, " +
-                    "       YEAR(i.fecha_graduacion) AS anio, " +
-                    "       0 AS inscriptos, " +
-                    "       COUNT(*) AS egresados " +
-                    "FROM Inscripcion i " +
-                    "JOIN Carrera c ON i.id_carrera = c.id_carrera " +
-                    "WHERE i.fecha_graduacion IS NOT NULL " +
-                    "GROUP BY c.nombre, YEAR(i.fecha_graduacion) " +
-                    "ORDER BY carrera ASC, anio ASC";
+                            "       anios.anio, " +
+                            "       SUM(CASE WHEN anios.tipo = 'I' THEN 1 ELSE 0 END) AS inscriptos , " +
+                            "       SUM(CASE WHEN anios.tipo = 'E' THEN 1 ELSE 0 END) AS egresados " +
+                            "FROM Carrera c " +
+                            "JOIN Inscripcion i ON i.id_carrera = c.id_carrera " +
+                            "JOIN (" +
+                            "       SELECT dni, id_carrera, YEAR(fecha_inscripcion) AS anio, 'I' AS tipo " +
+                            "       FROM Inscripcion WHERE fecha_inscripcion IS NOT NULL " +
+                            "       AND fecha_graduacion IS NULL " +
+                            "       UNION ALL " +
+                            "       SELECT dni, id_carrera, YEAR(fecha_graduacion) AS anio, 'E' AS tipo " +
+                            "       FROM Inscripcion WHERE fecha_graduacion IS NOT NULL " +
+                            "     ) anios ON anios.dni = i.dni AND anios.id_carrera = i.id_carrera " +
+                            "GROUP BY c.nombre, anios.anio " +
+                            "ORDER BY c.nombre ASC, anios.anio ASC";
 
             List<Object[]> results = em.createNativeQuery(sql).getResultList();
 

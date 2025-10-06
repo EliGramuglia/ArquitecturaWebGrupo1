@@ -30,9 +30,9 @@ public class App {
         InscripcionRepository inscripcionRepository = InscripcionRepositoryImpl.getInstance(emf);
 
         /* --------------------------- CARGA DE ARCHIVOS CSV -------------------------- */
-        dbUtils.addCarrera(carreraRepository);
-        dbUtils.addEstudiante(estudianteRepository);
-        dbUtils.addInscripcion(inscripcionRepository);
+        //dbUtils.addCarrera(carreraRepository);
+        //dbUtils.addEstudiante(estudianteRepository);
+        //dbUtils.addInscripcion(inscripcionRepository);
 
         /* --------------------------- CONSIGNAS --------------------------- */
         // A) Dar de alta un estudiante
@@ -68,7 +68,7 @@ public class App {
         // estudianteRepository.findAllEstudianteByCarreraAndCiudad("TUDAI", "Rauch").forEach(System.out::println);
 
         // 3) Generar reporte de carreras
-        // carreraRepository.generarReporte().forEach(System.out::println);
+         carreraRepository.generarReporte().forEach(System.out::println);
 
 
 
