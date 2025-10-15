@@ -1,10 +1,7 @@
 spring:
+  application:
+    name: EjercicioIntegrador3
   datasource:
-    url: jdbc:mysql://localhost:3306/EjercicioIntegrador3
+    url: jdbc:mysql://localhost:3306/Entregable3?createDatabaseIfNotExist=true
     username: root
     password: ""
-    driver-class-name: com.mysql.cj.jdbc.Driver
-  jpa:
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
