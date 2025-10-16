@@ -31,6 +31,12 @@ public class EstudianteController {
         return ResponseEntity.ok(estudiantes);
     }
 
+    // GET ID: obtener un estudiante
+    @GetMapping("/{id}")
+    public ResponseEntity<EstudianteResponseDTO> get(@PathVariable Integer dni){ //PathVariable indica que el valor del parámetro {id} viene en la URL
+        EstudianteResponseDTO estudiante = service.findById(dni);
+        return ResponseEntity.ok(estudiante);
+    }
 
 
 

@@ -49,4 +49,13 @@ public class EstudianteService {
                 .map(mapper::convertToDTO) // map() transforma cada elemento de la lista a un dto
                 .toList(); // convierte el stream de nuevo en lista para devolverlo al front
     }
+
+    // Obtener 1 estudiante, usando su id
+    public EstudianteResponseDTO findById(Integer dni) {
+        Estudiante e = estudianteRepository.findById(dni) // devuelve un Optional<Estudiante>
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró un estudiante con el DNI: " + dni));
+    // tengo que chequear si encontró el estudiante. Sino, devuelve una excepción
+
+        return mapper.convertToDTO(e); // convierte la Entidad a un DTO para devolverla al front
+    }
 }
