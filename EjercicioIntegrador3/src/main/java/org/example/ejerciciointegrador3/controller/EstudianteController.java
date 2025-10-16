@@ -17,6 +17,7 @@ public class EstudianteController {
     private final EstudianteService service;
 
 
+    /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
     // POST: crea un nuevo estudiante
     @PostMapping("")
     public ResponseEntity<EstudianteResponseDTO> create(@RequestBody EstudianteRequestDTO estudiante){
@@ -45,6 +46,19 @@ public class EstudianteController {
         return ResponseEntity.ok(estudianteActualizado);
     }
 
+    // DELETE: borrar un estudiante
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Integer dni) {
+        service.delete(dni);
+        return ResponseEntity.noContent().build(); // devuelve 204 (operación exitosa, pero no hay contenido que devovler)
+    }
 
 
+    /*-------------------------- ENDPOINTS ESPECÍFICOS --------------------------*/
+    // Recuperar un estudiante en base a su LU
+    @GetMapping("/lu/{lu}")
+    public ResponseEntity<EstudianteResponseDTO> getByLU(@PathVariable Integer lu){
+        EstudianteResponseDTO estudiante = service.findByLU(lu);
+        return ResponseEntity.ok(estudiante);
+    }
 }

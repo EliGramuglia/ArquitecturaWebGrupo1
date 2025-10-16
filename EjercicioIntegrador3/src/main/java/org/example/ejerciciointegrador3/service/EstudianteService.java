@@ -90,6 +90,28 @@ public class EstudianteService {
         //Devuelvo un DTO, nunca la entidad
         return mapper.convertToDTO(actualizado);
     }
+
+
+    // Borra un estudiante
+    public void delete(Integer dni) {
+        Estudiante e = estudianteRepository.findById(dni)
+                .orElseThrow(() -> new IllegalArgumentException("No se encontró un estudiante con el dni: "+ dni));
+        estudianteRepository.delete(e);
+    }
+
+
+    /*-------------------------- MÉTODOS ESPECÍFICOS --------------------------*/
+    // Recuperar un estudiante en base a su LU
+    public EstudianteResponseDTO findByLU(Integer lu) {
+        if (lu == null) {
+            throw new IllegalArgumentException("El LU no puede ser null");
+        }
+
+        Estudiante e = estudianteRepository.findByLU(lu)
+                .orElseThrow(() -> new IllegalArgumentException("No existe un estudiante con lu: "+ lu));
+
+        return mapper.convertToDTO(e);
+    }
 }
 
 
