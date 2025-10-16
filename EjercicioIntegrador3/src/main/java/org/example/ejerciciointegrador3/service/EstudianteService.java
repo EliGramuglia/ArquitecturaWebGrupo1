@@ -1,18 +1,20 @@
 package org.example.ejerciciointegrador3.service;
 
+import lombok.AllArgsConstructor;
 import org.example.ejerciciointegrador3.dto.request.EstudianteRequestDTO;
 import org.example.ejerciciointegrador3.dto.response.EstudianteResponseDTO;
 import org.example.ejerciciointegrador3.entity.Estudiante;
+import org.example.ejerciciointegrador3.mapper.EstudianteMapper;
 import org.example.ejerciciointegrador3.repository.EstudianteRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
+@AllArgsConstructor
 @Service
 public class EstudianteService {
     private final EstudianteRepository estudianteRepository;
-
-    public EstudianteService(EstudianteRepository estudianteRepository) {
-        this.estudianteRepository = estudianteRepository;
-    }
+    private final EstudianteMapper mapper;
 
 
     // Lógica de negocio para dar de alta un Estudiante
@@ -30,26 +32,21 @@ public class EstudianteService {
 
         // El método recibe un dto, no una entidad, por lo que hay que convertirlo a
         // un Estudiante real, que JPA sepa guardar en la base
-        Estudiante estudianteNuevo = new Estudiante(
-                request.getDni(),
-                request.getNombre(),
-                request.getApellido(),
-                request.getFechaNacimiento(),
-                request.getGenero(),
-                request.getCiudadResidencia(),
-                request.getLU()
-        );
+        Estudiante estudianteNuevo = mapper.convertToEntity(request);
 
         // Guardo el estudiante en la base
         Estudiante estudianteGuardado = estudianteRepository.save(estudianteNuevo);
 
         // Devuelvo al front sólo lo que quiero mostrar
-        EstudianteResponseDTO response = new EstudianteResponseDTO();
-        response.setDni(estudianteGuardado.getDni());
-        response.setNombre(estudianteGuardado.getNombre());
-        response.setApellido(estudianteGuardado.getApellido());
-        response.setLU(estudianteGuardado.getLU());
+        return mapper.convertToDTO(estudianteGuardado);
+    }
 
-        return response;
+
+    // Obtener todos los estudiantes
+    public List<EstudianteResponseDTO> findAll() {
+        return estudianteRepository.findAll() // devuelve una lista de <Estudiante>
+                .stream() // convierte la lista para poder hacer el mapping
+                .map(mapper::convertToDTO) // map() transforma cada elemento de la lista a un dto
+                .toList(); // convierte el stream de nuevo en lista para devolverlo al front
     }
 }

@@ -7,6 +7,8 @@ import org.example.ejerciciointegrador3.service.EstudianteService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/estudiantes")
@@ -22,20 +24,16 @@ public class EstudianteController {
         return ResponseEntity.ok(nuevo);
     }
 
-
-   /* @GetMapping("/all")
-    public List<EstudianteDTO> findAll() {
-        return service.findAll();
+    // GET: obtener todos los estudiantes
+    @GetMapping("/all")
+    public ResponseEntity<List<EstudianteResponseDTO>> getAll(){
+        List<EstudianteResponseDTO> estudiantes = service.findAll();
+        return ResponseEntity.ok(estudiantes);
     }
 
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable Integer id) {
 
-    }
 
-    @PutMapping("")
 
-    @PatchMapping*/
 
 }
