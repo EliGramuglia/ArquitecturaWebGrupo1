@@ -17,6 +17,7 @@ public class EstudianteService {
     private final EstudianteMapper mapper;
 
 
+    /*----------------------------- CRUD -----------------------------*/
     // Lógica de negocio para dar de alta un Estudiante
     public EstudianteResponseDTO save(EstudianteRequestDTO request) {
         // Primero validamos que los datos enviados sean correctos:
@@ -58,4 +59,42 @@ public class EstudianteService {
 
         return mapper.convertToDTO(e); // convierte la Entidad a un DTO para devolverla al front
     }
+
+    // Editar un Estudiante
+    public EstudianteResponseDTO update(Integer dni, EstudianteRequestDTO request) {
+        // Valido que el estudiante exista en mi base
+        Estudiante estudianteEditar = estudianteRepository.findById(dni)
+                .orElseThrow(() -> new IllegalArgumentException("No existe un estudiante con ese dni: " + dni));
+
+        //Valido que los datos enviados en el dto tengan algo
+        if(request.getNombre() == null || request.getNombre().isBlank()) {
+            throw new IllegalArgumentException("El nombre es obligatorio");
+        }
+        if(request.getApellido() == null || request.getApellido().isBlank()) {
+            throw new IllegalArgumentException("El apellido es obligatorio");
+        }
+        if(request.getLU() == null) {
+            throw new IllegalArgumentException("El LU es obligatorio");
+        }
+        //Edito la entidad
+        estudianteEditar.setNombre(request.getNombre());
+        estudianteEditar.setApellido(request.getApellido());
+        estudianteEditar.setFechaNacimiento(request.getFechaNacimiento());
+        estudianteEditar.setLU(request.getLU());
+        estudianteEditar.setGenero(request.getGenero());
+        estudianteEditar.setCiudadResidencia(request.getCiudadResidencia());
+
+        //Persisto los cambios en la base
+        Estudiante actualizado = estudianteRepository.save(estudianteEditar);
+
+        //Devuelvo un DTO, nunca la entidad
+        return mapper.convertToDTO(actualizado);
+    }
 }
+
+
+
+
+
+/* CONSULTAR SI SOLO TENGO QUE EDITAR LOS CAMPOS QUE EL USUARIO MODIFICA, O SI
+"PISO" LOS CAMPOS QUE NO EDITA, Y LOS ACTUALIZO IGUAL */

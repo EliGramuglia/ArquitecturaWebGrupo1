@@ -38,7 +38,12 @@ public class EstudianteController {
         return ResponseEntity.ok(estudiante);
     }
 
-
+    // PUT: editar un estudiante
+    @PutMapping("/{id}")
+    public ResponseEntity<EstudianteResponseDTO> update(@PathVariable Integer dni, @RequestBody EstudianteRequestDTO request){
+        EstudianteResponseDTO estudianteActualizado = service.update(dni, request);
+        return ResponseEntity.ok(estudianteActualizado);
+    }
 
 
 
