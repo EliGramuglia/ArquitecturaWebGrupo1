@@ -13,7 +13,7 @@ public class EstudianteMapper {
 
 
     // de EstudianteResquestDTO a Entidad
-    public Estudiante convertToEntity(EstudianteRequestDTO dto){
+    public static Estudiante convertToEntity(EstudianteRequestDTO dto){
         return new Estudiante(
                 dto.getDni(),
                 dto.getNombre(),

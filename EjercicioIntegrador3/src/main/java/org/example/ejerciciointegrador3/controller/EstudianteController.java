@@ -26,28 +26,28 @@ public class EstudianteController {
     }
 
     // GET: obtener todos los estudiantes
-    @GetMapping("/all")
+    @GetMapping("")
     public ResponseEntity<List<EstudianteResponseDTO>> getAll(){
         List<EstudianteResponseDTO> estudiantes = service.findAll();
         return ResponseEntity.ok(estudiantes);
     }
 
     // GET ID: obtener un estudiante
-    @GetMapping("/{id}")
+    @GetMapping("/{dni}")
     public ResponseEntity<EstudianteResponseDTO> get(@PathVariable Integer dni){ //PathVariable indica que el valor del parámetro {id} viene en la URL
         EstudianteResponseDTO estudiante = service.findById(dni);
         return ResponseEntity.ok(estudiante);
     }
 
     // PUT: editar un estudiante
-    @PutMapping("/{id}")
+    @PutMapping("/{dni}")
     public ResponseEntity<EstudianteResponseDTO> update(@PathVariable Integer dni, @RequestBody EstudianteRequestDTO request){
         EstudianteResponseDTO estudianteActualizado = service.update(dni, request);
         return ResponseEntity.ok(estudianteActualizado);
     }
 
     // DELETE: borrar un estudiante
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{dni}")
     public ResponseEntity<Void> delete(@PathVariable Integer dni) {
         service.delete(dni);
         return ResponseEntity.noContent().build(); // devuelve 204 (operación exitosa, pero no hay contenido que devovler)

@@ -5,3 +5,11 @@ spring:
     url: jdbc:mysql://localhost:3306/Entregable3?createDatabaseIfNotExist=true
     username: root
     password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: update  # crea/actualiza tablas automáticamente
+    show-sql: true       # opcional, para ver las queries en consola
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
