@@ -3,6 +3,7 @@ package org.example.ejerciciointegrador3.repository;
 import org.example.ejerciciointegrador3.entity.Estudiante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
+import java.util.List;
 
 // JpaRepository: el primer parámetro es la entidad y el segundo, el tipo de la PK
 public interface EstudianteRepository extends JpaRepository<Estudiante, Integer> {
@@ -11,4 +12,9 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
 
     // Obtiene un estudiante por su numero de libreta (LU)
     Optional<Estudiante> findByLU(Integer LU);
+
+    // Obtiene todos los estudiantes, en base a su género
+    // (ignorecase para que no importe si por ejemplo es femenino o Femenino)
+    List<Estudiante> findByGeneroIgnoreCase(String genero);
+
 }

@@ -31,6 +31,7 @@ public class EstudianteMapper {
         dto.setDni(entity.getDni());
         dto.setNombre(entity.getNombre());
         dto.setApellido(entity.getApellido());
+        dto.setGenero(entity.getGenero());
         dto.setLU(entity.getLU());
 
         return dto;

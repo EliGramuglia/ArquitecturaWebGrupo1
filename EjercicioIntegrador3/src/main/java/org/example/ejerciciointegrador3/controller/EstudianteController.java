@@ -61,4 +61,11 @@ public class EstudianteController {
         EstudianteResponseDTO estudiante = service.findByLU(lu);
         return ResponseEntity.ok(estudiante);
     }
+
+    @GetMapping("/genero/{genero}")
+    public ResponseEntity<List<EstudianteResponseDTO>> getByGenero(@PathVariable String genero) {
+        List<EstudianteResponseDTO> estudiantes = service.findByGenero(genero);
+        return ResponseEntity.ok(estudiantes);
+    }
+
 }
