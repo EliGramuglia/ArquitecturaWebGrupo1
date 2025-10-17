@@ -4,8 +4,13 @@ import lombok.AllArgsConstructor;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.example.ejerciciointegrador3.entity.Carrera;
 import org.example.ejerciciointegrador3.entity.Estudiante;
+import org.example.ejerciciointegrador3.entity.Inscripcion;
+import org.example.ejerciciointegrador3.entity.InscripcionId;
+import org.example.ejerciciointegrador3.repository.CarreraRepository;
 import org.example.ejerciciointegrador3.repository.EstudianteRepository;
+import org.example.ejerciciointegrador3.repository.InscripcionRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,12 +25,24 @@ import java.util.Objects;
 public class CsvReaderService {
 
     private final EstudianteRepository estudianteRepo;
+    private final CarreraRepository carreraRepo;
+    private final InscripcionRepository inscripcionRepo;
 
-    public CsvReaderService(EstudianteRepository estudianteRepo) {
+    public CsvReaderService(EstudianteRepository estudianteRepo, CarreraRepository carreraRepo, InscripcionRepository inscripcionRepo) {
         this.estudianteRepo = estudianteRepo;
+        this.carreraRepo = carreraRepo;
+        this.inscripcionRepo = inscripcionRepo;
     }
 
     @Transactional
+    public void cargarDatosDesdeCsv() throws IOException {
+        addCarreras();
+        addEstudiantes();
+        addInscripciones();
+        System.out.println("✅ Datos cargados correctamente desde los CSV");
+    }
+
+
     public void addEstudiantes() throws IOException {
         List<Estudiante> listEstudiantes = new ArrayList<>();
 
@@ -74,4 +91,86 @@ public class CsvReaderService {
             System.out.println("Estudiantes cargados: " + listEstudiantes.size());
         }
     }
+
+    private void addCarreras() throws IOException {
+        List<Carrera> listCarreras = new ArrayList<>();
+
+        try (CSVParser parser = CSVFormat.DEFAULT.builder()
+                .setHeader()
+                .setSkipHeaderRecord(true)
+                .build()
+                .parse(new InputStreamReader(
+                        Objects.requireNonNull(getClass().getResourceAsStream("/carreras.csv"))
+                ))) {
+
+            for (CSVRecord record : parser) {
+                try {
+
+                    String nombre = record.get("carrera");
+                    int duracion = Integer.parseInt(record.get("duracion").trim());
+
+                    Carrera c = new Carrera();
+                    c.setNombre(nombre);
+                    c.setDuracion(duracion);
+
+                    listCarreras.add(c);
+                } catch (Exception ex) {
+                    System.out.println("Registro de carrera ignorado: " + record);
+                }
+            }
+
+            carreraRepo.saveAll(listCarreras);
+            System.out.println("🎓 Carreras cargadas: " + listCarreras.size());
+        }
+    }
+
+    private void addInscripciones() throws IOException {
+        List<Inscripcion> listInscripciones = new ArrayList<>();
+
+        try (CSVParser parser = CSVFormat.DEFAULT.builder()
+                .setHeader()
+                .setSkipHeaderRecord(true)
+                .build()
+                .parse(new InputStreamReader(
+                        Objects.requireNonNull(getClass().getResourceAsStream("/estudianteCarrera.csv"))
+                ))) {
+
+            for (CSVRecord record : parser) {
+                try {
+                    // Leer columnas del CSV
+                    int dniEstudiante = Integer.parseInt(record.get("id_estudiante").trim());
+                    int idCarrera = Integer.parseInt(record.get("id_carrera").trim());
+                    int fechaInscripcion = Integer.parseInt(record.get("inscripcion").trim());
+                    int fechaGraduacion = Integer.parseInt(record.get("graduacion").trim());
+
+
+                    // Buscar entidades
+                    Estudiante estudiante = estudianteRepo.findById(dniEstudiante)
+                            .orElseThrow(() -> new RuntimeException("Estudiante no encontrado: " + dniEstudiante));
+                    Carrera carrera = carreraRepo.findById(idCarrera)
+                            .orElseThrow(() -> new RuntimeException("Carrera no encontrada: " + idCarrera));
+
+                    // Crear ID compuesto
+                    InscripcionId id = new InscripcionId(dniEstudiante, idCarrera);
+
+                    // Crear Inscripcion
+                    Inscripcion inscripcion = new Inscripcion();
+                    inscripcion.setIdInscripcion(id);
+                    inscripcion.setEstudiante(estudiante);
+                    inscripcion.setCarrera(carrera);
+                    inscripcion.setFechaInscripcion(LocalDate.of(fechaInscripcion, 1, 1));
+                    inscripcion.setFechaGraduacion(LocalDate.of(fechaGraduacion, 1, 1));
+
+                    listInscripciones.add(inscripcion);
+
+                } catch (Exception ex) {
+                    System.out.println("Registro de inscripción ignorado: " + record);
+                }
+            }
+
+            inscripcionRepo.saveAll(listInscripciones);
+            System.out.println("📝 Inscripciones cargadas: " + listInscripciones.size());
+        }
+    }
+
 }

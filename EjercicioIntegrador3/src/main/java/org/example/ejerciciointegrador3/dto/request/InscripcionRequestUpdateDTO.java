@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class InscripcionRequestDTO {
-    private Integer idCarrera;
-    private Integer dni;
+public class InscripcionRequestUpdateDTO {
+    private LocalDate fechaGraduacion;
 }
