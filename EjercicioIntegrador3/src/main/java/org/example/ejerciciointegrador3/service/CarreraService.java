@@ -27,19 +27,18 @@ public class CarreraService {
     }
 
     public List<CarreraDTO> findAll() {
-        return carreraRepository.findAll() // devuelve una lista de <Estudiante>
-                .stream() // convierte la lista para poder hacer el mapping
-                .map(mapper::convertToDTO) // map() transforma cada elemento de la lista a un dto
-                .toList(); // convierte el stream de nuevo en lista para devolverlo al front
+        return carreraRepository.findAll()
+                .stream()
+                .map(mapper::convertToDTO)
+                .toList();
     }
 
     // Obtener 1 estudiante, usando su id
     public CarreraDTO findById(Integer id) {
-        Carrera c = carreraRepository.findById(id) // devuelve un Optional<Estudiante>
+        Carrera c = carreraRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró una carrera con el id: " + id));
-        // tengo que chequear si encontró el estudiante. Sino, devuelve una excepción
 
-        return mapper.convertToDTO(c); // convierte la Entidad a un DTO para devolverla al front
+        return mapper.convertToDTO(c);
     }
 
     // Editar un Estudiante
