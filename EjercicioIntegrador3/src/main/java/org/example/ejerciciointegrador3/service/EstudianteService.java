@@ -1,6 +1,7 @@
     package org.example.ejerciciointegrador3.service;
     
     import lombok.AllArgsConstructor;
+    import org.example.ejerciciointegrador3.dto.EstudianteCarreraDTO;
     import org.example.ejerciciointegrador3.dto.request.EstudianteRequestDTO;
     import org.example.ejerciciointegrador3.dto.response.EstudianteResponseDTO;
     import org.example.ejerciciointegrador3.entity.Estudiante;
@@ -138,4 +139,17 @@
                     .map(mapper::convertToDTO)
                     .toList();
         }
+
+        // Recuperar los estudiantes de una determinada carrera, filtrando por ciudad de residencia.
+        public List<EstudianteCarreraDTO> findAllEstudianteByCarreraAndCiudad(String carrera, String ciudad) {
+            if (carrera == null || carrera.isBlank()) {
+                throw new IllegalArgumentException("La carrera no puede estar vacía");
+            }
+            if (ciudad == null || ciudad.isBlank()) {
+                throw new IllegalArgumentException("La ciudad no puede estar vacía");
+            }
+
+            return estudianteRepository.findAllEstudianteByCarreraAndCiudad(carrera, ciudad);
+        }
+
     }

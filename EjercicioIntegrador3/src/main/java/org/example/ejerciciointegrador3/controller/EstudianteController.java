@@ -1,6 +1,7 @@
 package org.example.ejerciciointegrador3.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.ejerciciointegrador3.dto.EstudianteCarreraDTO;
 import org.example.ejerciciointegrador3.dto.request.EstudianteRequestDTO;
 import org.example.ejerciciointegrador3.dto.response.EstudianteResponseDTO;
 import org.example.ejerciciointegrador3.service.EstudianteService;
@@ -75,5 +76,12 @@ public class EstudianteController {
         List<EstudianteResponseDTO> estudiantes = service.findAllOrderByDniAsc();
         return ResponseEntity.ok(estudiantes);
    }
+
+    // Recuperar los estudiantes de una determinada carrera, filtrando por ciudad de residencia.
+    @GetMapping("/{carrera}/{ciudad}")
+    public ResponseEntity<List<EstudianteCarreraDTO>> findAllEstudianteByCarreraAndCiudad(@PathVariable String carrera, @PathVariable String ciudad) {
+        List<EstudianteCarreraDTO> estudiantes = service.findAllEstudianteByCarreraAndCiudad(carrera, ciudad);
+        return ResponseEntity.ok(estudiantes);
+    }
 
 }
