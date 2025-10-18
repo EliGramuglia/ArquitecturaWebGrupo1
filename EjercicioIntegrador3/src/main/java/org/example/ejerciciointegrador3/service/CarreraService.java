@@ -3,6 +3,7 @@ package org.example.ejerciciointegrador3.service;
 import lombok.AllArgsConstructor;
 import org.example.ejerciciointegrador3.dto.CarreraCantInscriptosDTO;
 import org.example.ejerciciointegrador3.dto.CarreraDTO;
+import org.example.ejerciciointegrador3.dto.ReporteDTO;
 import org.example.ejerciciointegrador3.entity.Carrera;
 import org.example.ejerciciointegrador3.mapper.CarreraMapper;
 import org.example.ejerciciointegrador3.repository.CarreraRepository;
@@ -76,4 +77,10 @@ public class CarreraService {
     // Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
     public List<CarreraCantInscriptosDTO> findCarrerasInscriptos() {
         return carreraRepository.findCarrerasInscriptos();    }
+
+    // Reporte de carreras (inscriptos y egresados por año)
+    public List<ReporteDTO> getReporte() {
+        return carreraRepository.getReporte();
+    }
+
 }

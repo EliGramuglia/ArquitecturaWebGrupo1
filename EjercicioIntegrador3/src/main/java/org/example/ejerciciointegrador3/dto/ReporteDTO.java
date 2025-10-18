@@ -2,6 +2,8 @@ package org.example.ejerciciointegrador3.dto;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+
 @Getter
 @Setter
 @ToString
@@ -10,7 +12,7 @@ import lombok.*;
 public class ReporteDTO {
 
     private String carrera;
-    private Integer anio;
+    private Long anio;
     private Long inscriptos;
     private Long egresados;
 

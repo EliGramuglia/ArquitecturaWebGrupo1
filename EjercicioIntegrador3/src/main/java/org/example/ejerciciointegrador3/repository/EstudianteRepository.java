@@ -25,7 +25,7 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     List<Estudiante> findAllByOrderByDniAsc();
 
     // Recuperar los estudiantes de una determinada carrera, filtrando por ciudad de residencia.
-    @Query("SELECT new org.example.dto.EstudianteCarreraDTO(e.LU, e.nombre, e.apellido, e.ciudadResidencia, c.nombre) "+
+    @Query("SELECT new org.example.ejerciciointegrador3.dto.EstudianteCarreraDTO(e.LU, e.nombre, e.apellido, e.ciudadResidencia, c.nombre) "+
             "FROM Inscripcion i JOIN i.estudiante e JOIN i.carrera c "+
             "WHERE c.nombre =:carrera AND e.ciudadResidencia =:ciudad")
     List<EstudianteCarreraDTO> findAllEstudianteByCarreraAndCiudad(String carrera, String ciudad);

@@ -3,6 +3,7 @@ package org.example.ejerciciointegrador3.controller;
 import lombok.AllArgsConstructor;
 import org.example.ejerciciointegrador3.dto.CarreraCantInscriptosDTO;
 import org.example.ejerciciointegrador3.dto.CarreraDTO;
+import org.example.ejerciciointegrador3.dto.ReporteDTO;
 import org.example.ejerciciointegrador3.service.CarreraService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -60,5 +61,11 @@ public class CarreraController {
         return ResponseEntity.ok(carrerasInscriptos);
     }
 
+    // Reporte de carreras (inscriptos y egresados por año)
+    @GetMapping("/reporte")
+    public ResponseEntity<List<ReporteDTO>> getReporte() {
+        List<ReporteDTO> reporte = service.getReporte();
+        return ResponseEntity.ok(reporte);
+    }
 
 }
