@@ -1,1 +1,1 @@
-select * from estudiante
+select * from inscripcion
