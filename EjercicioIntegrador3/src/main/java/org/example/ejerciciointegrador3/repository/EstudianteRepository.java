@@ -18,6 +18,6 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     // (ignorecase para que no importe si por ejemplo es femenino o Femenino)
     List<Estudiante> findByGeneroIgnoreCase(String genero);
 
-
+    // Obtiene todos los estudiantes ordenados por su dni de forma ascendente
     List<Estudiante> findAllByOrderByDniAsc();
 }

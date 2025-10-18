@@ -1,6 +1,7 @@
 package org.example.ejerciciointegrador3.service;
 
 import lombok.AllArgsConstructor;
+import org.example.ejerciciointegrador3.dto.CarreraCantInscriptosDTO;
 import org.example.ejerciciointegrador3.dto.CarreraDTO;
 import org.example.ejerciciointegrador3.entity.Carrera;
 import org.example.ejerciciointegrador3.mapper.CarreraMapper;
@@ -33,7 +34,7 @@ public class CarreraService {
                 .toList();
     }
 
-    // Obtener 1 estudiante, usando su id
+    // Obtener 1 carrera, usando su id
     public CarreraDTO findById(Integer id) {
         Carrera c = carreraRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró una carrera con el id: " + id));
@@ -41,7 +42,7 @@ public class CarreraService {
         return mapper.convertToDTO(c);
     }
 
-    // Editar un Estudiante
+    // Editar una Carrera
     public CarreraDTO update(Integer id, CarreraDTO request) {
 
         Carrera carreraEditar = carreraRepository.findById(id)
@@ -63,8 +64,7 @@ public class CarreraService {
         return mapper.convertToDTO(actualizado);
     }
 
-
-    // Borra un estudiante
+    // Borra una carrera
     public void delete(Integer id) {
         Carrera e = carreraRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró una carrera con el id: "+ id));
@@ -73,15 +73,7 @@ public class CarreraService {
 
 
     /*-------------------------- MÉTODOS ESPECÍFICOS --------------------------*/
-
-    public CarreraDTO findByLU(Integer id) {
-        if (id == null) {
-            throw new IllegalArgumentException("El id no puede ser null");
-        }
-
-        Carrera c = carreraRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe una carrera: "+ id));
-
-        return mapper.convertToDTO(c);
-    }
+    // Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
+    public List<CarreraCantInscriptosDTO> findCarrerasInscriptos() {
+        return carreraRepository.findCarrerasInscriptos();    }
 }

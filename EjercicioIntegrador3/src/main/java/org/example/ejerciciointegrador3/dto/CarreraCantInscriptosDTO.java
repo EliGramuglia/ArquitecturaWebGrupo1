@@ -4,11 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 public class CarreraCantInscriptosDTO {
-    private Integer idCarrera;
     private String nombre;
     private Long cantidadInscriptos;
 

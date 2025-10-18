@@ -1,6 +1,7 @@
 package org.example.ejerciciointegrador3.controller;
 
 import lombok.AllArgsConstructor;
+import org.example.ejerciciointegrador3.dto.CarreraCantInscriptosDTO;
 import org.example.ejerciciointegrador3.dto.CarreraDTO;
 import org.example.ejerciciointegrador3.service.CarreraService;
 import org.springframework.http.ResponseEntity;
@@ -52,5 +53,12 @@ public class CarreraController {
 
 
     /*-------------------------- ENDPOINTS ESPECÍFICOS --------------------------*/
+    // Recuperar las carreras con estudiantes inscriptos, y ordenar por cantidad de inscriptos
+    @GetMapping("/carreras-inscriptos")
+    public ResponseEntity<List<CarreraCantInscriptosDTO>> getCarrerasInscriptos() {
+        List<CarreraCantInscriptosDTO> carrerasInscriptos = service.findCarrerasInscriptos();
+        return ResponseEntity.ok(carrerasInscriptos);
+    }
+
 
 }
