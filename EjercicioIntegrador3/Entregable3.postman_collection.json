@@ -81,7 +81,7 @@
 			"response": []
 		},
 		{
-			"name": "createEstudianteDuplicado500",
+			"name": "createEstudianteDuplicado400",
 			"protocolProfileBehavior": {
 				"disabledSystemHeaders": {}
 			},
@@ -112,7 +112,7 @@
 			"response": []
 		},
 		{
-			"name": "createEstudianteCampoVacio500",
+			"name": "createEstudianteCampoVacio400",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -260,7 +260,7 @@
 			"response": []
 		},
 		{
-			"name": "createCarrera500",
+			"name": "createCarrera409",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -423,7 +423,7 @@
 			"response": []
 		},
 		{
-			"name": "createInscripcion500",
+			"name": "createInscripcion409",
 			"request": {
 				"method": "POST",
 				"header": [],
