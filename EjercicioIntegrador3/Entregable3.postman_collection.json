@@ -1,0 +1,674 @@
+{
+	"info": {
+		"_postman_id": "e214bd29-ea23-4f1d-9d62-962a05e9bb71",
+		"name": "Entregable3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31094389"
+	},
+	"item": [
+		{
+			"name": "findAllEstudiantes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/estudiantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findByIdEstudiante",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345678,\r\n        \"nombre\": \"Roberta\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Female\",\r\n        \"lu\": 9999\r\n }\r\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes/11962781",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes",
+						"11962781"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createEstudianteOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345678,\r\n        \"nombre\": \"Marta\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Female\",\r\n        \"lu\": 9999\r\n }\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createEstudianteDuplicado500",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345678,\r\n        \"nombre\": \"Marta\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Female\",\r\n        \"lu\": 9999\r\n }\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createEstudianteCampoVacio500",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345688,\r\n        \"nombre\": \"Roberto\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Male\",\r\n        \"lu\": \"\"\r\n }\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateEstudianteOk",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345678,\r\n        \"nombre\": \"Roberta\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Female\",\r\n        \"lu\": 9999\r\n }\r\n    ",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes/12345678",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes",
+						"12345678"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteEstudianteOk",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345678,\r\n        \"nombre\": \"Roberta\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Female\",\r\n        \"lu\": 9999\r\n }\r\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes/12345678",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes",
+						"12345678"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllCarreras",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/carreras",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findByIdCarrera",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/carreras/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createCarreraOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Turismo\",\r\n    \"duracion\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/carreras",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createCarrera500",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Turismo\",\r\n    \"duracion\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/carreras",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateCarreraOk",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Arte\",\r\n    \"duracion\": 4\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/carreras/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteCarreraOk",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Arte\",\r\n    \"duracion\": 4\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/carreras/16",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"16"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllInscripciones",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Arte\",\r\n    \"duracion\": 4\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/inscripciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inscripciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findByIdInscripciones",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"Arte\",\r\n    \"duracion\": 4\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/inscripciones/11962781/13",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inscripciones",
+						"11962781",
+						"13"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createInscipcionOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCarrera\": 15,\r\n    \"dni\": 12345678\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/inscripciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inscripciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createInscripcion500",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"idCarrera\": 15,\r\n    \"dni\": 12345678\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/inscripciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inscripciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateInscripcionOk",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fechaGraduacion\": \"2025-10-18\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/inscripciones/12345678/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inscripciones",
+						"12345678",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteInscripcionOk",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fechaGraduacion\": \"2025-10-18\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/inscripciones/12345678/15",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"inscripciones",
+						"12345678",
+						"15"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findEstudianteByLU",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345688,\r\n        \"nombre\": \"Roberto\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Male\",\r\n        \"lu\": \"\"\r\n }\r\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes/lu/72976",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes",
+						"lu",
+						"72976"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllEstudiantesByGenero",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345688,\r\n        \"nombre\": \"Roberto\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Male\",\r\n        \"lu\": \"\"\r\n }\r\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes/genero/male",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes",
+						"genero",
+						"male"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllOrderByDniAsc",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345688,\r\n        \"nombre\": \"Roberto\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Male\",\r\n        \"lu\": \"\"\r\n }\r\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes/dniAsc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes",
+						"dniAsc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findCarrerasInscriptos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://localhost:8080/carreras/carreras-inscriptos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"carreras-inscriptos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findAllEstudianteByCarreraAndCiudad",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345688,\r\n        \"nombre\": \"Roberto\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Male\",\r\n        \"lu\": \"\"\r\n }\r\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/estudiantes/tudai/rauch",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"estudiantes",
+						"tudai",
+						"rauch"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getReporte",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n        \"dni\": 12345688,\r\n        \"nombre\": \"Roberto\",\r\n        \"apellido\": \"Lopez\",\r\n        \"genero\": \"Male\",\r\n        \"lu\": \"\"\r\n }\r\n    "
+				},
+				"url": {
+					"raw": "http://localhost:8080/carreras/reporte",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"carreras",
+						"reporte"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
