@@ -17,7 +17,7 @@ public class Carrera {
     @Column (name = "id_carrera")
     private Integer idCarrera;
 
-    @Column
+    @Column (unique = true, nullable = false)
     private String nombre;
 
     @Column

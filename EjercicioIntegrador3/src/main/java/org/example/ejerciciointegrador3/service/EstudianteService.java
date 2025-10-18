@@ -130,7 +130,12 @@
                     .toList();
         }
 
+        // Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple:
+        // Se los ordena por DNI de forma ascendente
+        public List<EstudianteResponseDTO> findAllOrderByDniAsc() {
+            return estudianteRepository.findAllByOrderByDniAsc()
+                    .stream()
+                    .map(mapper::convertToDTO)
+                    .toList();
+        }
     }
-
-    /* CONSULTAR SI SOLO TENGO QUE EDITAR LOS CAMPOS QUE EL USUARIO MODIFICA, O SI
-    "PISO" LOS CAMPOS QUE NO EDITA, Y LOS ACTUALIZO IGUAL */

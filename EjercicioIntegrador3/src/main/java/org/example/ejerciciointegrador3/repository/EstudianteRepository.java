@@ -1,5 +1,6 @@
 package org.example.ejerciciointegrador3.repository;
 
+import org.example.ejerciciointegrador3.dto.response.EstudianteResponseDTO;
 import org.example.ejerciciointegrador3.entity.Estudiante;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
@@ -17,4 +18,6 @@ public interface EstudianteRepository extends JpaRepository<Estudiante, Integer>
     // (ignorecase para que no importe si por ejemplo es femenino o Femenino)
     List<Estudiante> findByGeneroIgnoreCase(String genero);
 
+
+    List<Estudiante> findAllByOrderByDniAsc();
 }

@@ -68,4 +68,12 @@ public class EstudianteController {
         return ResponseEntity.ok(estudiantes);
     }
 
+    // Recuperar todos los estudiantes, y especificar algún criterio de ordenamiento simple:
+    // Se los ordena por DNI de forma ascendente
+    @GetMapping("/dniAsc")
+    public ResponseEntity<List<EstudianteResponseDTO>> findAllOrderByDniAsc() {
+        List<EstudianteResponseDTO> estudiantes = service.findAllOrderByDniAsc();
+        return ResponseEntity.ok(estudiantes);
+   }
+
 }

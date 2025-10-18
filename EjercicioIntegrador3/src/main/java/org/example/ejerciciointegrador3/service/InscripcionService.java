@@ -3,6 +3,8 @@ package org.example.ejerciciointegrador3.service;
 import lombok.AllArgsConstructor;
 import org.example.ejerciciointegrador3.dto.request.InscripcionRequestDTO;
 import org.example.ejerciciointegrador3.dto.response.InscripcionResponseDTO;
+import org.example.ejerciciointegrador3.entity.Carrera;
+import org.example.ejerciciointegrador3.entity.Estudiante;
 import org.example.ejerciciointegrador3.entity.Inscripcion;
 import org.example.ejerciciointegrador3.entity.InscripcionId;
 import org.example.ejerciciointegrador3.mapper.InscripcionMapper;
@@ -25,7 +27,22 @@ public class InscripcionService {
 
     // Crear inscripción
     public InscripcionResponseDTO save(InscripcionRequestDTO request) {
-        Inscripcion inscripcionNueva = mapper.convertToEntity(request);
+        Estudiante estudiante = estudianteRepository.findById(request.getDni())
+                .orElseThrow(() -> new IllegalArgumentException("Estudiante no encontrado: " + request.getDni()));
+
+        Carrera carrera = carreraRepository.findById(request.getIdCarrera())
+                .orElseThrow(() -> new IllegalArgumentException("Carrera no encontrada: " + request.getIdCarrera()));
+
+        InscripcionId id = new InscripcionId(request.getDni(), request.getIdCarrera());
+
+        // Verificamos si ya existe
+        if (inscripcionRepository.existsById(id)) {
+            throw new IllegalStateException("La inscripción ya existe para el estudiante " +
+                    request.getDni() + " en la carrera " + request.getIdCarrera());
+        }
+
+        // Creamos nueva inscripción
+        Inscripcion inscripcionNueva = mapper.convertToEntity(estudiante, carrera);
         Inscripcion guardada = inscripcionRepository.save(inscripcionNueva);
         return mapper.convertToDTO(guardada);
     }
