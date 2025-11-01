@@ -1,0 +1,52 @@
+package org.example.usuario.controller;
+
+import lombok.AllArgsConstructor;
+import org.example.usuario.dto.request.UsuarioRequestDTO;
+import org.example.usuario.dto.response.UsuarioResponseDTO;
+import org.example.usuario.service.UsuarioService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/usuarios")
+@AllArgsConstructor
+public class UsuarioController {
+    private final UsuarioService service;
+
+    /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
+    @PostMapping("")
+    public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioRequestDTO usuario){
+        UsuarioResponseDTO nuevo = service.save(usuario);
+        return ResponseEntity.ok(nuevo);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<UsuarioResponseDTO>> getAll(){
+        List<UsuarioResponseDTO> usuarios = service.findAll();
+        return ResponseEntity.ok(usuarios);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> getById(@PathVariable Long id){
+        UsuarioResponseDTO usuario = service.findById(id);
+        return ResponseEntity.ok(usuario);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> update(@PathVariable Long id, @RequestBody UsuarioRequestDTO usuario){
+        UsuarioResponseDTO usuarioEditado = service.update(id, usuario);
+        return ResponseEntity.ok(usuarioEditado);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<UsuarioResponseDTO> delete(@PathVariable Long id){
+       service.delete(id);
+       return ResponseEntity.noContent().build();
+    }
+}
+/*
+@PreAuthorize
+@PreAuthorize(ADMINISTRADOR)
+ */
