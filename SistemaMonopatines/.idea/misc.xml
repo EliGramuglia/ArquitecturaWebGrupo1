@@ -6,6 +6,11 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/Usuario/pom.xml" />
+        <option value="$PROJECT_DIR$/Viaje/pom.xml" />
+        <option value="$PROJECT_DIR$/Cuenta/pom.xml" />
+        <option value="$PROJECT_DIR$/Facturacion/pom.xml" />
+        <option value="$PROJECT_DIR$/Monopatin/pom.xml" />
+        <option value="$PROJECT_DIR$/Tarifa/pom.xml" />
       </list>
     </option>
   </component>

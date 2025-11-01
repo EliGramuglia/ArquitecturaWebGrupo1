@@ -5,15 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78c74711-7f99-4c0f-bd3c-f9d064ac12ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/Rol.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/controller/UsuarioController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/dto/CuentaDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/dto/request/UsuarioRequestDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/dto/response/UsuarioResponseDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/entity/Usuario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/mapper/UsuarioMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/repository/UsuarioRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/service/UsuarioService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Monopatin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Monopatin/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Monopatin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Monopatin/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/utils/Rol.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/entity/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/entity/Usuario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Usuario/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Usuario/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +23,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="package-info" />
         <option value="Enum" />
         <option value="Class" />
       </list>
@@ -42,22 +43,31 @@
   &quot;associatedIndex&quot;: 0
 }</component>
   <component name="ProjectId" id="34t7eA3XIPOfn6I5Tynu1FaOQFT" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.MonopatinApplication.executor": "Run",
+    "Application.UsuarioApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-24",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/emanu/Desktop/Arquitectura Web/SistemaMonopatines",
+    "last_opened_file_path": "C:/Users/afran/Documents/TUDAI/Arquitecturas/ArquitecturaWebGrupo1/SistemaMonopatines",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -70,7 +80,7 @@
       <recent name="C:\Users\emanu\Desktop\Arquitectura Web\SistemaMonopatines\src\main\java\org\example\sistemamonopatines\cuenta" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.SistemaMonopatinesApplication">
+  <component name="RunManager">
     <configuration name="SistemaMonopatinesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="SistemaMonopatines" />
@@ -91,8 +101,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9823dce3aa75-b114ca120d71-intellij.indexing.shared.core-IU-242.20224.419" />
-        <option value="bundled-js-predefined-d6986cc7102b-410509235cf1-JavaScript-IU-242.20224.419" />
+        <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>

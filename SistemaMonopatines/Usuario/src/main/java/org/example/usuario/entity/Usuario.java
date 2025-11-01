@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.example.usuario.dto.CuentaDTO;
+import org.example.usuario.utils.Rol;
 
 import java.util.List;
 
@@ -36,6 +37,9 @@ public class Usuario {
 
     @ElementCollection
     private List<Integer> cuentasId; // Guarda todos los ids de las cuentas asociadas
+
+    @Column (unique = true, nullable = false)
+    private Rol rol;
 
     public Usuario(@NotNull(message = "El nombre es obligatorio") String nombre, @NotNull(message = "El apellido es obligatorio") String apellido, @NotNull(message = "El email es obligatorio") String email, @NotNull(message = "El nroCelular es obligatorio") Integer nroCelular) {
         this.nombre = nombre;
