@@ -6,14 +6,9 @@
   <component name="ChangeListManager">
     <list default="true" id="78c74711-7f99-4c0f-bd3c-f9d064ac12ed" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Monopatin/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Monopatin/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Monopatin/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Monopatin/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/Rol.java" beforeDir="false" afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/utils/Rol.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/entity/Usuario.java" beforeDir="false" afterPath="$PROJECT_DIR$/Usuario/src/main/java/org/example/usuario/entity/Usuario.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Usuario/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/Usuario/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tarifa/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Tarifa/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tarifa/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Tarifa/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,6 +51,7 @@
     "Application.UsuarioApplication.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-24",
     "kotlin-language-version-configured": "true",
