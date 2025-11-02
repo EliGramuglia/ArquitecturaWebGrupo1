@@ -2,11 +2,11 @@ version: "3"
 services:
   mysql:
     image: mysql:8.0
-    container_name: cuenta-mysql
+    container_name: Cuenta-mysql
     restart: always
     environment:
       MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
       MYSQL_ROOT_PASSWORD: ""
-      MYSQL_DATABASE: Cuenta
+      MYSQL_DATABASE: cuentas
     ports:
-      - "3307:3307"
+      - "3307:3306"
