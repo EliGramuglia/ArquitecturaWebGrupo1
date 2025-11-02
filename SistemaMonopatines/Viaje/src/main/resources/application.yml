@@ -1,1 +1,15 @@
-spring.application.name=Viaje
+spring:
+  application:
+    name: Viaje
+  datasource:
+    url: jdbc:mysql://localhost:3306/viajes?createDatabaseIfNotExist=true
+    username: root
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # (PONER UPDATE) edita tablas autom?ticamente
+    show-sql: true       # opcional, para ver las queries en consola
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
