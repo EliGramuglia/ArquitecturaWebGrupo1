@@ -13,4 +13,10 @@ import java.time.LocalTime;
 public class PausaDTO {
     private LocalTime inicio;
     private LocalTime fin;
+    private Long duracionMinutos;
+
+    public PausaDTO(LocalTime inicio, LocalTime fin) {
+        this.inicio = inicio;
+        this.fin = fin;
+    }
 }

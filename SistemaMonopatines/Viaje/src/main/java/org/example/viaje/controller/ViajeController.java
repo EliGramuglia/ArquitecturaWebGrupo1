@@ -2,6 +2,7 @@ package org.example.viaje.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.viaje.dto.PausaDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.service.ViajeService;
@@ -46,6 +47,30 @@ public class ViajeController {
         service.delete(id);
         return ResponseEntity.noContent().build(); // caso exitoso 204
     }
+
+    /*-------------------- ENDPOINTS ANIDADOS PARA PAUSAR EL VIAJE -----------------------*/
+    // Crear una pausa para un viaje específico
+    @PostMapping("/{viajeId}/pausas")
+    public ResponseEntity<PausaDTO> iniciarPausa(@PathVariable Long viajeId){
+        PausaDTO pausa = service.iniciarPausa(viajeId);
+        return ResponseEntity.ok(pausa);
+    }
+
+    // Finalizar una pausa
+    @PutMapping("/{viajeId}/pausas/{pausaId}/finalizar")
+    public ResponseEntity<PausaDTO> finalizarPausa(@PathVariable Long viajeId,
+                                                   @PathVariable Long pausaId) {
+        PausaDTO pausaFinalizada = service.finalizarPausa(viajeId, pausaId);
+        return ResponseEntity.ok(pausaFinalizada);
+    }
+
+    // Listar todas las pausas de un viaje
+    @GetMapping("/{viajeId}/pausas")
+    public ResponseEntity<List<PausaDTO>> getPausas(@PathVariable Long viajeId){
+        List<PausaDTO> pausas = service.getPausas(viajeId);
+        return ResponseEntity.ok(pausas);
+    }
+
 }
 
 // VALID SE USA EN EL CONTROLLER, no en el service ??
