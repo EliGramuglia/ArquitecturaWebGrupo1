@@ -1,5 +1,6 @@
 package org.example.cuenta.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.cuenta.dto.request.CuentaRequestDTO;
@@ -7,6 +8,7 @@ import org.example.cuenta.dto.response.CuentaResponseDTO;
 import org.example.cuenta.entity.Cuenta;
 import org.example.cuenta.mapper.CuentaMapper;
 import org.example.cuenta.repository.CuentaRepository;
+import org.example.cuenta.utils.Estado;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,6 +17,7 @@ import java.util.List;
 @Service
 public class CuentaService {
     private final CuentaRepository cuentaRepository;
+    private final CuentaMapper cuentaMapper;
 
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
@@ -55,4 +58,25 @@ public class CuentaService {
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró una cuenta con el id: "+ nroCuenta));
         cuentaRepository.delete(cuenta);
     }
+
+    /*-------------------------- METODOS PARA SERVICIOS --------------------------*/
+
+    public CuentaResponseDTO anularCuenta(Long nroCuenta, String estado) {
+        Cuenta cuenta = cuentaRepository.findById(nroCuenta)
+                .orElseThrow(() -> new EntityNotFoundException("Cuenta no encontrada"));
+
+        Estado estadoEnum;
+        try {
+            estadoEnum = Estado.valueOf(estado.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Estado incorrecto. Valores permitidos: "
+                    + java.util.Arrays.toString(Estado.values()));
+        }
+
+        cuenta.setEstado(estadoEnum);
+        cuentaRepository.save(cuenta);
+
+        return cuentaMapper.convertToDTO(cuenta);
+    }
+
 }

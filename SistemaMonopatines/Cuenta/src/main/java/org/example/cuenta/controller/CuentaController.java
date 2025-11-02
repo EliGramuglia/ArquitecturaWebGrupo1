@@ -45,6 +45,15 @@ public class CuentaController {
        service.delete(nroCuenta);
        return ResponseEntity.noContent().build();
     }
+
+    /*-------------------------- ENDPOINTS SERVICIOS --------------------------*/
+
+    @PutMapping("/{nroCuenta}/estado/{estado}")
+    public ResponseEntity<CuentaResponseDTO> anularCuenta(@PathVariable Long nroCuenta, @PathVariable String estado) {
+        CuentaResponseDTO cuentaAnulada = service.anularCuenta(nroCuenta, estado);
+        return ResponseEntity.ok(cuentaAnulada);
+    }
+
 }
 /*
 @PreAuthorize
