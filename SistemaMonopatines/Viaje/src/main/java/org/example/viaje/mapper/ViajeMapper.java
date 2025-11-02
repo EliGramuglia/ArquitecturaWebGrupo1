@@ -1,7 +1,7 @@
 package org.example.viaje.mapper;
 
-import org.example.viaje.dto.PausaDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
+import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.entity.Pausa;
 import org.example.viaje.entity.Viaje;
@@ -14,7 +14,7 @@ public class ViajeMapper {
 
     // Convierte de entidad a dto
     public static ViajeResponseDTO convertToDTO(Viaje entity) {
-        List<PausaDTO> pausasDTO = entity.getPausas()
+        List<PausaResponseDTO> pausasDTO = entity.getPausas()
                 .stream()
                 .map(PausaMapper::convertToDTO)
                 .toList();

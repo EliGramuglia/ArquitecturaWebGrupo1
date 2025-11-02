@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -42,9 +43,8 @@ public class Viaje {
     @Column(nullable = false)
     private Long idCliente;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true) // Un viaje puede tener muchas pausas
-    @JoinColumn(name = "viaje_id") // En la tabla Pausa existe la column viaje_id
-    private List<Pausa> pausas;
+    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pausa> pausas = new ArrayList<>();
 
     public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Double tarifa, Long idMonopatin, Long idCliente) {
         this.fechaHoraInicio = fechaHoraInicio;
@@ -61,5 +61,3 @@ public class Viaje {
 /* cascade = CascadeType.ALL ->
     Si haces algo sobre un Viaje, se aplica automaticamente a todas sus Pausas.
 */
-
-// Navegación Unidireccional (por eso en Pausa no se anota nada más de la relación)

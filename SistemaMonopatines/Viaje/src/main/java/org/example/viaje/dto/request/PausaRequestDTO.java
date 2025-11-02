@@ -1,4 +1,4 @@
-package org.example.viaje.dto;
+package org.example.viaje.dto.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,12 +10,12 @@ import java.time.LocalTime;
 @NoArgsConstructor
 @Getter
 @Setter
-public class PausaDTO {
+public class PausaRequestDTO {
     private LocalTime inicio;
     private LocalTime fin;
     private Long duracionMinutos;
 
-    public PausaDTO(LocalTime inicio, LocalTime fin) {
+    public PausaRequestDTO(LocalTime inicio, LocalTime fin) {
         this.inicio = inicio;
         this.fin = fin;
     }
