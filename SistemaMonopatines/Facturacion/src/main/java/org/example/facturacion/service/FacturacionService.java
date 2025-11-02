@@ -33,7 +33,7 @@ public class FacturacionService {
 
     public FacturacionResponseDTO findById(Long id) {
         Facturacion facturacion = facturacionRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe la factura con el id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("No existe la factura con los id: " + id));
         return FacturacionMapper.convertToDTO(facturacion);
     }
 
@@ -44,6 +44,7 @@ public class FacturacionService {
         facturacionEditar.setId(id);
         facturacionEditar.setIdCliente(facturacion.getIdCliente());
         facturacionEditar.setIdCuenta(facturacion.getIdCuenta());
+        facturacionRepository.save(facturacionEditar);
 
         return FacturacionMapper.convertToDTO(facturacionEditar);
     }

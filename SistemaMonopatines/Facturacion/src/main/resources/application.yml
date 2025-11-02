@@ -2,7 +2,7 @@ spring:
   application:
     name: Facturacion
   datasource:
-    url: jdbc:mysql://localhost:3306/Facturacion?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/facturaciones?createDatabaseIfNotExist=true
     username: root
     password: ""
 
