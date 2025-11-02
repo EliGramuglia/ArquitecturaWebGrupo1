@@ -3,6 +3,7 @@ package org.example.usuario.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.usuario.utils.Rol;
 
 @AllArgsConstructor
 @Setter
@@ -13,5 +14,6 @@ public class UsuarioResponseDTO {
     private String apellido;
     private String email;
     private Integer nroCelular;
+    private Rol rol;
 
 }

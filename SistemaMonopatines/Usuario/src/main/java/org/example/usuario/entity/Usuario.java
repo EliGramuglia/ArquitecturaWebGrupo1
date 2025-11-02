@@ -48,4 +48,5 @@ public class Usuario {
         this.nroCelular = nroCelular;
         this.rol = rol;
     }
+
 }
