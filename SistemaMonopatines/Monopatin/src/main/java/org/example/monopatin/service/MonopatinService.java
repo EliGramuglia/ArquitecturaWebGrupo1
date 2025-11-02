@@ -64,17 +64,19 @@ public class MonopatinService {
     public MonopatinResponseDTO cambiarEstadoMonopatin(String id, String estado) {
         Monopatin monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con id: " + id));
-        switch (estado){
-                case "mantenimiento":
-                    monopatin.setEstado(Estado.EN_MANTENIMIENTO);
-                    break;
-                case "en-uso":
-                    monopatin.setEstado(Estado.EN_USO);
-                    break;
-                default:
-                    monopatin.setEstado(Estado.DISPONIBLE);
+
+        // Convierte el string a enum, validando el valor
+        Estado estadoEnum;
+        try {
+            estadoEnum = Estado.valueOf(estado.trim().toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Estado incorrecto. Valores permitidos: "
+                    + java.util.Arrays.toString(Estado.values()));
         }
+
+        monopatin.setEstado(estadoEnum);
         monopatinRepository.save(monopatin);
+
         return MonopatinMapper.convertToDTO(monopatin);
     }
 
