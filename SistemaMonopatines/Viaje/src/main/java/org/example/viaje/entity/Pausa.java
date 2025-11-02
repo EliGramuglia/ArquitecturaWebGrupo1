@@ -23,4 +23,9 @@ public class Pausa {
 
     @Column(nullable = false)
     private LocalTime fin;
+
+    public Pausa(LocalTime inicio, LocalTime fin) {
+        this.inicio = inicio;
+        this.fin = fin;
+    }
 }

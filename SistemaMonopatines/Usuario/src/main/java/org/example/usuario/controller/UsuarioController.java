@@ -1,5 +1,6 @@
 package org.example.usuario.controller;
 
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
@@ -17,7 +18,7 @@ public class UsuarioController {
 
     /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
     @PostMapping("")
-    public ResponseEntity<UsuarioResponseDTO> create(@RequestBody UsuarioRequestDTO usuario){
+    public ResponseEntity<UsuarioResponseDTO> create(@Valid @RequestBody UsuarioRequestDTO usuario){
         UsuarioResponseDTO nuevo = service.save(usuario);
         return ResponseEntity.ok(nuevo);
     }
@@ -35,7 +36,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioResponseDTO> update(@PathVariable Long id, @RequestBody UsuarioRequestDTO usuario){
+    public ResponseEntity<UsuarioResponseDTO> update(@PathVariable Long id,@Valid @RequestBody UsuarioRequestDTO usuario){
         UsuarioResponseDTO usuarioEditado = service.update(id, usuario);
         return ResponseEntity.ok(usuarioEditado);
     }

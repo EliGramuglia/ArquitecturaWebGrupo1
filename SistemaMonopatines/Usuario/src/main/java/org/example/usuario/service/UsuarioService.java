@@ -19,7 +19,7 @@ public class UsuarioService {
 
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
-    public UsuarioResponseDTO save(@Valid UsuarioRequestDTO request) {
+    public UsuarioResponseDTO save(UsuarioRequestDTO request) {
         Optional<Usuario> usuario = usuarioRepository.findByEmail(request.getEmail());
         if (usuario.isPresent()) {
             throw new IllegalArgumentException("Ya hay un usuario registrado con ese email");
@@ -47,14 +47,13 @@ public class UsuarioService {
         Usuario usuarioEditar = usuarioRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No existe el usuario con id: " + id));
 
-        usuarioEditar.setId(id);
         usuarioEditar.setEmail(usuario.getEmail());
         usuarioEditar.setNombre(usuario.getNombre());
         usuarioEditar.setApellido(usuario.getApellido());
         usuarioEditar.setNroCelular(usuario.getNroCelular());
-        usuarioRepository.save(usuarioEditar);
 
-        return UsuarioMapper.convertToDTO(usuarioEditar);
+        Usuario usuarioPersistido = usuarioRepository.save(usuarioEditar);
+        return UsuarioMapper.convertToDTO(usuarioPersistido);
     }
 
     public void delete(Long id) {
