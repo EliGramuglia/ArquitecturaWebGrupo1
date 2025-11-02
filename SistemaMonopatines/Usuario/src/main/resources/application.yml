@@ -2,13 +2,13 @@ spring:
   application:
     name: Usuario
   datasource:
-    url: jdbc:mysql://localhost:3306/Usuario?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3306/usuarios?createDatabaseIfNotExist=true
     username: root
     password: ""
 
   jpa:
     hibernate:
-      ddl-auto: update  # crea/borra tablas autom�ticamente
+      ddl-auto: create-drop  # (PONER UPDATE) edita tablas autom�ticamente
     show-sql: true       # opcional, para ver las queries en consola
     properties:
       hibernate:

@@ -21,6 +21,7 @@ public class UsuarioRequestDTO {
     @NotNull(message = "El nroCelular es obligatorio")
     private Integer nroCelular;
 
-    @NotNull(message = "El roll es obligatorio")
+    @NotNull(message = "El rol es obligatorio")
     private Rol rol;
+
 }
