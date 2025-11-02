@@ -1,1 +1,15 @@
-spring.application.name=Tarifa
+spring:
+  application:
+    name: Tarifa
+  datasource:
+    url: jdbc:mysql://localhost:3306/tarifas?createDatabaseIfNotExist=true
+    username: root
+    password: ""
+
+  jpa:
+    hibernate:
+      ddl-auto: create-drop  # (PONER UPDATE) edita tablas autom?ticamente
+    show-sql: true       # opcional, para ver las queries en consola
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect

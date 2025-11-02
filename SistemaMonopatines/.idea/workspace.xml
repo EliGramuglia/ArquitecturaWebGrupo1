@@ -5,20 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="78c74711-7f99-4c0f-bd3c-f9d064ac12ed" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Parada/.gitattributes" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/mvnw" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/mvnw.cmd" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/src/main/java/org/example/parada/ParadaApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Parada/src/test/java/org/example/parada/ParadaApplicationTests.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tarifa/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Tarifa/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Tarifa/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/Tarifa/src/main/resources/application.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,10 +27,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
-  <component name="KubernetesApiPersistence"><![CDATA[{}]]></component>
-  <component name="KubernetesApiProvider"><![CDATA[{
-  "isMigrated": true
-}]]></component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -65,12 +51,11 @@
     "Application.UsuarioApplication.executor": "Run",
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
     "jdk.selected.JAVA_MODULE": "openjdk-24",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/maruj/Desktop/ArquitecturaWebGrupo1/SistemaMonopatines",
+    "last_opened_file_path": "C:/Users/afran/Documents/TUDAI/Arquitecturas/ArquitecturaWebGrupo1/SistemaMonopatines",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -79,7 +64,6 @@
     "project.structure.last.edited": "Project",
     "project.structure.proportion": "0.0",
     "project.structure.side.proportion": "0.0",
-    "run.configurations.included.in.services": "true",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -92,25 +76,7 @@
       <recent name="C:\Users\emanu\Desktop\Arquitectura Web\SistemaMonopatines\src\main\java\org\example\sistemamonopatines\cuenta" />
     </key>
   </component>
-  <component name="RunDashboard">
-    <option name="configurationTypes">
-      <set>
-        <option value="KtorApplicationConfigurationType" />
-        <option value="MicronautRunConfigurationType" />
-        <option value="QuarkusRunConfigurationType" />
-        <option value="SpringBootApplicationConfigurationType" />
-      </set>
-    </option>
-  </component>
-  <component name="RunManager" selected="Spring Boot.SistemaMonopatinesApplication">
-    <configuration name="ParadaApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
-      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
-      <module name="Parada" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="org.example.parada.ParadaApplication" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager">
     <configuration name="SistemaMonopatinesApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
       <module name="SistemaMonopatines" />
@@ -132,7 +98,6 @@
     <attachedChunks>
       <set>
         <option value="bundled-jdk-9823dce3aa75-bf35d07a577b-intellij.indexing.shared.core-IU-252.26830.84" />
-        <option value="bundled-js-predefined-d6986cc7102b-3aa1da707db6-JavaScript-IU-252.26830.84" />
       </set>
     </attachedChunks>
   </component>
@@ -145,7 +110,6 @@
       <option name="presentableId" value="Default" />
       <updated>1762021111114</updated>
       <workItem from="1762021112251" duration="8293000" />
-      <workItem from="1762091576444" duration="372000" />
     </task>
     <servers />
   </component>
