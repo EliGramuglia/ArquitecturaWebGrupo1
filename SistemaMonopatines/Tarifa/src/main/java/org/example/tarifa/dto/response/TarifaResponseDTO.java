@@ -12,7 +12,7 @@ import lombok.Setter;
 public class TarifaResponseDTO {
 
     private Long id;
-    private Integer monto;
+    private Double monto;
     private Long viajeId;
     private Long usuarioId;
 

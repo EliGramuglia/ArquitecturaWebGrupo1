@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class TarifaRequestDTO {
 
-    private Integer monto;
+    private Double monto;
     private Long viajeId;
     private Long usuarioId;
 
