@@ -50,7 +50,7 @@ public class MonopatinController {
     /*-------------------------- ENDPOINTS PARA EL SERVICIOS --------------------------*/
     @PutMapping("/{id}/estado/{estado}")
     public ResponseEntity<MonopatinResponseDTO> cambiarEstadoMonopatin(@PathVariable String id, @PathVariable String estado){
-        MonopatinResponseDTO monopatinEstado = service.enMantenimiento(id, estado);
+        MonopatinResponseDTO monopatinEstado = service.cambiarEstadoMonopatin(id, estado);
         return ResponseEntity.ok(monopatinEstado);
     }
 }
