@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 public class FacturacionResponseDTO {
     private Long id;
-    private Usuario cliente;
-    private Cuenta cuenta;
+    private Long idCliente;
+    private Long idCuenta;
 
 }

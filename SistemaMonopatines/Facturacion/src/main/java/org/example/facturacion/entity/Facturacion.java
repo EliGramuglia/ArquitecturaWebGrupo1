@@ -17,13 +17,13 @@ public class Facturacion {
     private Long id;
 
     @Column(nullable = false)
-    private Usuario cliente;
+    private Long idCliente;
 
     @Column(nullable = false)
-    private Cuenta cuenta;
+    private Long idCuenta;
 
-    public Facturacion(Usuario cliente, Cuenta cuenta) {
-        this.cliente = cliente;
-        this.cuenta = cuenta;
+    public Facturacion(Long cliente, Long cuenta) {
+        this.idCliente = cliente;
+        this.idCuenta = cuenta;
     }
 }

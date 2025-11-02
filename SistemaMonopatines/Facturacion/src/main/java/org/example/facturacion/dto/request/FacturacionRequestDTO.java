@@ -12,9 +12,9 @@ import lombok.Setter;
 @Setter
 public class FacturacionRequestDTO {
     @NotNull(message = "El cliente es obligatorio")
-    private Usuario cliente;
+    private Long idCliente;
 
     @NotNull(message = "La cuenta es obligatorio")
-    private Cuenta cuenta;
+    private Long idCuenta;
 
 }

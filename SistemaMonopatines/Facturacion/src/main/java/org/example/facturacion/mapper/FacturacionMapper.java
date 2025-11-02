@@ -11,15 +11,15 @@ public class FacturacionMapper {
     public static FacturacionResponseDTO convertToDTO(Facturacion facturacion) {
         return new FacturacionResponseDTO(
                 facturacion.getId(),
-                facturacion.getCliente(),
-                facturacion.getCuenta()
+                facturacion.getIdCliente(),
+                facturacion.getIdCuenta()
         );
     }
 
     public static Facturacion convertToEntity(FacturacionRequestDTO facturacionResponseDTO) {
         return new Facturacion(
-                facturacionResponseDTO.getCliente(),
-                facturacionResponseDTO.getCuenta()
+                facturacionResponseDTO.getIdCliente(),
+                facturacionResponseDTO.getIdCuenta()
         );
     }
 }

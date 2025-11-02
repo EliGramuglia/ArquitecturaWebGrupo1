@@ -42,8 +42,8 @@ public class FacturacionService {
                 .orElseThrow(() -> new IllegalArgumentException("No existe la factura con id: " + id));
 
         facturacionEditar.setId(id);
-        facturacionEditar.setCliente(facturacion.getCliente());
-        facturacionEditar.setCuenta(facturacion.getCuenta());
+        facturacionEditar.setIdCliente(facturacion.getIdCliente());
+        facturacionEditar.setIdCuenta(facturacion.getIdCuenta());
 
         return FacturacionMapper.convertToDTO(facturacionEditar);
     }
