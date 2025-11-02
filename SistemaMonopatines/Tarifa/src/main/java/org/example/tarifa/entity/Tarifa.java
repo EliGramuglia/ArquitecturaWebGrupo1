@@ -1,15 +1,11 @@
 package org.example.tarifa.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
 
 @Entity
 @AllArgsConstructor
@@ -23,7 +19,7 @@ public class Tarifa {
     private Long id;
 
     @Column(nullable = false)
-    private Integer monto;
+    private Double monto;
 
     @Column(nullable = false)
     private Long viajeId;
@@ -31,12 +27,18 @@ public class Tarifa {
     @Column(nullable = false)
     private Long usuarioId;
 
-    public Tarifa(@NotNull(message = "El monto es obligatorio") Integer monto, @NotNull(message = "El viajeId es obligatorio") Long viajeId, @NotNull(message = "El usuarioId es obligatorio") Long usuarioId) {
+    @Column(nullable = false)
+    private Double extra;
+
+    public Tarifa(@NotNull(message = "El monto es obligatorio") Double monto, @NotNull(message = "El viajeId es obligatorio") Long viajeId, @NotNull(message = "El usuarioId es obligatorio") Long usuarioId) {
         this.monto = monto;
         this.viajeId = viajeId;
         this.usuarioId = usuarioId;
     }
 
+    public Double getExtra() {
+        return monto + extra;
+    }
     // Debo guardar también info de idMonopatin o el viaje ya lo tiene?
 
 }

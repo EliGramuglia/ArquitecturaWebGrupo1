@@ -9,4 +9,4 @@ services:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_DATABASE: tarifas
     ports:
-      - "3306:3306"
+      - "3305:3305"

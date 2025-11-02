@@ -7,6 +7,7 @@ import org.example.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.monopatin.entity.Monopatin;
 import org.example.monopatin.mapper.MonopatinMapper;
 import org.example.monopatin.repository.MonopatinRepository;
+import org.example.monopatin.utils.Estado;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -57,6 +58,24 @@ public class MonopatinService {
         Monopatin monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró un Monopatin con el id: "+ id));
         monopatinRepository.delete(monopatin);
+    }
+
+    /*-------------------------- ENDPOINTS SERVICIOS --------------------------*/
+    public MonopatinResponseDTO cambiarEstadoMonopatin(String id, String estado) {
+        Monopatin monopatin = monopatinRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con id: " + id));
+        switch (estado){
+                case "mantenimiento":
+                    monopatin.setEstado(Estado.EN_MANTENIMIENTO);
+                    break;
+                case "en-uso":
+                    monopatin.setEstado(Estado.EN_USO);
+                    break;
+                default:
+                    monopatin.setEstado(Estado.DISPONIBLE);
+        }
+        monopatinRepository.save(monopatin);
+        return MonopatinMapper.convertToDTO(monopatin);
     }
 
 }
