@@ -2,6 +2,7 @@ package org.example.usuario.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.example.usuario.utils.Rol;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,4 +21,6 @@ public class UsuarioRequestDTO {
     @NotNull(message = "El nroCelular es obligatorio")
     private Integer nroCelular;
 
+    @NotNull(message = "El roll es obligatorio")
+    private Rol rol;
 }
