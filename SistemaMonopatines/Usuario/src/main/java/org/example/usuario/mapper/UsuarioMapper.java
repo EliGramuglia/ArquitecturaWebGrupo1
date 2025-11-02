@@ -23,7 +23,8 @@ public class UsuarioMapper {
                 usuarioResponseDTO.getNombre(),
                 usuarioResponseDTO.getApellido(),
                 usuarioResponseDTO.getEmail(),
-                usuarioResponseDTO.getNroCelular()
+                usuarioResponseDTO.getNroCelular(),
+                usuarioResponseDTO.getRol()
         );
     }
 }

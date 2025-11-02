@@ -38,13 +38,14 @@ public class Usuario {
     @ElementCollection
     private List<Integer> cuentasId; // Guarda todos los ids de las cuentas asociadas
 
-    @Column (unique = true, nullable = false)
+    @Column (nullable = false)
     private Rol rol;
 
-    public Usuario(@NotNull(message = "El nombre es obligatorio") String nombre, @NotNull(message = "El apellido es obligatorio") String apellido, @NotNull(message = "El email es obligatorio") String email, @NotNull(message = "El nroCelular es obligatorio") Integer nroCelular) {
+    public Usuario(@NotNull(message = "El nombre es obligatorio") String nombre, @NotNull(message = "El apellido es obligatorio") String apellido, @NotNull(message = "El email es obligatorio") String email, @NotNull(message = "El nroCelular es obligatorio") Integer nroCelular, @NotNull(message = "El rol es obligatorio") Rol rol) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.nroCelular = nroCelular;
+        this.rol = rol;
     }
 }

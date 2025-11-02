@@ -8,7 +8,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create-drop  # crea/borra tablas automáticamente
+      ddl-auto: create-drop  # (PONER UPDATE) edita tablas automï¿½ticamente
     show-sql: true       # opcional, para ver las queries en consola
     properties:
       hibernate:
