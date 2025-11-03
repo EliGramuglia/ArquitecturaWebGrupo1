@@ -1,6 +1,7 @@
 package org.example.viaje.mapper;
 
-import org.example.viaje.dto.PausaDTO;
+import org.example.viaje.dto.request.PausaRequestDTO;
+import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.entity.Pausa;
 import org.springframework.stereotype.Component;
 
@@ -10,9 +11,10 @@ import java.time.Duration;
 public class PausaMapper {
 
     // Convierte de entidad a dto
-    public static PausaDTO convertToDTO(Pausa pausa) {
+    public static PausaResponseDTO convertToDTO(Pausa pausa) {
         if (pausa == null) return null;
-        PausaDTO dto = new PausaDTO(
+        PausaResponseDTO dto = new PausaResponseDTO(
+                pausa.getId(),
                 pausa.getInicio(),
                 pausa.getFin()
         );
@@ -24,7 +26,7 @@ public class PausaMapper {
     }
 
     // Convierte de dto a entity
-    public static Pausa convertToEntity(PausaDTO dto) {
+    public static Pausa convertToEntity(PausaRequestDTO dto) {
         if (dto == null) return null;
         return new Pausa(
                 dto.getInicio(),

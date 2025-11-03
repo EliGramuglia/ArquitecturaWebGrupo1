@@ -1,10 +1,9 @@
 package org.example.viaje.service;
 
 import jakarta.transaction.Transactional;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.viaje.dto.PausaDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
+import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.entity.Pausa;
 import org.example.viaje.entity.Viaje;
@@ -12,11 +11,9 @@ import org.example.viaje.mapper.PausaMapper;
 import org.example.viaje.mapper.ViajeMapper;
 import org.example.viaje.repository.ViajeRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -79,7 +76,7 @@ public class ViajeService {
     }
 
     /*-------------------- ENDPOINTS ANIDADOS PARA PAUSAR EL VIAJE -----------------------*/
-    public PausaDTO iniciarPausa(Long viajeId) {
+    public PausaResponseDTO iniciarPausa(Long viajeId) {
         Viaje viaje = viajeRepository.findById(viajeId)
                 .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
 
@@ -92,14 +89,15 @@ public class ViajeService {
         Pausa pausa = new Pausa();
         pausa.setInicio(LocalTime.now());
         pausa.setFin(null);
+        pausa.setViaje(viaje);
 
         viaje.getPausas().add(pausa);
-        viajeRepository.save(viaje);
+        viajeRepository.saveAndFlush(viaje);
         return PausaMapper.convertToDTO(pausa);
     }
 
     @Transactional // Si cualquier error ocurre dentro del método, toda la transacción se revierte automáticamente y la base de datos queda como estaba antes de llamar ese método.
-    public PausaDTO finalizarPausa(Long viajeId, Long pausaId) {
+    public PausaResponseDTO finalizarPausa(Long viajeId, Long pausaId) {
         Viaje viaje = viajeRepository.findById(viajeId)
                 .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
         // Buscar la pausa dentro de la lista
@@ -119,7 +117,7 @@ public class ViajeService {
         return PausaMapper.convertToDTO(pausa);
     }
 
-    public List<PausaDTO> getPausas(Long viajeId) {
+    public List<PausaResponseDTO> getPausas(Long viajeId) {
         Viaje viaje = viajeRepository.findById(viajeId)
                 .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
 

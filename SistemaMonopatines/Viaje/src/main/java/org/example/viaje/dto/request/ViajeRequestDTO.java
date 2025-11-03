@@ -5,7 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.viaje.dto.PausaDTO;
+import org.example.viaje.dto.response.PausaResponseDTO;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -38,5 +39,5 @@ public class ViajeRequestDTO {
     @NotNull(message = "El cliente que hizo uso del monopatin es obligatorio")
     private Long idCliente;
 
-    private List<PausaDTO> pausas;
+    private List<PausaRequestDTO> pausas;
 }

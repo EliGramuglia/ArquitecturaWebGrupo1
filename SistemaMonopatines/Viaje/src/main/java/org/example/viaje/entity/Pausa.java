@@ -21,8 +21,12 @@ public class Pausa {
     @Column(nullable = false)
     private LocalTime inicio;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private LocalTime fin;
+
+    @ManyToOne
+    @JoinColumn(name = "viaje_id")
+    private Viaje viaje;
 
     public Pausa(LocalTime inicio, LocalTime fin) {
         this.inicio = inicio;
