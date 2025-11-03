@@ -3,7 +3,7 @@ package org.example.usuario.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.usuario.utils.Estado;
+import org.example.usuario.utils.cuenta.EstadoCuenta;
 
 import java.time.LocalDate;
 
@@ -13,6 +13,6 @@ import java.time.LocalDate;
 public class CuentaResponseDTO {
     private Long nroCuenta;
     private LocalDate fecha_alta;
-    private Estado estado;
+    private EstadoCuenta estadoCuenta;
     private Integer monto;
 }

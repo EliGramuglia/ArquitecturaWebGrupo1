@@ -9,4 +9,4 @@ services:
       MYSQL_ROOT_PASSWORD: ""
       MYSQL_DATABASE: usuarios
     ports:
-      - "3306:3306"
+      - "3303:3306"

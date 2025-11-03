@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.monopatin.utils.Estado;
+import org.example.monopatin.utils.EstadoMonopatin;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -17,6 +17,6 @@ public class MonopatinResponseDTO {
     private Integer longitud;
     private Integer kmRecorridos;
     private Long viajeId;
-    private Estado estado;
+    private EstadoMonopatin estadoMonopatin;
 
 }

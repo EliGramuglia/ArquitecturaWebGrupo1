@@ -37,10 +37,10 @@ public class Viaje {
     @Column(nullable = false)
     private Double tarifa;
 
-    @Column(nullable = false)
+    @Column(name="id_monopatin", nullable = false)
     private Long idMonopatin;
 
-    @Column(nullable = false)
+    @Column(name="id_cliente", nullable = false)
     private Long idCliente;
 
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true)

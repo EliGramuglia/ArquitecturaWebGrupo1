@@ -11,7 +11,7 @@ public class CuentaMapper {
         return new CuentaResponseDTO(
                 cuenta.getNroCuenta(),
                 cuenta.getFecha_alta(),
-                cuenta.getEstado(),
+                cuenta.getEstadoCuenta(),
                 cuenta.getMonto()
         );
     }
@@ -19,7 +19,7 @@ public class CuentaMapper {
     public static Cuenta convertToEntity(CuentaRequestDTO cuentaResponseDTO) {
         return new Cuenta(
                 cuentaResponseDTO.getFecha_alta(),
-                cuentaResponseDTO.getEstado(),
+                cuentaResponseDTO.getEstadoCuenta(),
                 cuentaResponseDTO.getMonto()
         );
     }

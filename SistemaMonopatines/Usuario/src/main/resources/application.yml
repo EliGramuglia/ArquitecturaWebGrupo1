@@ -2,7 +2,7 @@ spring:
   application:
     name: Usuario
   datasource:
-    url: jdbc:mysql://localhost:3306/usuarios?createDatabaseIfNotExist=true
+    url: jdbc:mysql://localhost:3303/usuarios?createDatabaseIfNotExist=true
     username: root
     password: ""
 

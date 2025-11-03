@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.usuario.utils.Estado;
+import org.example.usuario.utils.cuenta.EstadoCuenta;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,7 +25,7 @@ public class Cuenta {
     private LocalDate fecha_alta;
 
     @Column
-    private Estado estado;
+    private EstadoCuenta estadoCuenta;
 
     @Column
     private Integer monto;
@@ -33,9 +33,9 @@ public class Cuenta {
     @ManyToMany
     private List<Usuario> clientes;
 
-    public Cuenta(@NotNull(message = "La fecha de alta es obligatoria") LocalDate fechaAlta, @NotNull(message = "El estado es obligatorio") Estado estado, @NotNull(message = "El monto es obligatorio") Integer monto) {
+    public Cuenta(@NotNull(message = "La fecha de alta es obligatoria") LocalDate fechaAlta, @NotNull(message = "El estado es obligatorio") EstadoCuenta estadoCuenta, @NotNull(message = "El monto es obligatorio") Integer monto) {
         this.fecha_alta = fechaAlta;
-        this.estado = estado;
+        this.estadoCuenta = estadoCuenta;
         this.monto = monto;
     }
 }

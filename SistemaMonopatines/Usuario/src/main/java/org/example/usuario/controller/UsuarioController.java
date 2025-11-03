@@ -2,6 +2,8 @@ package org.example.usuario.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
+import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
 import org.example.usuario.service.UsuarioService;
@@ -45,6 +47,13 @@ public class UsuarioController {
     public ResponseEntity<UsuarioResponseDTO> delete(@PathVariable Long id){
        service.delete(id);
        return ResponseEntity.noContent().build();
+    }
+
+    /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
+    @PostMapping("/monopatines/create")
+    public ResponseEntity<MonopatinResponseDTO> create(@RequestBody MonopatinRequestDTO monopatin){
+        MonopatinResponseDTO nuevo = service.saveMonopatin(monopatin);
+        return ResponseEntity.ok(nuevo);
     }
 }
 /*

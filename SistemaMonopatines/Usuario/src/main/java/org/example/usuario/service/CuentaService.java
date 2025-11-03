@@ -8,7 +8,7 @@ import org.example.usuario.dto.response.CuentaResponseDTO;
 import org.example.usuario.entity.Cuenta;
 import org.example.usuario.mapper.CuentaMapper;
 import org.example.usuario.repository.CuentaRepository;
-import org.example.usuario.utils.Estado;
+import org.example.usuario.utils.cuenta.EstadoCuenta;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -46,7 +46,7 @@ public class CuentaService {
 
         cuentaEditar.setNroCuenta(nroCuenta);
         cuentaEditar.setFecha_alta(cuenta.getFecha_alta());
-        cuentaEditar.setEstado(cuenta.getEstado());
+        cuentaEditar.setEstadoCuenta(cuenta.getEstadoCuenta());
         cuentaEditar.setMonto(cuenta.getMonto());
         cuentaRepository.save(cuentaEditar);
 
@@ -65,15 +65,15 @@ public class CuentaService {
         Cuenta cuenta = cuentaRepository.findById(nroCuenta)
                 .orElseThrow(() -> new EntityNotFoundException("Cuenta no encontrada"));
 
-        Estado estadoEnum;
+        EstadoCuenta estadoCuentaEnum;
         try {
-            estadoEnum = Estado.valueOf(estado.trim().toUpperCase());
+            estadoCuentaEnum = EstadoCuenta.valueOf(estado.trim().toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Estado incorrecto. Valores permitidos: "
-                    + java.util.Arrays.toString(Estado.values()));
+                    + java.util.Arrays.toString(EstadoCuenta.values()));
         }
 
-        cuenta.setEstado(estadoEnum);
+        cuenta.setEstadoCuenta(estadoCuentaEnum);
         cuentaRepository.save(cuenta);
 
         return cuentaMapper.convertToDTO(cuenta);

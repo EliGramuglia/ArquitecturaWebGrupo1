@@ -7,7 +7,7 @@ import org.example.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.monopatin.entity.Monopatin;
 import org.example.monopatin.mapper.MonopatinMapper;
 import org.example.monopatin.repository.MonopatinRepository;
-import org.example.monopatin.utils.Estado;
+import org.example.monopatin.utils.EstadoMonopatin;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -47,7 +47,7 @@ public class MonopatinService {
         monopatinEditar.setLongitud(monopatin.getLongitud());
         monopatinEditar.setKmRecorridos(monopatin.getKmRecorridos());
         monopatinEditar.setViajeId(monopatin.getViajeId());
-        monopatinEditar.setEstado(monopatin.getEstado());
+        monopatinEditar.setEstadoMonopatin(monopatin.getEstadoMonopatin());
         monopatinEditar.setHorasUso(monopatin.getHorasUso());
         monopatinRepository.save(monopatinEditar);
 
@@ -66,15 +66,15 @@ public class MonopatinService {
                 .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con id: " + id));
 
         // Convierte el string a enum, validando el valor
-        Estado estadoEnum;
+        EstadoMonopatin estadoMonopatinEnum;
         try {
-            estadoEnum = Estado.valueOf(estado.trim().toUpperCase());
+            estadoMonopatinEnum = EstadoMonopatin.valueOf(estado.trim().toUpperCase());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Estado incorrecto. Valores permitidos: "
-                    + java.util.Arrays.toString(Estado.values()));
+                    + java.util.Arrays.toString(EstadoMonopatin.values()));
         }
 
-        monopatin.setEstado(estadoEnum);
+        monopatin.setEstadoMonopatin(estadoMonopatinEnum);
         monopatinRepository.save(monopatin);
 
         return MonopatinMapper.convertToDTO(monopatin);

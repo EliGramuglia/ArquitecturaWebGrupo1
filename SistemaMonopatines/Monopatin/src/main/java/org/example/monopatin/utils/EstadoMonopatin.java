@@ -1,6 +1,6 @@
 package org.example.monopatin.utils;
 
-public enum Estado {
+public enum EstadoMonopatin {
 
     DISPONIBLE,
     EN_MANTENIMIENTO,
