@@ -53,7 +53,8 @@ public class UsuarioService {
         usuarioEditar.setNombre(usuario.getNombre());
         usuarioEditar.setApellido(usuario.getApellido());
         usuarioEditar.setNroCelular(usuario.getNroCelular());
-
+        usuarioEditar.setLatitud(usuario.getLatitud());
+        usuarioEditar.setLongitud(usuario.getLongitud());
         Usuario usuarioPersistido = usuarioRepository.save(usuarioEditar);
         return UsuarioMapper.convertToDTO(usuarioPersistido);
     }

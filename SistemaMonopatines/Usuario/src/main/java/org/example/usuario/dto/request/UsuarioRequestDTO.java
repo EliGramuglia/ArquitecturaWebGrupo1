@@ -1,5 +1,6 @@
 package org.example.usuario.dto.request;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import org.example.usuario.utils.Rol;
@@ -23,5 +24,8 @@ public class UsuarioRequestDTO {
 
     @NotNull(message = "El rol es obligatorio")
     private Rol rol;
+
+    private Integer latitud;
+    private Integer longitud;
 
 }
