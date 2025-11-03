@@ -1,11 +1,12 @@
-package org.example.cuenta.dto.request;
+package org.example.usuario.dto.request;
+
 
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.cuenta.utils.Estado;
+import org.example.usuario.utils.Estado;
 
 import java.time.LocalDate;
 

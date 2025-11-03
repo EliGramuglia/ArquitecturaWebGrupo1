@@ -1,9 +1,9 @@
-package org.example.cuenta.dto.response;
+package org.example.usuario.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.cuenta.utils.Estado;
+import org.example.usuario.utils.Estado;
 
 import java.time.LocalDate;
 

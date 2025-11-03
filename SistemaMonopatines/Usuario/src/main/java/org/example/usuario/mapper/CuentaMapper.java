@@ -1,13 +1,12 @@
-package org.example.cuenta.mapper;
+package org.example.usuario.mapper;
 
-import org.example.cuenta.dto.request.CuentaRequestDTO;
-import org.example.cuenta.dto.response.CuentaResponseDTO;
-import org.example.cuenta.entity.Cuenta;
+import org.example.usuario.dto.request.CuentaRequestDTO;
+import org.example.usuario.dto.response.CuentaResponseDTO;
+import org.example.usuario.entity.Cuenta;
 import org.springframework.stereotype.Component;
 
 @Component
 public class CuentaMapper {
-
     public static CuentaResponseDTO convertToDTO(Cuenta cuenta) {
         return new CuentaResponseDTO(
                 cuenta.getNroCuenta(),

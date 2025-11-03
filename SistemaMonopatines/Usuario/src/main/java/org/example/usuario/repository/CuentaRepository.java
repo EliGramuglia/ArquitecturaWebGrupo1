@@ -1,8 +1,7 @@
-package org.example.cuenta.repository;
+package org.example.usuario.repository;
 
-import org.example.cuenta.entity.Cuenta;
+import org.example.usuario.entity.Cuenta;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CuentaRepository extends JpaRepository<Cuenta, Long> {
-
 }

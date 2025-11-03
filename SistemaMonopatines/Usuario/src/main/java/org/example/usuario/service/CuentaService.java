@@ -1,14 +1,14 @@
-package org.example.cuenta.service;
+package org.example.usuario.service;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.cuenta.dto.request.CuentaRequestDTO;
-import org.example.cuenta.dto.response.CuentaResponseDTO;
-import org.example.cuenta.entity.Cuenta;
-import org.example.cuenta.mapper.CuentaMapper;
-import org.example.cuenta.repository.CuentaRepository;
-import org.example.cuenta.utils.Estado;
+import org.example.usuario.dto.request.CuentaRequestDTO;
+import org.example.usuario.dto.response.CuentaResponseDTO;
+import org.example.usuario.entity.Cuenta;
+import org.example.usuario.mapper.CuentaMapper;
+import org.example.usuario.repository.CuentaRepository;
+import org.example.usuario.utils.Estado;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

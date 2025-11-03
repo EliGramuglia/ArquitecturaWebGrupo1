@@ -30,14 +30,14 @@ public class Usuario {
     @Column
     private Integer nroCelular;
 
-    @Column(unique = true, nullable = false)
+    @Column (unique = true, nullable = false)
     @Email
     private String email;
 
-    @ManyToMany
+    @ElementCollection
     private List<Cuenta> cuentasId; // Guarda todos los ids de las cuentas asociadas
 
-    @Column(nullable = false)
+    @Column (nullable = false)
     private Rol rol;
 
     public Usuario(@NotNull(message = "El nombre es obligatorio") String nombre, @NotNull(message = "El apellido es obligatorio") String apellido, @NotNull(message = "El email es obligatorio") String email, @NotNull(message = "El nroCelular es obligatorio") Integer nroCelular, @NotNull(message = "El rol es obligatorio") Rol rol) {
@@ -47,4 +47,5 @@ public class Usuario {
         this.nroCelular = nroCelular;
         this.rol = rol;
     }
+
 }

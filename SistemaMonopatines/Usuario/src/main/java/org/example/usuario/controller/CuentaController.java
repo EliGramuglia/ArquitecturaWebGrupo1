@@ -1,9 +1,10 @@
-package org.example.cuenta.controller;
+package org.example.usuario.controller;
+
 
 import lombok.AllArgsConstructor;
-import org.example.cuenta.dto.request.CuentaRequestDTO;
-import org.example.cuenta.dto.response.CuentaResponseDTO;
-import org.example.cuenta.service.CuentaService;
+import org.example.usuario.dto.request.CuentaRequestDTO;
+import org.example.usuario.dto.response.CuentaResponseDTO;
+import org.example.usuario.service.CuentaService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,7 +12,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/cuentas")
+@RequestMapping ("/usuarios/cuentas")
 public class CuentaController {
     private final CuentaService service;
 
@@ -21,7 +22,6 @@ public class CuentaController {
         CuentaResponseDTO nuevo = service.save(cuenta);
         return ResponseEntity.ok(nuevo);
     }
-
     @GetMapping("")
     public ResponseEntity<List<CuentaResponseDTO>> getAll(){
         List<CuentaResponseDTO> cuentas = service.findAll();
@@ -42,8 +42,8 @@ public class CuentaController {
 
     @DeleteMapping("/{nroCuenta}")
     public ResponseEntity<CuentaResponseDTO> delete(@PathVariable Long nroCuenta){
-       service.delete(nroCuenta);
-       return ResponseEntity.noContent().build();
+        service.delete(nroCuenta);
+        return ResponseEntity.noContent().build();
     }
 
     /*-------------------------- ENDPOINTS SERVICIOS --------------------------*/
@@ -55,7 +55,3 @@ public class CuentaController {
     }
 
 }
-/*
-@PreAuthorize
-@PreAuthorize(ADMINISTRADOR)
- */

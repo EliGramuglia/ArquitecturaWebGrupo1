@@ -1,6 +1,5 @@
 package org.example.usuario.service;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
