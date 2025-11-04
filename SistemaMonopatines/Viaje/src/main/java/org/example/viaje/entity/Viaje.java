@@ -34,19 +34,19 @@ public class Viaje {
     @Column(name = "parada_final", nullable = false)
     private Long idParadaFinal;
 
-    @Column(nullable = false)
-    private Double tarifa;
-
     @Column(name="id_monopatin", nullable = false)
     private Long idMonopatin;
 
     @Column(name="id_cliente", nullable = false)
-    private Long idCliente;
+    private Long idCliente; // ponerle Usuario
 
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pausa> pausas = new ArrayList<>();
 
-    public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Double tarifa, Long idMonopatin, Long idCliente) {
+    @OneToOne
+    private Tarifa tarifa; // INSTANCIA DE TARIFA ??? PREGUNTAR
+
+    public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, Long idMonopatin, Long idCliente) {
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.kmRecorridos = kmRecorridos;

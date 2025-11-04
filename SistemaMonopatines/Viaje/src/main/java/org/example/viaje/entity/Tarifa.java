@@ -1,4 +1,4 @@
-package org.example.tarifa.entity;
+package org.example.viaje.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -7,13 +7,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Entity
 public class Tarifa {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -22,10 +21,7 @@ public class Tarifa {
     private Double monto;
 
     @Column(nullable = false)
-    private Long viajeId;
-
-    @Column(nullable = false)
-    private Long usuarioId;
+    private Viaje viajeId;
 
     @Column(nullable = false)
     private Double extra;
@@ -33,12 +29,9 @@ public class Tarifa {
     public Tarifa(@NotNull(message = "El monto es obligatorio") Double monto, @NotNull(message = "El viajeId es obligatorio") Long viajeId, @NotNull(message = "El usuarioId es obligatorio") Long usuarioId) {
         this.monto = monto;
         this.viajeId = viajeId;
-        this.usuarioId = usuarioId;
     }
 
     public Double getExtra() {
         return monto + extra;
     }
-
-
 }

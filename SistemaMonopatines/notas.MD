@@ -1,30 +1,48 @@
-1ra ENTREGA
-- Realizar un modelamiento de las distintas funcionalidades y datos que debe guardar el sistema. Este
-   modelamiento debe ser capturado en términos de (sub-)dominios, apuntando a un diseño con
-   microservicios.
-
-Ajustar el diseño anterior para implementar los siguientes servicios/reportes:
-- Como administrador quiero poder generar un reporte de uso de monopatines por kilómetros
-   para establecer si un monopatín requiere de mantenimiento. Este reporte debe poder
-   configurarse para incluir (o no) los tiempos de pausa.
-
-- Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
-- Como administrador quiero consultar el total facturado en un rango de meses de cierto año.
-- Como administrador quiero ver los usuarios que más utilizan los monopatines, filtrado por
-   período y por tipo de usuario.
-- Como administrador quiero hacer un ajuste de precios, y que a partir de cierta fecha el sistema
-   habilite los nuevos precios.
-- Como usuario quiero buscar un listado de los monopatines cercanos a mi zona, para poder
-   encontrar un monopatín cerca de mi ubicación
-- Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
-   otros usuarios relacionados a mi cuenta los han usado.
-
 TODO:
-- Ubicar monopatín en parada (opcional)
-- Registrar parada
-- Quitar parada
 - Definir tarifa extra para reinicio por pausa extensa
 - Generar reporte de uso de monopatines por kilómetros, por tiempo (con y sin pausas)
+
+- Realizar un modelamiento de las distintas funcionalidades y datos que debe guardar el sistema. Este
+  modelamiento debe ser capturado en términos de (sub-)dominios, apuntando a un diseño con
+  microservicios.
+
+- Como administrador quiero poder generar un reporte de uso de monopatines por kilómetros
+  para establecer si un monopatín requiere de mantenimiento. Este reporte debe poder
+  configurarse para incluir (o no) los tiempos de pausa.
+
+- Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+  (VIAJE)
+
+- Como administrador quiero ver los usuarios que más utilizan los monopatines, filtrado por
+  período y por tipo de usuario. (en VIAJE)
+MAX idUsuario between mes1 a mes2 GROUP BY premium - comunes
+
+- Como administrador quiero hacer un ajuste de precios, y que a partir de cierta fecha el sistema
+  habilite los nuevos precios. CONSULTAR!!!!! ES UN UPDATE DEL CAMPO TARIFA EN VIAJE ?? CON EL SETTER
+
+- Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
+  otros usuarios relacionados a mi cuenta los han usado.
+  
+
+ELI:
+arreglo el micro viaje
+- Como administrador quiero consultar el total facturado en un rango de meses de cierto año.
+  /viajes/total-facturado -> count getTarifa() between mes1 a mes2 AND año=año
+
+MARI:
+- Como usuario quiero buscar un listado de los monopatines cercanos a mi zona, para poder
+  encontrar un monopatín cerca de mi ubicación
+  EN USUARIO HACER UN ENDPOINT
+
+FRAN:
+MONOPATIN -> FEIGNCLIENT DE VIAJE
+- Registrar parada
+- Quitar parada
+- CRUDO COMPLETO
+- Ubicar monopatín en parada (opcional)
+
+
+
 
 
 DONE:
