@@ -54,6 +54,7 @@ DONE:
 - Anular cuenta
 - Como administrador quiero poder anular cuentas de usuarios, para inhabilitar el uso
   momentáneo de la aplicación.
+
 - Una vez validado el modelamiento, generar las entidades y relaciones correspondientes, y mapearlo
     a una base de datos SQL. En ciertos casos (por ej., recorridos), puede utilizarse una base NoSQL (por
     ej., MongoDB)
@@ -61,3 +62,20 @@ DONE:
     así poblar y gestionar la(s) base(s) de datos) y dar soporte a las principales funcionalidades antes
     mencionadas. En este diseño, considerar que cada microservicio contará (preferentemente) con una
     base de datos separada.
+
+
+
+DUDAS: 
+- Anular cuenta
+- Como administrador quiero poder anular cuentas de usuarios, para inhabilitar el uso
+  momentáneo de la aplicación.
+
+El microservicio Usuario (Luego con la validación, Admin) tendría el endpoint, o está bien
+por ej iniciar desde CuentaController?
+
+La tarifa puede quedar sin fecha de fin de vigencia ?
+Si tiene que tener fecha ed vigencia -> Agregar en la Entidad Tarifa (cuando se crea la tabla) Not NUll
+Si puede crearse sin fecha de fin de vigencia -> Agregar en el metodo que crea tarifas esto
+ultimaTarifa.setFechaFinVigencia(nuevaTarifa.getFechaInicioVigencia().minusDays(1));
+tarifaRepository.save(ultimaTarifa);
+para que le settee la fecha de ayer y entonces finalice la tarifa y entre en vigencia la actual.

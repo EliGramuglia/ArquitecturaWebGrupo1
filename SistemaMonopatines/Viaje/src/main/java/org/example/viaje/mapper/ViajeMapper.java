@@ -2,6 +2,7 @@ package org.example.viaje.mapper;
 
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
+import org.example.viaje.dto.response.TarifaResponseDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.entity.Pausa;
 import org.example.viaje.entity.Viaje;
@@ -19,6 +20,8 @@ public class ViajeMapper {
                 .map(PausaMapper::convertToDTO)
                 .toList();
 
+        TarifaResponseDTO tarifaDTO = TarifaMapper.convertToDTO(entity.getTarifa());
+
         return new ViajeResponseDTO(
                 entity.getId(),
                 entity.getFechaHoraInicio(),
@@ -26,10 +29,10 @@ public class ViajeMapper {
                 entity.getKmRecorridos(),
                 entity.getIdParadaInicio(),
                 entity.getIdParadaFinal(),
-                entity.getTarifa(),
                 entity.getIdMonopatin(),
                 entity.getIdCliente(),
-                pausasDTO
+                pausasDTO,
+                tarifaDTO
         );
     }
 
@@ -41,7 +44,7 @@ public class ViajeMapper {
                 dto.getKmRecorridos(),
                 dto.getIdParadaInicio(),
                 dto.getIdParadaFinal(),
-                dto.getTarifa(),
+                null,
                 dto.getIdMonopatin(),
                 dto.getIdCliente()
         );

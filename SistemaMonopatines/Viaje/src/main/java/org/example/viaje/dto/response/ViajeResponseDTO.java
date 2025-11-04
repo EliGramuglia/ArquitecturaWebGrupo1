@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -19,8 +18,8 @@ public class ViajeResponseDTO {
     private Double kmRecorridos;
     private Long idParadaInicio;
     private Long idParadaFinal;
-    private Double tarifa;
     private Long idMonopatin;
     private Long idCliente;
     private List<PausaResponseDTO> pausas;
+    private TarifaResponseDTO tarifa;
 }

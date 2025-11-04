@@ -43,8 +43,9 @@ public class Viaje {
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pausa> pausas = new ArrayList<>();
 
-    @OneToOne
-    private Tarifa tarifa; // INSTANCIA DE TARIFA ??? PREGUNTAR
+    @ManyToOne(fetch = FetchType.LAZY) // Una misma tarifa se aplica a muchos viajes (por ejemplo, todos los viajes del mes de noviembre usan la misma tarifa).
+    @JoinColumn(name = "tarifa_id") // Nombre de la columna que se va a crear en la tabla viaje para guardar el ID de la tarifa asociada
+    private Tarifa tarifa;
 
     public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, Long idMonopatin, Long idCliente) {
         this.fechaHoraInicio = fechaHoraInicio;

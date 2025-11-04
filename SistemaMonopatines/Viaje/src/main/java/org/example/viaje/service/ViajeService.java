@@ -6,9 +6,11 @@ import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.entity.Pausa;
+import org.example.viaje.entity.Tarifa;
 import org.example.viaje.entity.Viaje;
 import org.example.viaje.mapper.PausaMapper;
 import org.example.viaje.mapper.ViajeMapper;
+import org.example.viaje.repository.TarifaRepository;
 import org.example.viaje.repository.ViajeRepository;
 import org.springframework.stereotype.Service;
 import java.time.Duration;
@@ -19,11 +21,19 @@ import java.util.List;
 @Service
 public class ViajeService {
     private final ViajeRepository viajeRepository;
+    private final TarifaRepository tarifaRepository;
 
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     public ViajeResponseDTO save(ViajeRequestDTO viaje) {
         Viaje viajeNuevo = ViajeMapper.convertToEntity(viaje);
+        // Buscamos la tarifa activa
+        Tarifa tarifaActual = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()
+                .orElseThrow(() -> new RuntimeException("No hay una tarifa activa configurada"));
+
+        // Asignamos la tarifa actual al viaje
+        viajeNuevo.setTarifa(tarifaActual);
+
         Viaje viajePersistido = viajeRepository.save(viajeNuevo);
         return ViajeMapper.convertToDTO(viajePersistido);
     }
@@ -46,7 +56,6 @@ public class ViajeService {
                 .orElseThrow(() -> new IllegalArgumentException("No existe viaje con id: " + id));
         viajeEditar.setFechaHoraInicio(viajeDTO.getFechaHoraInicio());
         viajeEditar.setFechaHoraFin(viajeDTO.getFechaHoraFin());
-        viajeEditar.setTarifa(viajeDTO.getTarifa());
         viajeEditar.setIdMonopatin(viajeDTO.getIdMonopatin());
         viajeEditar.setIdParadaInicio(viajeDTO.getIdParadaInicio());
         viajeEditar.setIdParadaFinal(viajeDTO.getIdParadaFinal());

@@ -30,9 +30,6 @@ public class ViajeRequestDTO {
     @NotNull(message = "La parada final es obligatoria")
     private Long idParadaFinal;
 
-    @NotNull(message = "La tarifa es obligatoria")
-    private Double tarifa;
-
     @NotNull(message = "El monopatin utilizado es obligatorio")
     private Long idMonopatin;
 
