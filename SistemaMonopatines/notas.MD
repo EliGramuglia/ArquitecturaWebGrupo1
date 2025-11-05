@@ -35,11 +35,7 @@ MARI:
   EN USUARIO HACER UN ENDPOINT
 
 FRAN:
-MONOPATIN -> FEIGNCLIENT DE VIAJE
-- Registrar parada
-- Quitar parada
-- CRUDO COMPLETO
-- Ubicar monopatín en parada (opcional)
+
 
 
 
@@ -63,7 +59,11 @@ DONE:
     mencionadas. En este diseño, considerar que cada microservicio contará (preferentemente) con una
     base de datos separada.
 
-
+MONOPATIN -> FEIGNCLIENT DE VIAJE
+- Registrar parada
+- Quitar parada
+- CRUDO COMPLETO
+- Ubicar monopatín en parada (opcional)
 
 DUDAS: 
 - Anular cuenta
