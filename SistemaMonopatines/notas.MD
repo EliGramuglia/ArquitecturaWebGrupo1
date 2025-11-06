@@ -65,23 +65,11 @@ MONOPATIN -> FEIGNCLIENT DE VIAJE
 - CRUDO COMPLETO
 - Ubicar monopatín en parada (opcional)
 
-DUDAS: 
-- Anular cuenta
-- Como administrador quiero poder anular cuentas de usuarios, para inhabilitar el uso
-  momentáneo de la aplicación.
-
-El microservicio Usuario (Luego con la validación, Admin) tendría el endpoint, o está bien
-por ej iniciar desde CuentaController?
-
-La tarifa puede quedar sin fecha de fin de vigencia ?
-Si tiene que tener fecha ed vigencia -> Agregar en la Entidad Tarifa (cuando se crea la tabla) Not NUll
-Si puede crearse sin fecha de fin de vigencia -> Agregar en el metodo que crea tarifas esto
-ultimaTarifa.setFechaFinVigencia(nuevaTarifa.getFechaInicioVigencia().minusDays(1));
-tarifaRepository.save(ultimaTarifa);
-para que le settee la fecha de ayer y entonces finalice la tarifa y entre en vigencia la actual.
-
+- f. Como administrador quiero hacer un ajuste de precios, y que a partir de cierta fecha el sistema
+habilite los nuevos precios.
 
 - Como administrador quiero consultar el total facturado en un rango de meses de cierto año.
+
 
 
 

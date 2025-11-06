@@ -11,20 +11,21 @@ import org.example.viaje.entity.Tarifa;
 import org.example.viaje.entity.Viaje;
 import org.example.viaje.mapper.PausaMapper;
 import org.example.viaje.mapper.ViajeMapper;
+import org.example.viaje.repository.PausaRepository;
 import org.example.viaje.repository.TarifaRepository;
 import org.example.viaje.repository.ViajeRepository;
 import org.springframework.stereotype.Service;
-
 import java.time.*;
 import java.util.List;
 
-import static java.lang.Long.sum;
+
 
 @AllArgsConstructor
 @Service
 public class ViajeService {
     private final ViajeRepository viajeRepository;
     private final TarifaRepository tarifaRepository;
+    private final PausaRepository pausaRepository;
 
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
@@ -138,9 +139,9 @@ public class ViajeService {
         pausa.setFin(null);
         pausa.setViaje(viaje);
 
-        viaje.getPausas().add(pausa);
-        viajeRepository.saveAndFlush(viaje);
-        return PausaMapper.convertToDTO(pausa);
+        Pausa pausaGuardada = pausaRepository.save(pausa);
+
+        return PausaMapper.convertToDTO(pausaGuardada);
     }
 
     @Transactional // Si cualquier error ocurre dentro del método, toda la transacción se revierte automáticamente y la base de datos queda como estaba antes de llamar ese método.

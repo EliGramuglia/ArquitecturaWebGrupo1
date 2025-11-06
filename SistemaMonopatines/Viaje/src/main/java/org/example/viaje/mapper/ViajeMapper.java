@@ -32,7 +32,8 @@ public class ViajeMapper {
                 entity.getIdMonopatin(),
                 entity.getIdCliente(),
                 pausasDTO,
-                tarifaDTO
+                tarifaDTO,
+                entity.getCostoTotal()
         );
     }
 
