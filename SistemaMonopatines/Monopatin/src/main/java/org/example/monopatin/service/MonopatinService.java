@@ -109,15 +109,11 @@ public class MonopatinService {
     }
 
     public List<MonopatinResponseDTO> buscarMonopatinesCercanos(double lat, double lon) {
-        double radio = 1000.00;
-        //Convierte 1000 m a grados de latitud y longitud
-        double latOffset = radio / 111_000.0;
-        double lonOffset = radio / (111_000.0 * Math.cos(Math.toRadians(lat)));
-        //Calcula los límites de una “caja” geográfica de 1 km alrededor del usuario
-        double latMin = lat - latOffset;
-        double latMax = lat + latOffset;
-        double lonMin = lon - lonOffset;
-        double lonMax = lon + lonOffset;
+        double rango = 1.0;
+        double latMin = lat - rango;
+        double latMax = lat + rango;
+        double lonMin = lon - rango;
+        double lonMax = lon + rango;
 
         List<Monopatin> monopatines = monopatinRepository.findMonopatinesCercanos(latMin, latMax, lonMin, lonMax);
         return monopatines.stream()

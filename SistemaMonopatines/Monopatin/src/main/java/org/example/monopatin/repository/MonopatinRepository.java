@@ -7,7 +7,9 @@ import org.springframework.data.mongodb.repository.Query;
 import java.util.List;
 
 public interface MonopatinRepository extends MongoRepository<Monopatin, String> {
-    @Query("{ 'latitud': { $gte: ?0, $lte: ?1 }, 'longitud': { $gte: ?2, $lte: ?3 } }")
+    @Query("{ 'latitud': { $gte: ?0, $lte: ?1 }, " +
+            "'longitud': { $gte: ?2, $lte: ?3 }, " +
+            "'estadoMonopatin': 'DISPONIBLE' }")
     List<Monopatin> findMonopatinesCercanos(double latMin, double latMax, double lonMin, double lonMax);
 
 }
