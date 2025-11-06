@@ -2,6 +2,8 @@ package org.example.monopatin.service;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.monopatin.client.ParadaFeignClient;
+import org.example.monopatin.client.parada.dto.response.ParadaResponseDTO;
 import org.example.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.monopatin.entity.Monopatin;
@@ -17,6 +19,7 @@ import java.util.List;
 public class MonopatinService {
 
     private final MonopatinRepository monopatinRepository;
+    private final ParadaFeignClient paradaFeignClient;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     public MonopatinResponseDTO save(@Valid MonopatinRequestDTO request) {
@@ -75,6 +78,31 @@ public class MonopatinService {
         }
 
         monopatin.setEstadoMonopatin(estadoMonopatinEnum);
+        monopatinRepository.save(monopatin);
+
+        return MonopatinMapper.convertToDTO(monopatin);
+    }
+
+    public MonopatinResponseDTO ubicarEnParada(String monopatinId, Long paradaId) {
+        Monopatin monopatin = monopatinRepository.findById(monopatinId)
+                .orElseThrow(() -> new IllegalArgumentException("No existe el monopatín con id: " + monopatinId));
+
+        // Le pido al MS de parada la info de la parada con el id recibido por parámetro
+        ParadaResponseDTO parada = paradaFeignClient.getById(paradaId).getBody();
+        if (parada == null) {
+            throw new IllegalArgumentException("No existe la parada con id: " + paradaId);
+        }
+
+        // Le seteo la misma latitud y longitud de la parada al monopatín
+        // Parada tiene latitud y longitud de tipo float y monopatin en Integer por eso se usa Math.round para redondear los valores de posición de parada.
+        // ^ Consultar eso con las chicas, si mejor no nos conviene cambiar el tipo de latitud y longitud en la entidad Monopatin a float
+        monopatin.setLatitud(Math.round(parada.getLatitud()));
+        monopatin.setLongitud(Math.round(parada.getLongitud()));
+
+        // Al estar en una parada el monopatín pasa a estar disponible -> consultar con las chicas si es correcto
+        monopatin.setEstadoMonopatin(EstadoMonopatin.DISPONIBLE);
+
+        // Se actualiza la info del monopatín
         monopatinRepository.save(monopatin);
 
         return MonopatinMapper.convertToDTO(monopatin);

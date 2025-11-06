@@ -53,4 +53,12 @@ public class MonopatinController {
         MonopatinResponseDTO monopatinEstado = service.cambiarEstadoMonopatin(id, estado);
         return ResponseEntity.ok(monopatinEstado);
     }
+
+    @PutMapping("/{id}/parada/{paradaId}")
+    public ResponseEntity<MonopatinResponseDTO> ubicarEnParada(@PathVariable String id,
+                                                               @PathVariable Long paradaId) {
+        MonopatinResponseDTO dto = service.ubicarEnParada(id, paradaId);
+        return ResponseEntity.ok(dto);
+    }
+
 }
