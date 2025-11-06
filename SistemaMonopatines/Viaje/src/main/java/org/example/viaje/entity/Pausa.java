@@ -24,6 +24,9 @@ public class Pausa {
     @Column(nullable = true)
     private LocalTime fin;
 
+    @Column
+    private Long duracion;
+
     @ManyToOne
     @JoinColumn(name = "viaje_id")
     private Viaje viaje;

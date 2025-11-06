@@ -22,4 +22,5 @@ public class ViajeResponseDTO {
     private Long idCliente;
     private List<PausaResponseDTO> pausas;
     private TarifaResponseDTO tarifa;
+    private Double costoTotal;
 }

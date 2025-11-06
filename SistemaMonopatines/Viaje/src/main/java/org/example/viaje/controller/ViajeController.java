@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
+import org.example.viaje.dto.response.TotalFacturadoDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.service.ViajeService;
 import org.springframework.http.ResponseEntity;
@@ -71,10 +72,22 @@ public class ViajeController {
         return ResponseEntity.ok(pausas);
     }
 
+    /*------------------------- ENDPOINTS SERVICIOS  ----------------------------*/
+    // Como administrador quiero consultar el total facturado en un rango de meses de cierto año
+    // Ejemplo: http://localhost:8080/viajes/total-facturado?anio=2025&mesInicio=1&mesFin=6
+    @GetMapping("/total-facturado")
+    public ResponseEntity<TotalFacturadoDTO> getTotalFacturado(
+            @RequestParam int anio,
+            @RequestParam int mesInicio,
+            @RequestParam int mesFin) {
+
+        TotalFacturadoDTO total = service.obtenerTotalFacturado(anio, mesInicio, mesFin);
+        return ResponseEntity.ok(total);
+    }
 }
 
+
 // VALID SE USA EN EL CONTROLLER, no en el service ??
-// HACEMOS UNA INERFACE PARA EL SERVICE ???? -> BUENA PRACTICA PARA LOS TESTS Y ESCALABILIDAD
 // EN LOS METODOS UPDATES SACAR EL SET(ID)->No es necesario porque el objeto ya tiene ese id (lo encontraste por findById).
 /*En el update, después de hacer el save, mejor guardar el resultado en una variable y devolverlo (como hiciste en el save) para asegurarte que el DTO contenga datos actualizados:
 Viaje viajeGuardado = viajeRepository.save(viajeEditar);

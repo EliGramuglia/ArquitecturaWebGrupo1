@@ -40,12 +40,15 @@ public class Viaje {
     @Column(name="id_cliente", nullable = false)
     private Long idCliente; // ponerle Usuario
 
-    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Pausa> pausas = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY) // Una misma tarifa se aplica a muchos viajes (por ejemplo, todos los viajes del mes de noviembre usan la misma tarifa).
     @JoinColumn(name = "tarifa_id") // Nombre de la columna que se va a crear en la tabla viaje para guardar el ID de la tarifa asociada
     private Tarifa tarifa;
+
+    @Column(name = "costo_total")
+    private Double costoTotal;
 
     public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, Long idMonopatin, Long idCliente) {
         this.fechaHoraInicio = fechaHoraInicio;

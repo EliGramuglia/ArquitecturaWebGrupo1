@@ -31,7 +31,7 @@ public class Tarifa {
     private LocalDate fechaInicioVigencia;
 
     // Puede ser null si sigue vigente
-    @Column(name = "fecha_fin_vigencia")
+    @Column(name = "fecha_fin_vigencia", nullable = false)
     private LocalDate fechaFinVigencia;
 
     // Tarifa activa o no(para invalidar tarifas sin borrarlas)

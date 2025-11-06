@@ -4,24 +4,28 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
+import org.example.viaje.dto.response.TotalFacturadoDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.entity.Pausa;
 import org.example.viaje.entity.Tarifa;
 import org.example.viaje.entity.Viaje;
 import org.example.viaje.mapper.PausaMapper;
 import org.example.viaje.mapper.ViajeMapper;
+import org.example.viaje.repository.PausaRepository;
 import org.example.viaje.repository.TarifaRepository;
 import org.example.viaje.repository.ViajeRepository;
 import org.springframework.stereotype.Service;
-import java.time.Duration;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.List;
+
+
 
 @AllArgsConstructor
 @Service
 public class ViajeService {
     private final ViajeRepository viajeRepository;
     private final TarifaRepository tarifaRepository;
+    private final PausaRepository pausaRepository;
 
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
@@ -34,9 +38,44 @@ public class ViajeService {
         // Asignamos la tarifa actual al viaje
         viajeNuevo.setTarifa(tarifaActual);
 
+        // Calculo el costo total del viaje
+        Double costoViaje = calcularCostoTotal(viajeNuevo, tarifaActual);
+        viajeNuevo.setCostoTotal(costoViaje);
+
         Viaje viajePersistido = viajeRepository.save(viajeNuevo);
         return ViajeMapper.convertToDTO(viajePersistido);
     }
+
+    // Método para calcular cúanto costo el Viaje, y persistirlo luego en la base
+    private Double calcularCostoTotal(Viaje viaje, Tarifa tarifa) {
+        Double km = viaje.getKmRecorridos();
+        List<Pausa> pausas = viaje.getPausas();
+
+        // Si el viaje no tuvo pausas, multiplico los km por el precio normal (precioBase)
+        if(pausas == null || pausas.isEmpty()) {
+            return km * tarifa.getPrecioBase();
+        }
+
+        // Si tuvo pausas, entonces sumo la duración para ver si pasaron los 15 minutos
+        long minutosTotales = 0;
+        for (Pausa pausa : pausas) {
+            if (pausa.getFin() != null) {
+                long duracion = Duration.between(pausa.getInicio(), pausa.getFin()).toMinutes();
+                minutosTotales += duracion;
+                if (minutosTotales > 15) {
+                    break; // No hace falta seguir porque ya supero los 15 min
+                }
+            }
+        }
+
+        // Decido el tipo de tarifa que se va a aplicar
+        if(minutosTotales >= 15){
+            return km * tarifa.getPrecioRecargaPorPausa();
+        } else {
+            return km * tarifa.getPrecioBase();
+        }
+    }
+
 
     public List<ViajeResponseDTO> findAll() {
         return viajeRepository.findAll()
@@ -100,9 +139,9 @@ public class ViajeService {
         pausa.setFin(null);
         pausa.setViaje(viaje);
 
-        viaje.getPausas().add(pausa);
-        viajeRepository.saveAndFlush(viaje);
-        return PausaMapper.convertToDTO(pausa);
+        Pausa pausaGuardada = pausaRepository.save(pausa);
+
+        return PausaMapper.convertToDTO(pausaGuardada);
     }
 
     @Transactional // Si cualquier error ocurre dentro del método, toda la transacción se revierte automáticamente y la base de datos queda como estaba antes de llamar ese método.
@@ -134,4 +173,24 @@ public class ViajeService {
                 .map(PausaMapper::convertToDTO)
                 .toList();
     }
+
+    /*-------------------- ENDPOINTS PARA LOS SERVICIOS -----------------------*/
+    public TotalFacturadoDTO obtenerTotalFacturado(int anio, int mesInicio, int mesFin) {
+        // Crea la fecha que representa el primer día del mes de inicio, a las 00:00 hs.
+        LocalDateTime inicio = LocalDateTime.of(anio, mesInicio, 1,0,0);
+        // Representa el ultimo dia de un mes en especifico, segun el año
+        LocalDate ultimoDia = YearMonth.of(anio, mesFin).atEndOfMonth();
+        // Le agrega la última hora del día a ese ultimo día del mes
+        LocalDateTime fin = ultimoDia.atTime(23, 59, 59);
+
+        List<Viaje> viajes = viajeRepository.findByFechaHoraInicioBetween(inicio, fin);
+
+        Double total = viajes.stream()
+                .mapToDouble(v -> v.getCostoTotal() != null ? v.getCostoTotal() : 0.0) //Sirve para que si en algún momento, por error, se guardó un viaje incompleto o con un costo sin calcular no tire un NullPointerException.
+                .sum();
+
+        return new TotalFacturadoDTO(anio, mesInicio, mesFin, total);
+    }
+
+
 }
