@@ -79,3 +79,9 @@ Si puede crearse sin fecha de fin de vigencia -> Agregar en el metodo que crea t
 ultimaTarifa.setFechaFinVigencia(nuevaTarifa.getFechaInicioVigencia().minusDays(1));
 tarifaRepository.save(ultimaTarifa);
 para que le settee la fecha de ayer y entonces finalice la tarifa y entre en vigencia la actual.
+
+
+- Como administrador quiero consultar el total facturado en un rango de meses de cierto año.
+
+
+

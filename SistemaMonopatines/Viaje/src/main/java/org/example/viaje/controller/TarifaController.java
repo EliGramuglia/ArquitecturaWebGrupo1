@@ -17,12 +17,17 @@ public class TarifaController {
     private final TarifaService service;
 
     /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
+    // f. Como administrador quiero hacer un ajuste de precios, y que a partir de cierta fecha el sistema
+    // habilite los nuevos precios.
+
     // Ajustar tarifa (solo administrador) -> Se crea una nueva, ya que las anteriores sirven para llevar un historial
     @PostMapping("/ajustar")
     public ResponseEntity<TarifaResponseDTO> create(@RequestBody TarifaRequestDTO tarifa){
         TarifaResponseDTO nuevo = service.save(tarifa);
         return ResponseEntity.ok(nuevo);
     }
+
+    // HACER METODO UPDATE PERO SOLO DE FIN DE VIGENCIA
 
     // Obtener todas las tarifas (ver el historial)
     @GetMapping("")

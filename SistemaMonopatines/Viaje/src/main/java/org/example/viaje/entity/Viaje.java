@@ -47,6 +47,9 @@ public class Viaje {
     @JoinColumn(name = "tarifa_id") // Nombre de la columna que se va a crear en la tabla viaje para guardar el ID de la tarifa asociada
     private Tarifa tarifa;
 
+    @Column(name = "costo_total")
+    private Double costoTotal;
+
     public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, Long idMonopatin, Long idCliente) {
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
