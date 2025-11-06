@@ -108,4 +108,21 @@ public class MonopatinService {
         return MonopatinMapper.convertToDTO(monopatin);
     }
 
+    public List<MonopatinResponseDTO> buscarMonopatinesCercanos(double lat, double lon) {
+        double radio = 1000.00;
+        //Convierte 1000 m a grados de latitud y longitud
+        double latOffset = radio / 111_000.0;
+        double lonOffset = radio / (111_000.0 * Math.cos(Math.toRadians(lat)));
+        //Calcula los límites de una “caja” geográfica de 1 km alrededor del usuario
+        double latMin = lat - latOffset;
+        double latMax = lat + latOffset;
+        double lonMin = lon - lonOffset;
+        double lonMax = lon + lonOffset;
+
+        List<Monopatin> monopatines = monopatinRepository.findMonopatinesCercanos(latMin, latMax, lonMin, lonMax);
+        return monopatines.stream()
+                .map(MonopatinMapper::convertToDTO)
+                .toList();
+    }
+
 }

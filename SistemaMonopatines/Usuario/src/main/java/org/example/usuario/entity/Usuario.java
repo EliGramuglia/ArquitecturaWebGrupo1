@@ -40,12 +40,6 @@ public class Usuario {
     @Column(nullable = false)
     private Rol rol;
 
-    @Column(nullable = false)
-    private Integer latitud;
-
-    @Column(nullable = false)
-    private Integer longitud;
-
     public Usuario(@NotNull(message = "El nombre es obligatorio") String nombre, @NotNull(message = "El apellido es obligatorio") String apellido, @NotNull(message = "El email es obligatorio") String email, @NotNull(message = "El nroCelular es obligatorio") Integer nroCelular, @NotNull(message = "El rol es obligatorio") Rol rol) {
         this.nombre = nombre;
         this.apellido = apellido;

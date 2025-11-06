@@ -61,4 +61,11 @@ public class MonopatinController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/cercanos")
+    public ResponseEntity<List<MonopatinResponseDTO>> getMonopatinesCercanos(@RequestParam double latitud,
+                                                                             @RequestParam double longitud) {
+        List<MonopatinResponseDTO> monopatinesCercanos = service.buscarMonopatinesCercanos(latitud, longitud);
+        return ResponseEntity.ok(monopatinesCercanos);
+    }
+
 }

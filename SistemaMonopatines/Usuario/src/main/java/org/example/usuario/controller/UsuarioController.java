@@ -55,8 +55,13 @@ public class UsuarioController {
         MonopatinResponseDTO nuevo = service.saveMonopatin(monopatin);
         return ResponseEntity.ok(nuevo);
     }
+
+    @GetMapping("/monopatines-cercanos")
+    public ResponseEntity<List<MonopatinResponseDTO>> getMonopatinesCercanos(
+            @RequestParam double latitud,
+            @RequestParam double longitud
+    ) {
+        List<MonopatinResponseDTO> cercanos = service.buscarMonopatinesCercanos(latitud, longitud);
+        return ResponseEntity.ok(cercanos);
+    }
 }
-/*
-@PreAuthorize
-@PreAuthorize(ADMINISTRADOR)
- */
