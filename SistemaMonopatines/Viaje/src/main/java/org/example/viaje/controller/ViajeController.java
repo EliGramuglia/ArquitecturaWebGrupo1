@@ -2,6 +2,7 @@ package org.example.viaje.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.TotalFacturadoDTO;
@@ -52,17 +53,10 @@ public class ViajeController {
     /*-------------------- ENDPOINTS ANIDADOS PARA PAUSAR EL VIAJE -----------------------*/
     // Crear una pausa para un viaje específico
     @PostMapping("/{viajeId}/pausas")
-    public ResponseEntity<PausaResponseDTO> iniciarPausa(@PathVariable Long viajeId){
-        PausaResponseDTO pausa = service.iniciarPausa(viajeId);
+    public ResponseEntity<PausaResponseDTO> agregarPausa(@PathVariable Long viajeId,
+                                                         @RequestBody PausaRequestDTO dto){
+        PausaResponseDTO pausa = service.createPausa(viajeId, dto);
         return ResponseEntity.ok(pausa);
-    }
-
-    // Finalizar una pausa
-    @PutMapping("/{viajeId}/pausas/{pausaId}/finalizar")
-    public ResponseEntity<PausaResponseDTO> finalizarPausa(@PathVariable Long viajeId,
-                                                   @PathVariable Long pausaId) {
-        PausaResponseDTO pausaFinalizada = service.finalizarPausa(viajeId, pausaId);
-        return ResponseEntity.ok(pausaFinalizada);
     }
 
     // Listar todas las pausas de un viaje
@@ -86,9 +80,3 @@ public class ViajeController {
     }
 }
 
-
-// VALID SE USA EN EL CONTROLLER, no en el service ??
-// EN LOS METODOS UPDATES SACAR EL SET(ID)->No es necesario porque el objeto ya tiene ese id (lo encontraste por findById).
-/*En el update, después de hacer el save, mejor guardar el resultado en una variable y devolverlo (como hiciste en el save) para asegurarte que el DTO contenga datos actualizados:
-Viaje viajeGuardado = viajeRepository.save(viajeEditar);
-return ViajeMapper.convertToDTO(viajeGuardado);*/

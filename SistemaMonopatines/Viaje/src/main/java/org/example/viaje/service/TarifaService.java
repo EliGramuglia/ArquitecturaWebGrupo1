@@ -22,6 +22,10 @@ public class TarifaService {
     public TarifaResponseDTO save(@Valid TarifaRequestDTO request) {
         Tarifa nuevaTarifa = TarifaMapper.convertToEntity(request);
 
+        if (nuevaTarifa.getFechaFinVigencia().isBefore(nuevaTarifa.getFechaInicioVigencia())) {
+            throw new RuntimeException("La fecha de fin de vigencia no puede ser anterior a la fecha de inicio");
+        }
+
         // 1. Validar que la fecha de inicio no sea anterior a hoy
         if (nuevaTarifa.getFechaInicioVigencia().isBefore(LocalDate.now())) {
             throw new RuntimeException("La fecha de inicio de vigencia no puede ser anterior a la fecha actual");

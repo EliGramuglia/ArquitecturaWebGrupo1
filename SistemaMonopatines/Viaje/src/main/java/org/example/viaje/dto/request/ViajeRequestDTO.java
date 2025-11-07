@@ -36,5 +36,4 @@ public class ViajeRequestDTO {
     @NotNull(message = "El cliente que hizo uso del monopatin es obligatorio")
     private Long idCliente;
 
-    private List<PausaRequestDTO> pausas;
 }

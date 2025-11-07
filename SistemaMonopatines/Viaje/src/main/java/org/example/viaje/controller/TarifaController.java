@@ -13,7 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/viajes/tarifas")
 public class TarifaController {
-
     private final TarifaService service;
 
     /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/

@@ -2,6 +2,7 @@ package org.example.viaje.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.TotalFacturadoDTO;
@@ -27,10 +28,15 @@ public class ViajeService {
     private final TarifaRepository tarifaRepository;
     private final PausaRepository pausaRepository;
 
-
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     public ViajeResponseDTO save(ViajeRequestDTO viaje) {
+        // Validación: la fecha de fin no puede ser anterior a la de inicio
+        if (viaje.getFechaHoraFin().isBefore(viaje.getFechaHoraInicio())) {
+            throw new IllegalArgumentException("La fecha de fin del viaje no puede ser anterior a la fecha de inicio");
+        }
+
         Viaje viajeNuevo = ViajeMapper.convertToEntity(viaje);
+
         // Buscamos la tarifa activa
         Tarifa tarifaActual = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()
                 .orElseThrow(() -> new RuntimeException("No hay una tarifa activa configurada"));
@@ -101,17 +107,12 @@ public class ViajeService {
         viajeEditar.setKmRecorridos(viajeDTO.getKmRecorridos());
         viajeEditar.setIdCliente(viajeDTO.getIdCliente());
 
-        // Mapea la lista de pausas del DTO a entidades (si es que hay pausas)
-        if (viajeDTO.getPausas() != null) {
-            List<Pausa> pausas = viajeDTO.getPausas()
-                    .stream()
-                    .map(PausaMapper::convertToEntity)
-                    .toList();
-
-            // Elimina las pausas viejas y agrega las nuevas
-            viajeEditar.getPausas().clear();
-            viajeEditar.getPausas().addAll(pausas);
-        }
+        // Recalcular el costo total con la tarifa actual (por si cambió)
+        Tarifa tarifaActual = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()
+                .orElseThrow(() -> new RuntimeException("No hay una tarifa activa configurada"));
+        viajeEditar.setTarifa(tarifaActual);
+        Double costoViaje = calcularCostoTotal(viajeEditar, tarifaActual);
+        viajeEditar.setCostoTotal(costoViaje);
 
         Viaje viajePersistido = viajeRepository.save(viajeEditar);
         return ViajeMapper.convertToDTO(viajePersistido);
@@ -124,46 +125,39 @@ public class ViajeService {
     }
 
     /*-------------------- ENDPOINTS ANIDADOS PARA PAUSAR EL VIAJE -----------------------*/
-    public PausaResponseDTO iniciarPausa(Long viajeId) {
+    @Transactional // Si cualquier error ocurre dentro del método, toda la transacción se revierte automáticamente y la base de datos queda como estaba antes de llamar ese método.
+    public PausaResponseDTO createPausa(Long viajeId, PausaRequestDTO dto) {
         Viaje viaje = viajeRepository.findById(viajeId)
                 .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
 
-        boolean hayPausaAbierta = viaje.getPausas().stream()
-                .anyMatch(p -> p.getFin() == null);
-
-        if (hayPausaAbierta) {
-            throw new RuntimeException("Ya hay una pausa abierta en este viaje");
-        }
-        Pausa pausa = new Pausa();
-        pausa.setInicio(LocalTime.now());
-        pausa.setFin(null);
+        Pausa pausa = PausaMapper.convertToEntity(dto);
         pausa.setViaje(viaje);
 
-        Pausa pausaGuardada = pausaRepository.save(pausa);
+        // Calcula la duración de la pausa en minutos
+        LocalTime inicio = pausa.getInicio();
+        LocalTime fin = pausa.getFin();
+        if (inicio != null && fin != null) {
+            pausa.setDuracion(calcularDuracionEnMinutos(inicio, fin));
+        }
 
+        // Guardamos la pausa
+        Pausa pausaGuardada = pausaRepository.save(pausa);
+        viaje.getPausas().add(pausaGuardada);
+
+        // Recalcular el costo total del viaje
+        Tarifa tarifa = viaje.getTarifa();
+        Double nuevoCosto = calcularCostoTotal(viaje, tarifa);
+        viaje.setCostoTotal(nuevoCosto);
+
+        viajeRepository.save(viaje);
         return PausaMapper.convertToDTO(pausaGuardada);
     }
 
-    @Transactional // Si cualquier error ocurre dentro del método, toda la transacción se revierte automáticamente y la base de datos queda como estaba antes de llamar ese método.
-    public PausaResponseDTO finalizarPausa(Long viajeId, Long pausaId) {
-        Viaje viaje = viajeRepository.findById(viajeId)
-                .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
-        // Buscar la pausa dentro de la lista
-        Pausa pausa = viaje.getPausas().stream()
-                .filter(p -> p.getId().equals(pausaId))
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Pausa no encontrada en este viaje"));
-
-        pausa.setFin(LocalTime.now());
-        // Calcular duración en minutos
-        long duracionMinutos = Duration.between(pausa.getInicio(), pausa.getFin()).toMinutes();
-        if (duracionMinutos > 15) {
-            // Marcar que el monopatín se volvio a usar (actualizar el estado del viaje, tarifa, etc)
-        }
-
-        viajeRepository.save(viaje);
-        return PausaMapper.convertToDTO(pausa);
+    // Calcula la duración de la pausa en minutos
+    private long calcularDuracionEnMinutos(LocalTime inicio, LocalTime fin) {
+        return Duration.between(inicio, fin.isBefore(inicio) ? fin.plusHours(24) : fin).toMinutes();
     }
+
 
     public List<PausaResponseDTO> getPausas(Long viajeId) {
         Viaje viaje = viajeRepository.findById(viajeId)
