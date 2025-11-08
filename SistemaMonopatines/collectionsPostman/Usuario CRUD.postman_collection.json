@@ -1,0 +1,228 @@
+{
+	"info": {
+		"_postman_id": "0f08072e-636c-4ac5-88a0-fd384fb93b3a",
+		"name": "Usuario CRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31094389"
+	},
+	"item": [
+		{
+			"name": "PostUsuarioOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Arturo\",\r\n  \"apellido\": \"Gramuglia\",\r\n  \"email\": \"asdfgl@example.com\",\r\n  \"nroCelular\": 1234567890,\r\n  \"rol\": \"CLIENTE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostUsuarioOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Thresh\",\r\n  \"apellido\": \"Cabrera\",\r\n  \"email\": \"assdfsdfdfgl@example.com\",\r\n  \"nroCelular\": 123557890,\r\n  \"rol\": \"CLIENTE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostUsuarioOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Manchi\",\r\n  \"apellido\": \"jkasdjad\",\r\n  \"email\": \"adsfsfdfgl@example.com\",\r\n  \"nroCelular\": 123558890,\r\n  \"rol\": \"CLIENTE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostUsuarioOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Kiara\",\r\n  \"apellido\": \"jkasdjad\",\r\n  \"email\": \"adsfdgdl@example.com\",\r\n  \"nroCelular\": 123058890,\r\n  \"rol\": \"CLIENTE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindUsuarioById",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Kiara\",\r\n  \"apellido\": \"jkasdjad\",\r\n  \"email\": \"adsfdgdl@example.com\",\r\n  \"nroCelular\": 123058890,\r\n  \"rol\": \"CLIENTE\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateUsuarioOk",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Kiara\",\r\n  \"apellido\": \"jkasdasdaad\",\r\n  \"email\": \"adsfdgdl@example.com\",\r\n  \"nroCelular\": 120090,\r\n  \"rol\": \"CLIENTE\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteUsuarioOk",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Kiara\",\r\n  \"apellido\": \"jkasdasdaad\",\r\n  \"email\": \"adsfdgdl@example.com\",\r\n  \"nroCelular\": 120090,\r\n  \"rol\": \"CLIENTE\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllUsuarios",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Kiara\",\r\n  \"apellido\": \"jkasdjad\",\r\n  \"email\": \"adsfdgdl@example.com\",\r\n  \"nroCelular\": 123058890,\r\n  \"rol\": \"CLIENTE\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

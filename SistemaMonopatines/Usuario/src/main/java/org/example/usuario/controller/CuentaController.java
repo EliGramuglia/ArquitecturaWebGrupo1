@@ -17,7 +17,7 @@ public class CuentaController {
     private final CuentaService service;
 
     /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
-    @PostMapping("")
+    @PostMapping("/{id}")
     public ResponseEntity<CuentaResponseDTO> create(@RequestBody CuentaRequestDTO cuenta){
         CuentaResponseDTO nuevo = service.save(cuenta);
         return ResponseEntity.ok(nuevo);

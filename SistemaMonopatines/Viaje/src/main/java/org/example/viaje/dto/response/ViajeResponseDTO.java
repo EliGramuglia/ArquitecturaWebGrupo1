@@ -19,7 +19,7 @@ public class ViajeResponseDTO {
     private Long idParadaInicio;
     private Long idParadaFinal;
     private Long idMonopatin;
-    private Long idUsuario;
+    private Long idCliente;
     private List<PausaResponseDTO> pausas;
     private TarifaResponseDTO tarifa;
     private Double costoTotal;

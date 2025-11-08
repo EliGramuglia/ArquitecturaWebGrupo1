@@ -30,7 +30,7 @@ public class Usuario {
     @Column
     private Integer nroCelular;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     @Email
     private String email;
 

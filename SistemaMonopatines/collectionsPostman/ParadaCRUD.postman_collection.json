@@ -1,0 +1,89 @@
+{
+	"info": {
+		"_postman_id": "53cc4418-fff0-4ae0-81f3-5b72d2ff9120",
+		"name": "ParadaCRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31094389"
+	},
+	"item": [
+		{
+			"name": "PostParadaOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Kiara\",\r\n  \"apellido\": \"jkasdjad\",\r\n  \"email\": \"adsfdgdl@example.com\",\r\n  \"nroCelular\": 123058890,\r\n  \"rol\": \"CLIENTE\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/paradas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paradas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostParadaOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Arana\",\r\n  \"latitud\": 90,\r\n  \"longitud\": 100\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/paradas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paradas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostParadaOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Alem\",\r\n  \"latitud\": 100,\r\n  \"longitud\": 90\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/paradas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"paradas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

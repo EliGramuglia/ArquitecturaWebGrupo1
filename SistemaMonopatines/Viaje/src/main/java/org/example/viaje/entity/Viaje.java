@@ -38,7 +38,7 @@ public class Viaje {
     private Long idMonopatin;
 
     @Column(name="id_cliente", nullable = false)
-    private Long idUsuario; // ponerle Usuario
+    private Long idCliente;
 
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Pausa> pausas = new ArrayList<>();
@@ -50,7 +50,7 @@ public class Viaje {
     @Column(name = "costo_total")
     private Double costoTotal;
 
-    public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, Long idMonopatin, Long idUsuario) {
+    public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, Long idMonopatin, Long idCliente) {
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.kmRecorridos = kmRecorridos;
@@ -58,7 +58,7 @@ public class Viaje {
         this.idParadaFinal = idParadaFinal;
         this.tarifa = tarifa;
         this.idMonopatin = idMonopatin;
-        this.idUsuario = idUsuario;
+        this.idCliente = idCliente;
     }
 }
 
