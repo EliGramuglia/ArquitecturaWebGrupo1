@@ -2,6 +2,9 @@ package org.example.viaje.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.example.viaje.client.UsuarioFeignClient;
+import org.example.viaje.client.dto.UsuarioViajesCountDTO;
+import org.example.viaje.client.dto.response.UsuarioViajesDTO;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.MonopatinViajesDTO;
@@ -16,8 +19,10 @@ import org.example.viaje.mapper.ViajeMapper;
 import org.example.viaje.repository.PausaRepository;
 import org.example.viaje.repository.TarifaRepository;
 import org.example.viaje.repository.ViajeRepository;
+import org.example.viaje.utils.usuario.Rol;
 import org.springframework.stereotype.Service;
 import java.time.*;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,6 +33,7 @@ public class ViajeService {
     private final ViajeRepository viajeRepository;
     private final TarifaRepository tarifaRepository;
     private final PausaRepository pausaRepository;
+    private final UsuarioFeignClient usuarioFeignClient;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     public ViajeResponseDTO save(ViajeRequestDTO viaje) {
@@ -191,4 +197,31 @@ public class ViajeService {
     public List<MonopatinViajesDTO> obtenerMonopatinesConMasViajes(int anio, long cantidadMinima) {
         return viajeRepository.findMonopatinesConMasViajes(anio, cantidadMinima);
     }
+
+    // Consultar los usuarios que más utilizan los monopatines, filtrando por período y por tipo de usuario.
+    public List<UsuarioViajesDTO> obtenerUsuariosMasActivos(LocalDate inicio, LocalDate fin, Rol tipoUsuario) {
+        List<UsuarioViajesCountDTO> viajesPorUsuario = viajeRepository.contarViajesPorUsuario(inicio, fin);
+
+        List<UsuarioViajesDTO> resultado = new ArrayList<>();
+
+        for(UsuarioViajesCountDTO dtoCount: viajesPorUsuario) {
+            UsuarioViajesDTO usuario = usuarioFeignClient.findById(dtoCount.getUsuarioId());
+
+            if(usuario.getRol().equals(tipoUsuario)) {
+                resultado.add(new UsuarioViajesDTO(
+                        usuario.getId(),
+                        usuario.getNombre(),
+                        usuario.getApellido(),
+                        usuario.getEmail(),
+                        usuario.getRol(),
+                        dtoCount.getCantidadViajes()
+                ));
+            }
+        }
+        return resultado;
+    }
+
+
+
+
 }

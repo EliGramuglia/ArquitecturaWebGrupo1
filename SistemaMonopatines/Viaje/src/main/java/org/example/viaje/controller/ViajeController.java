@@ -2,6 +2,7 @@ package org.example.viaje.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
+import org.example.viaje.client.dto.response.UsuarioViajesDTO;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.MonopatinViajesDTO;
@@ -9,8 +10,11 @@ import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.TotalFacturadoDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
 import org.example.viaje.service.ViajeService;
+import org.example.viaje.utils.usuario.Rol;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -68,7 +72,7 @@ public class ViajeController {
     }
 
     /*------------------------- ENDPOINTS SERVICIOS  ----------------------------*/
-    // Como administrador quiero consultar el total facturado en un rango de meses de cierto año
+    // d) Como administrador quiero consultar el total facturado en un rango de meses de cierto año
     // Ejemplo: http://localhost:8080/viajes/total-facturado?anio=2025&mesInicio=1&mesFin=6
     @GetMapping("/total-facturado")
     public ResponseEntity<TotalFacturadoDTO> getTotalFacturado(
@@ -80,7 +84,7 @@ public class ViajeController {
         return ResponseEntity.ok(total);
     }
 
-    // Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+    // c) Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
     // Ejemplo: http://localhost:8080/viajes/monopatines-mas-viajes?anio=2025&cantidadMinima=2
     @GetMapping("/monopatines-mas-viajes")
     public ResponseEntity<List<MonopatinViajesDTO>> getMonopatinesMasViajes(
@@ -89,5 +93,17 @@ public class ViajeController {
         List<MonopatinViajesDTO> resultado = service.obtenerMonopatinesConMasViajes(anio, cantidadMinima);
         return ResponseEntity.ok(resultado);
     }
+
+    // e) Como administrador quiero ver los usuarios que más utilizan los monopatines,
+    // filtrando por período y por tipo de usuario.
+    @GetMapping("/usuarios/mas-activos")
+    public ResponseEntity<List<UsuarioViajesDTO>> getUsuariosMasActivos(
+            @RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin,
+            @RequestParam("tipo-usuario") Rol tipoUsuario){
+        List<UsuarioViajesDTO> usuariosActivos = service.obtenerUsuariosMasActivos(inicio, fin, tipoUsuario);
+        return ResponseEntity.ok(usuariosActivos);
+    }
+
 }
 
