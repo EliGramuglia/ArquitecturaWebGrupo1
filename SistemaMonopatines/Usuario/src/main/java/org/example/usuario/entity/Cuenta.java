@@ -30,6 +30,9 @@ public class Cuenta {
     @Column
     private Integer monto;
 
+    @Column
+    private boolean premium;
+
     @ManyToMany
     private List<Usuario> clientes;
 

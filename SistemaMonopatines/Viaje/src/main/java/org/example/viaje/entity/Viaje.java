@@ -58,7 +58,7 @@ public class Viaje {
         this.idParadaFinal = idParadaFinal;
         this.tarifa = tarifa;
         this.idMonopatin = idMonopatin;
-        this.idCliente = idCliente;
+        this.idUsuario = idCliente;
     }
 }
 
