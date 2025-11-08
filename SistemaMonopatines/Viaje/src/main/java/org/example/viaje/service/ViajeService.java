@@ -2,6 +2,8 @@ package org.example.viaje.service;
 
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
+import org.example.viaje.client.CuentaFeignClient;
+import org.example.viaje.client.cuenta.dto.response.CuentaResponseDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.TotalFacturadoDTO;
@@ -26,7 +28,8 @@ public class ViajeService {
     private final ViajeRepository viajeRepository;
     private final TarifaRepository tarifaRepository;
     private final PausaRepository pausaRepository;
-
+    private final CuentaFeignClient cuentaFeignClient;
+    private final Double descuento = 0.5;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     public ViajeResponseDTO save(ViajeRequestDTO viaje) {
@@ -45,14 +48,23 @@ public class ViajeService {
         Viaje viajePersistido = viajeRepository.save(viajeNuevo);
         return ViajeMapper.convertToDTO(viajePersistido);
     }
+    //al asignar el cobro de un viaje si el usuario es premium debemos restarle los km
+    //disponibles que tiene y cobrarle 50% de la tarifa una vez que ya no tenga
 
     // Método para calcular cúanto costo el Viaje, y persistirlo luego en la base
     private Double calcularCostoTotal(Viaje viaje, Tarifa tarifa) {
         Double km = viaje.getKmRecorridos();
         List<Pausa> pausas = viaje.getPausas();
 
+        CuentaResponseDTO cuenta = cuentaFeignClient.obtenerCuentaPorUsuario(viaje.getIdUsuario());
+        Boolean isPremium = cuenta.getPremium();
+        Double kmAcobrar = kmAcobrar(isPremium, cuenta, km);
+
         // Si el viaje no tuvo pausas, multiplico los km por el precio normal (precioBase)
         if(pausas == null || pausas.isEmpty()) {
+            if(isPremium) {
+               return kmAcobrar * tarifa.getPrecioBase()*descuento;
+            }
             return km * tarifa.getPrecioBase();
         }
 
@@ -70,12 +82,37 @@ public class ViajeService {
 
         // Decido el tipo de tarifa que se va a aplicar
         if(minutosTotales >= 15){
+            if(isPremium) {
+                return kmAcobrar * tarifa.getPrecioRecargaPorPausa() *  descuento;
+            }
             return km * tarifa.getPrecioRecargaPorPausa();
-        } else {
-            return km * tarifa.getPrecioBase();
         }
+
+        if(isPremium) {
+            return kmAcobrar * tarifa.getPrecioBase()*descuento;
+        }
+        return km * tarifa.getPrecioBase();
     }
 
+    /**Metodo para determinar cantidad de km a cobrar segun que tipo de usuario es  */
+    private Double kmAcobrar(Boolean isPremium,  CuentaResponseDTO cuenta, Double kmRecorridos){
+        if(isPremium) {
+            Double kmDisponibles = cuenta.getKmAcumuladosMes();
+            if(kmDisponibles >= kmRecorridos) {
+                Double total = kmDisponibles - kmRecorridos;
+                cuenta.setKmAcumuladosMes(total);
+                cuentaFeignClient.update(cuenta, cuenta.getNroCuenta());
+                return 0.0;
+            }
+            else {
+                Double kmAcobrar = kmRecorridos - kmDisponibles;
+                cuenta.setKmAcumuladosMes(0.0);
+                cuentaFeignClient.update(cuenta, cuenta.getNroCuenta());
+                return kmAcobrar;
+            }
+        }
+        return kmRecorridos;
+    }
 
     public List<ViajeResponseDTO> findAll() {
         return viajeRepository.findAll()

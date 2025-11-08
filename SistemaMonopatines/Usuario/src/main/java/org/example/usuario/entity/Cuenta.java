@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.example.usuario.utils.cuenta.EstadoCuenta;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.List;
 
 @AllArgsConstructor
@@ -31,14 +32,27 @@ public class Cuenta {
     private Integer monto;
 
     @Column
-    private boolean premium;
+    private Boolean premium;
+
+    @Column
+    private Double kmAcumuladosMes;
+
+    @Column
+    private int mesCupo;
 
     @ManyToMany
     private List<Usuario> clientes;
 
-    public Cuenta(@NotNull(message = "La fecha de alta es obligatoria") LocalDate fechaAlta, @NotNull(message = "El estado es obligatorio") EstadoCuenta estadoCuenta, @NotNull(message = "El monto es obligatorio") Integer monto) {
+    public Cuenta(LocalDate fechaAlta, EstadoCuenta estadoCuenta, Integer monto, Boolean premium) {
         this.fecha_alta = fechaAlta;
         this.estadoCuenta = estadoCuenta;
         this.monto = monto;
+        this.premium = premium;
+    }
+
+    public int getMesCupo() {
+        LocalDate fecha = LocalDate.now();
+        int mesNumero = fecha.getMonthValue();
+        return mesNumero;
     }
 }

@@ -12,7 +12,8 @@ public class CuentaMapper {
                 cuenta.getNroCuenta(),
                 cuenta.getFecha_alta(),
                 cuenta.getEstadoCuenta(),
-                cuenta.getMonto()
+                cuenta.getMonto(),
+                cuenta.getPremium()
         );
     }
 
@@ -20,7 +21,8 @@ public class CuentaMapper {
         return new Cuenta(
                 cuentaResponseDTO.getFecha_alta(),
                 cuentaResponseDTO.getEstadoCuenta(),
-                cuentaResponseDTO.getMonto()
+                cuentaResponseDTO.getMonto(),
+                cuentaResponseDTO.getPremium()
         );
     }
 }
