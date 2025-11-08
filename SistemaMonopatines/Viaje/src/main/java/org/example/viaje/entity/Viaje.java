@@ -38,7 +38,7 @@ public class Viaje {
     private Long idMonopatin;
 
     @Column(name="id_cliente", nullable = false)
-    private Long idCliente; // ponerle Usuario
+    private Long idUsuario; // ponerle Usuario
 
     @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<Pausa> pausas = new ArrayList<>();

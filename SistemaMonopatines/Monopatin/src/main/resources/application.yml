@@ -1,8 +1,10 @@
 spring:
+  application:
+    name:
+      monopatin-service
   data:
     mongodb:
       uri: mongodb://localhost:27017/monopatin
-  application:
-    name: monopatin-service
+
 server:
   port: 8082
