@@ -2,7 +2,9 @@ package org.example.monopatin.controller;
 
 import lombok.AllArgsConstructor;
 import org.example.monopatin.dto.request.MonopatinRequestDTO;
+import org.example.monopatin.dto.request.ReporteUsoRequestDTO;
 import org.example.monopatin.dto.response.MonopatinResponseDTO;
+import org.example.monopatin.dto.response.ReporteUsoResponseDTO;
 import org.example.monopatin.service.MonopatinService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,6 +68,12 @@ public class MonopatinController {
                                                                              @RequestParam double longitud) {
         List<MonopatinResponseDTO> monopatinesCercanos = service.buscarMonopatinesCercanos(latitud, longitud);
         return ResponseEntity.ok(monopatinesCercanos);
+    }
+
+    @PostMapping("/reporte-uso")
+    public ResponseEntity<ReporteUsoResponseDTO> generarReporteUso(@RequestBody ReporteUsoRequestDTO request) {
+        ReporteUsoResponseDTO reporte = service.generarReporteUso(request);
+        return ResponseEntity.ok(reporte);
     }
 
 }
