@@ -13,4 +13,8 @@ public interface CuentaFeignClient {
 
     @PutMapping("/{nroCuenta}")
     void update(@RequestBody CuentaResponseDTO cuenta, @RequestParam Long nroCuenta);
+
+    // verificar y renovar cupo
+    @GetMapping("/{nroCuenta}/verificar-cupo")
+    CuentaResponseDTO verificarCupo(@PathVariable Long nroCuenta);
 }

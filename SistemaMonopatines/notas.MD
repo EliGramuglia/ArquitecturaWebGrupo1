@@ -17,9 +17,7 @@ MARI:
 - Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
   otros usuarios relacionados a mi cuenta los han usado.
 
-- En una cuenta premium, el usuario paga un valor mensual fijo, 
-  y tienen recorridos ilimitados hasta 100 km por mes, y luego de eso paga el 50% de la tarifa,
-  hasta que se renueva su cupo el mes siguiente.
+- se renueva su cupo el mes siguiente.
 
 FRAN:
 - Generar reporte de uso de monopatines por kilómetros, por tiempo (con y sin pausas)
@@ -31,6 +29,8 @@ FRAN:
 
 
 DONE:
+- En una cuenta premium, el usuario paga un valor mensual fijo,
+  y tienen recorridos ilimitados hasta 100 km por mes, y luego de eso paga el 50% de la tarifa,....
 - La cuenta puede ser básica o premium.
 - gateway
 - Registrar monopatín en mantenimiento (debe marcarse como no disponible para su uso) -> CONSULTA

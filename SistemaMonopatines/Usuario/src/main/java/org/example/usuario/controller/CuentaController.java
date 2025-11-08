@@ -54,4 +54,10 @@ public class CuentaController {
         return ResponseEntity.ok(cuentaAnulada);
     }
 
+    @GetMapping("/{nroCuenta}/verificar-cupo")
+    public ResponseEntity<CuentaResponseDTO> verificarCupo(@PathVariable Long nroCuenta) {
+        CuentaResponseDTO cuenta = service.verificarYRnovarCupo(nroCuenta);
+        return ResponseEntity.ok(cuenta);
+    }
+
 }

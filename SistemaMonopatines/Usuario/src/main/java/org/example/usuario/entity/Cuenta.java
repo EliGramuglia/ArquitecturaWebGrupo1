@@ -38,7 +38,7 @@ public class Cuenta {
     private Double kmAcumuladosMes;
 
     @Column
-    private int mesCupo;
+    private LocalDate ultimaRenovacionCupo;
 
     @ManyToMany
     private List<Usuario> clientes;
@@ -50,9 +50,4 @@ public class Cuenta {
         this.premium = premium;
     }
 
-    public int getMesCupo() {
-        LocalDate fecha = LocalDate.now();
-        int mesNumero = fecha.getMonthValue();
-        return mesNumero;
-    }
 }

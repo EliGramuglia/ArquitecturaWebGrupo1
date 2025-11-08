@@ -11,6 +11,7 @@ import org.example.usuario.repository.CuentaRepository;
 import org.example.usuario.utils.cuenta.EstadoCuenta;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @AllArgsConstructor
@@ -59,6 +60,26 @@ public class CuentaService {
         cuentaRepository.delete(cuenta);
     }
 
+    /** Verifica si debe renovarse el cupo mensual de 100 km */
+    public CuentaResponseDTO verificarYRnovarCupo(Long nroCuenta) {
+        Cuenta cuenta = cuentaRepository.findById(nroCuenta)
+                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+
+        if (Boolean.TRUE.equals(cuenta.getPremium())) {
+            LocalDate hoy = LocalDate.now();
+
+            if (cuenta.getUltimaRenovacionCupo() == null ||
+                    cuenta.getUltimaRenovacionCupo().getMonthValue() != hoy.getMonthValue() ||
+                    cuenta.getUltimaRenovacionCupo().getYear() != hoy.getYear()) {
+
+                cuenta.setKmAcumuladosMes(100.0);
+                cuenta.setUltimaRenovacionCupo(hoy);
+                cuentaRepository.save(cuenta);
+            }
+        }
+
+        return CuentaMapper.convertToDTO(cuenta);
+    }
     /*-------------------------- METODOS PARA SERVICIOS --------------------------*/
 
     public CuentaResponseDTO anularCuenta(Long nroCuenta, String estado) {
