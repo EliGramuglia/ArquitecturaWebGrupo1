@@ -69,8 +69,8 @@ public class ViajeService {
     private Double calcularCostoTotal(Viaje viaje, Tarifa tarifa) {
         Double km = viaje.getKmRecorridos();
         List<Pausa> pausas = viaje.getPausas();
-
         CuentaResponseDTO cuenta = cuentaFeignClient.obtenerCuentaPorUsuario(viaje.getIdUsuario());
+        cuenta = cuentaFeignClient.verificarCupo(cuenta.getNroCuenta());
         Boolean isPremium = cuenta.getPremium();
         Double kmAcobrar = kmAcobrar(isPremium, cuenta, km);
 
