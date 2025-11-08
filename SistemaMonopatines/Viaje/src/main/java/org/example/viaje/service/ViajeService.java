@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
+import org.example.viaje.dto.response.MonopatinViajesDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.TotalFacturadoDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
@@ -187,4 +188,7 @@ public class ViajeService {
     }
 
 
+    public List<MonopatinViajesDTO> obtenerMonopatinesConMasViajes(int anio, long cantidadMinima) {
+        return viajeRepository.findMonopatinesConMasViajes(anio, cantidadMinima);
+    }
 }

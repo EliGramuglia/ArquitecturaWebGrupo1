@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
+import org.example.viaje.dto.response.MonopatinViajesDTO;
 import org.example.viaje.dto.response.PausaResponseDTO;
 import org.example.viaje.dto.response.TotalFacturadoDTO;
 import org.example.viaje.dto.response.ViajeResponseDTO;
@@ -77,6 +78,16 @@ public class ViajeController {
 
         TotalFacturadoDTO total = service.obtenerTotalFacturado(anio, mesInicio, mesFin);
         return ResponseEntity.ok(total);
+    }
+
+    // Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+    // Ejemplo: http://localhost:8080/viajes/monopatines-mas-viajes?anio=2025&cantidadMinima=2
+    @GetMapping("/monopatines-mas-viajes")
+    public ResponseEntity<List<MonopatinViajesDTO>> getMonopatinesMasViajes(
+            @RequestParam int anio,
+            @RequestParam long cantidadMinima){
+        List<MonopatinViajesDTO> resultado = service.obtenerMonopatinesConMasViajes(anio, cantidadMinima);
+        return ResponseEntity.ok(resultado);
     }
 }
 
