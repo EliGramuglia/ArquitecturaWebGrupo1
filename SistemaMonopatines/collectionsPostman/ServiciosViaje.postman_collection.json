@@ -1,0 +1,445 @@
+{
+	"info": {
+		"_postman_id": "a01f7ae7-4182-4ddc-86c6-06674cda2ea9",
+		"name": "ServiciosViaje",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31094389"
+	},
+	"item": [
+		{
+			"name": "PostViajeSinTarifaCreada",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-04T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-04T11:30:00\",\r\n  \"kmRecorridos\": 5.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": 1,\r\n  \"idCliente\": 1,\r\n  \"pausas\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostTarifaActiva",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 10.0,\r\n  \"precioRecargaPorPausa\": 15.0,\r\n  \"fechaInicioVigencia\": \"2025-11-06\",\r\n  \"fechaFinVigencia\": \"2025-11-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/tarifas/ajustar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"tarifas",
+						"ajustar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostNoSolapamiento",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 10.0,\r\n  \"precioRecargaPorPausa\": 15.0,\r\n  \"fechaInicioVigencia\": \"2025-11-08\",\r\n  \"fechaFinVigencia\": null\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/tarifas/ajustar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"tarifas",
+						"ajustar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostViajeErrorFechasOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 12.0,\r\n  \"precioRecargaPorPausa\": 18.0,\r\n  \"fechaInicioVigencia\": \"2025-11-20\",\r\n  \"fechaFinVigencia\": \"2025-11-11\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/tarifas/ajustar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"tarifas",
+						"ajustar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFinDeVigencia",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 10.0,\r\n  \"precioRecargaPorPausa\": 15.0,\r\n  \"fechaInicioVigencia\": \"2025-11-15\",\r\n  \"fechaFinVigencia\": \"2025-12-10\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/tarifas/fecha-fin?fecha-fin=2025-11-09",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"tarifas",
+						"fecha-fin"
+					],
+					"query": [
+						{
+							"key": "fecha-fin",
+							"value": "2025-11-09"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostTarifaFutura",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 20.0,\r\n  \"precioRecargaPorPausa\": 25.0,\r\n  \"fechaInicioVigencia\": \"2025-11-15\",\r\n  \"fechaFinVigencia\": \"2025-11-30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/tarifas/ajustar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"tarifas",
+						"ajustar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllTarifas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/viajes/tarifas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"tarifas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindTarifaActiva",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/viajes/tarifas/activa",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"tarifas",
+						"activa"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostViajeOK",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-06T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-06T11:30:00\",\r\n  \"kmRecorridos\": 5.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": 1,\r\n  \"idCliente\": 1,\r\n  \"pausas\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostPausaParaViaje",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "    {\r\n      \"inicio\": \"11:15:00\",\r\n      \"fin\": \"11:25:00\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/1/pausas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"1",
+						"pausas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindByIdViaje",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/viajes/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Total-Facturado",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/viajes/total-facturado?anio=2025&mesInicio=11&mesFin=11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"total-facturado"
+					],
+					"query": [
+						{
+							"key": "anio",
+							"value": "2025"
+						},
+						{
+							"key": "mesInicio",
+							"value": "11"
+						},
+						{
+							"key": "mesFin",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetViajes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-06T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-06T11:30:00\",\r\n  \"kmRecorridos\": 5.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": 1,\r\n  \"idCliente\": 1,\r\n  \"pausas\": []\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "MonopatinesConMasDeXViajes",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-06T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-06T11:30:00\",\r\n  \"kmRecorridos\": 5.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": 1,\r\n  \"idCliente\": 1,\r\n  \"pausas\": []\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/monopatines-mas-viajes?anio=2025&cantidadMinima=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"monopatines-mas-viajes"
+					],
+					"query": [
+						{
+							"key": "anio",
+							"value": "2025"
+						},
+						{
+							"key": "cantidadMinima",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostUsuarioOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8081/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}

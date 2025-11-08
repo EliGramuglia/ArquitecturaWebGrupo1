@@ -6,22 +6,11 @@ TODO:
   microservicios.
 
 
-ELI:
-- Como administrador quiero ver los usuarios que más utilizan los monopatines, filtrado por
-  período y por tipo de usuario. (en VIAJE)
-  MAX idUsuario between mes1 a mes2 GROUP BY premium - comunes
-
 MARI:
 - Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
   otros usuarios relacionados a mi cuenta los han usado.
 
-- se renueva su cupo el mes siguiente.
 
-FRAN:
-- Generar reporte de uso de monopatines por kilómetros, por tiempo (con y sin pausas)
-- Como administrador quiero poder generar un reporte de uso de monopatines por kilómetros
-  para establecer si un monopatín requiere de mantenimiento. Este reporte debe poder
-  configurarse para incluir (o no) los tiempos de pausa.
 
 
 
@@ -63,6 +52,10 @@ habilite los nuevos precios.
 - Como administrador quiero consultar el total facturado en un rango de meses de cierto año.
 - Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
     (VIAJE)
+- Generar reporte de uso de monopatines por kilómetros, por tiempo (con y sin pausas)
+- Como administrador quiero poder generar un reporte de uso de monopatines por kilómetros
+  para establecer si un monopatín requiere de mantenimiento. Este reporte debe poder
+  configurarse para incluir (o no) los tiempos de pausa.
 
 
 

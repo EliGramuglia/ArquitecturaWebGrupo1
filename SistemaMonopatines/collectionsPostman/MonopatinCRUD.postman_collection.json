@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "2e184780-b0e9-4e96-85db-6dcad84ace5c",
+		"name": "MonopatinCRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31094389"
+	},
+	"item": [
+		{
+			"name": "PostMonopatinOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"latitud\": 100,\r\n  \"longitud\": 90,\r\n  \"kmRecorridos\": 40,\r\n  \"viajeId\": 2,\r\n  \"estadoMonopatin\": \"DISPONIBLE\",\r\n  \"horasUso\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/monopatines",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"monopatines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostMonopatinesOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"latitud\": 90,\r\n  \"longitud\": 100,\r\n  \"kmRecorridos\": 50,\r\n  \"viajeId\": 1,\r\n  \"estadoMonopatin\": \"DISPONIBLE\",\r\n  \"horasUso\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/monopatines",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"monopatines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostMonopatinesOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"latitud\": 300,\r\n  \"longitud\": 250,\r\n  \"kmRecorridos\": 100,\r\n  \"viajeId\": 3,\r\n  \"estadoMonopatin\": \"DISPONIBLE\",\r\n  \"horasUso\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/monopatines",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"monopatines"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

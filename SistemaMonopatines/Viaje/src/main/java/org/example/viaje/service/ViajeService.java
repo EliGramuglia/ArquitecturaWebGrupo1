@@ -70,7 +70,8 @@ public class ViajeService {
         Double km = viaje.getKmRecorridos();
         List<Pausa> pausas = viaje.getPausas();
 
-        CuentaResponseDTO cuenta = cuentaFeignClient.obtenerCuentaPorUsuario(viaje.getIdUsuario());
+        CuentaResponseDTO cuenta = cuentaFeignClient.obtenerCuentaPorUsuario(viaje.getIdCliente());
+        cuenta = cuentaFeignClient.verificarCupo(cuenta.getNroCuenta());
         Boolean isPremium = cuenta.getPremium();
         Double kmAcobrar = kmAcobrar(isPremium, cuenta, km);
 
@@ -150,7 +151,7 @@ public class ViajeService {
         viajeEditar.setIdParadaInicio(viajeDTO.getIdParadaInicio());
         viajeEditar.setIdParadaFinal(viajeDTO.getIdParadaFinal());
         viajeEditar.setKmRecorridos(viajeDTO.getKmRecorridos());
-        viajeEditar.setIdUsuario(viajeDTO.getIdUsuario());
+        viajeEditar.setIdCliente(viajeDTO.getIdCliente());
 
         // Recalcular el costo total con la tarifa actual (por si cambió)
         Tarifa tarifaActual = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()

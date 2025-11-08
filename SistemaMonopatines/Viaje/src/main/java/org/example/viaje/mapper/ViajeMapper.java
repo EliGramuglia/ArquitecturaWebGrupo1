@@ -30,7 +30,7 @@ public class ViajeMapper {
                 entity.getIdParadaInicio(),
                 entity.getIdParadaFinal(),
                 entity.getIdMonopatin(),
-                entity.getIdUsuario(),
+                entity.getIdCliente(),
                 pausasDTO,
                 tarifaDTO,
                 entity.getCostoTotal()
@@ -47,7 +47,7 @@ public class ViajeMapper {
                 dto.getIdParadaFinal(),
                 null,
                 dto.getIdMonopatin(),
-                dto.getIdUsuario()
+                dto.getIdCliente()
         );
         return viaje;
     }
