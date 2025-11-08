@@ -30,7 +30,7 @@ public class ViajeMapper {
                 entity.getIdParadaInicio(),
                 entity.getIdParadaFinal(),
                 entity.getIdMonopatin(),
-                entity.getIdCliente(),
+                entity.getIdUsuario(),
                 pausasDTO,
                 tarifaDTO,
                 entity.getCostoTotal()
@@ -47,7 +47,7 @@ public class ViajeMapper {
                 dto.getIdParadaFinal(),
                 null,
                 dto.getIdMonopatin(),
-                dto.getIdCliente()
+                dto.getIdUsuario()
         );
         if(dto.getPausas() != null && !dto.getPausas().isEmpty()){
             List<Pausa> pausas = dto.getPausas()

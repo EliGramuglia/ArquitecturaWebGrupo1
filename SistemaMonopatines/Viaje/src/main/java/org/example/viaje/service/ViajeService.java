@@ -99,7 +99,7 @@ public class ViajeService {
         viajeEditar.setIdParadaInicio(viajeDTO.getIdParadaInicio());
         viajeEditar.setIdParadaFinal(viajeDTO.getIdParadaFinal());
         viajeEditar.setKmRecorridos(viajeDTO.getKmRecorridos());
-        viajeEditar.setIdCliente(viajeDTO.getIdCliente());
+        viajeEditar.setIdUsuario(viajeDTO.getIdUsuario());
 
         // Mapea la lista de pausas del DTO a entidades (si es que hay pausas)
         if (viajeDTO.getPausas() != null) {
