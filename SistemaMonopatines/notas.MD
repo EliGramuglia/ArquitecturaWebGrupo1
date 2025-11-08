@@ -7,8 +7,6 @@ TODO:
 
 
 ELI:
-- Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
-  (VIAJE)
 - Como administrador quiero ver los usuarios que más utilizan los monopatines, filtrado por
   período y por tipo de usuario. (en VIAJE)
   MAX idUsuario between mes1 a mes2 GROUP BY premium - comunes
@@ -63,6 +61,8 @@ MONOPATIN -> FEIGNCLIENT DE VIAJE
 habilite los nuevos precios.
 
 - Como administrador quiero consultar el total facturado en un rango de meses de cierto año.
+- Como administrador quiero consultar los monopatines con más de X viajes en un cierto año.
+    (VIAJE)
 
 
 

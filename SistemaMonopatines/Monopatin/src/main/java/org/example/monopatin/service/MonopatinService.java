@@ -3,15 +3,22 @@ package org.example.monopatin.service;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.monopatin.client.ParadaFeignClient;
+import org.example.monopatin.client.ViajeFeignClient;
 import org.example.monopatin.client.parada.dto.response.ParadaResponseDTO;
+import org.example.monopatin.client.viaje.dto.response.ViajeMonopatinResponseDTO;
 import org.example.monopatin.dto.request.MonopatinRequestDTO;
+import org.example.monopatin.dto.request.ReporteUsoRequestDTO;
 import org.example.monopatin.dto.response.MonopatinResponseDTO;
+import org.example.monopatin.dto.response.MonopatinUsoResponseDTO;
+import org.example.monopatin.dto.response.ReporteUsoResponseDTO;
 import org.example.monopatin.entity.Monopatin;
 import org.example.monopatin.mapper.MonopatinMapper;
 import org.example.monopatin.repository.MonopatinRepository;
 import org.example.monopatin.utils.EstadoMonopatin;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +27,7 @@ public class MonopatinService {
 
     private final MonopatinRepository monopatinRepository;
     private final ParadaFeignClient paradaFeignClient;
+    private final ViajeFeignClient viajeFeignClient;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     public MonopatinResponseDTO save(@Valid MonopatinRequestDTO request) {
@@ -119,6 +127,78 @@ public class MonopatinService {
         return monopatines.stream()
                 .map(MonopatinMapper::convertToDTO)
                 .toList();
+    }
+
+    public ReporteUsoResponseDTO generarReporteUso(ReporteUsoRequestDTO request) {
+
+        // Definimos el umbral de km que determina si un monopatín requiere mantenimiento.
+        // Si el cliente no lo envía en el request, usamos un valor por defecto (1000 km).
+        double umbral = request.getUmbralKmMantenimiento() != null
+                ? request.getUmbralKmMantenimiento()
+                : 1000.0;
+
+        // Obtenemos todos los monopatines registrados en la base de datos.
+        List<Monopatin> monopatinesTotales = monopatinRepository.findAll();
+
+        List<MonopatinUsoResponseDTO> resultados = new ArrayList<>();
+
+        // Recorremos cada monopatín para calcular su reporte individual.
+        for (Monopatin monopatin : monopatinesTotales) {
+
+            List<ViajeMonopatinResponseDTO> viajes = viajeFeignClient.getViajesByMonopatin(monopatin.getId());
+
+            double totalKm = 0.0;             // suma total de kilómetros recorridos
+            long totalMinutosConPausa = 0L;   // tiempo total de uso incluyendo pausas
+            long totalMinutos = 0L;           // tiempo total ajustado según la configuración "incluirPausas"
+
+            for (ViajeMonopatinResponseDTO viaje : viajes) {
+
+                // Si el viaje tiene un valor de kilómetros, lo sumamos al total.
+                if (viaje.getKmRecorridos() != null) {
+                    totalKm += viaje.getKmRecorridos();
+                }
+
+                long minutosViaje = 0L;
+                // Si las fechas de inicio y fin existen, calculamos la duración en minutos.
+                if (viaje.getFechaHoraInicio() != null && viaje.getFechaHoraFin() != null) {
+                    Duration duracion = Duration.between(viaje.getFechaHoraInicio(), viaje.getFechaHoraFin());
+                    minutosViaje = duracion.toMinutes();
+                }
+
+                // Si el viaje tiene pausas registradas, las usamos. Si no, es 0
+                long minutosPausa = viaje.getMinutosPausa() != null ? viaje.getMinutosPausa() : 0L;
+
+                // Siempre acumulamos el tiempo total con pausas (tiempo real de uso).
+                totalMinutosConPausa += minutosViaje;
+
+                // Si el reporte incluye pausas, sumamos el tiempo total del viaje.
+                // Si no las incluye, restamos los minutos de pausa (sin permitir valores negativos).
+                if (request.isIncluirPausas()) {
+                    totalMinutos += minutosViaje;
+                } else {
+                    long minutosSinPausa = minutosViaje - minutosPausa;
+                    if (minutosSinPausa < 0) {
+                        minutosSinPausa = 0;
+                    }
+                    totalMinutos += minutosSinPausa;
+                }
+            }
+
+            // Si el total de kilómetros supera el umbral configurado, el monopatín requiere mantenimiento.
+            boolean requiereMantenimiento = totalKm >= umbral;
+
+            MonopatinUsoResponseDTO dto = new MonopatinUsoResponseDTO(
+                    monopatin.getId(),
+                    totalKm,
+                    totalMinutos,
+                    totalMinutosConPausa,
+                    requiereMantenimiento
+            );
+
+            resultados.add(dto);
+        }
+
+        return new ReporteUsoResponseDTO(resultados);
     }
 
 }

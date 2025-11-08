@@ -40,7 +40,7 @@ public class Viaje {
     @Column(name="id_cliente", nullable = false)
     private Long idUsuario; // ponerle Usuario
 
-    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "viaje", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Pausa> pausas = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY) // Una misma tarifa se aplica a muchos viajes (por ejemplo, todos los viajes del mes de noviembre usan la misma tarifa).

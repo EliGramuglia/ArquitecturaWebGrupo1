@@ -1,6 +1,7 @@
 package org.example.monopatin.client;
 
 import org.example.monopatin.client.viaje.dto.request.ViajeRequestDTO;
+import org.example.monopatin.client.viaje.dto.response.ViajeMonopatinResponseDTO;
 import org.example.monopatin.client.viaje.dto.response.ViajeResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
@@ -22,5 +23,8 @@ public interface ViajeFeignClient {
 
     @DeleteMapping("/{id}")
     ResponseEntity<Void> delete(@PathVariable Long id);
+
+    @GetMapping("/monopatin/{monopatinId}")
+    List<ViajeMonopatinResponseDTO> getViajesByMonopatin(@PathVariable("monopatinId") String monopatinId);
 
 }

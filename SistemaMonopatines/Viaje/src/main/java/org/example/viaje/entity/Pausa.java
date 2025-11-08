@@ -5,7 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.time.LocalTime;
 
 @AllArgsConstructor
@@ -21,7 +20,7 @@ public class Pausa {
     @Column(nullable = false)
     private LocalTime inicio;
 
-    @Column(nullable = true)
+    @Column(nullable = false)
     private LocalTime fin;
 
     @Column

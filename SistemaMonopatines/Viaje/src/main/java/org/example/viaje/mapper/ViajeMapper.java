@@ -49,14 +49,6 @@ public class ViajeMapper {
                 dto.getIdMonopatin(),
                 dto.getIdUsuario()
         );
-        if(dto.getPausas() != null && !dto.getPausas().isEmpty()){
-            List<Pausa> pausas = dto.getPausas()
-                    .stream()
-                    .map(PausaMapper::convertToEntity)
-                    .toList();
-
-            viaje.setPausas(pausas);
-        }
         return viaje;
     }
 
