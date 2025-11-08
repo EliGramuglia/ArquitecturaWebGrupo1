@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import org.example.viaje.dto.request.TarifaRequestDTO;
 import org.example.viaje.dto.response.TarifaResponseDTO;
 import org.example.viaje.service.TarifaService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -26,7 +28,13 @@ public class TarifaController {
         return ResponseEntity.ok(nuevo);
     }
 
-    // HACER METODO UPDATE PERO SOLO DE FIN DE VIGENCIA
+    // Método que actualiza la fecha de fin de vigencia
+    @PutMapping("/fecha-fin")
+    public ResponseEntity<TarifaResponseDTO> updateFechaFinVigencia(@RequestParam("fecha-fin")
+                           @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate nuevaFechaFin){
+        TarifaResponseDTO tarifaActualizada = service.updateFechaFinTarifaActiva(nuevaFechaFin);
+        return ResponseEntity.ok(tarifaActualizada);
+    }
 
     // Obtener todas las tarifas (ver el historial)
     @GetMapping("")
