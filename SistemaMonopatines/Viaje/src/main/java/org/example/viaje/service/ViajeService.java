@@ -9,10 +9,7 @@ import org.example.viaje.client.dto.UsuarioViajesCountDTO;
 import org.example.viaje.client.dto.response.UsuarioViajesDTO;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
-import org.example.viaje.dto.response.MonopatinViajesDTO;
-import org.example.viaje.dto.response.PausaResponseDTO;
-import org.example.viaje.dto.response.TotalFacturadoDTO;
-import org.example.viaje.dto.response.ViajeResponseDTO;
+import org.example.viaje.dto.response.*;
 import org.example.viaje.entity.Pausa;
 import org.example.viaje.entity.Tarifa;
 import org.example.viaje.entity.Viaje;
@@ -261,6 +258,18 @@ public class ViajeService {
     }
 
 
+    public UsoMonopatinUsuarioDTO obtenerCantidadViajesUsuario(Long idCliente, LocalDate inicio, LocalDate fin) {
+        // Convertimos el LocalDate a LocalDateTime:
+        LocalDateTime inicioDT = inicio.atStartOfDay();               // 2025-11-01T00:00:00
+        LocalDateTime finDT = fin.plusDays(1).atStartOfDay().minusNanos(1); // 2025-11-09T23:59:59.999999999
+
+        UsoMonopatinUsuarioDTO resultado = viajeRepository.contarViajesPorUsuarioYRango(idCliente, inicioDT, finDT);
+
+        if (resultado == null) {
+            return new UsoMonopatinUsuarioDTO(idCliente, 0L);
+        }
+        return resultado;
+    }
 
 
 }

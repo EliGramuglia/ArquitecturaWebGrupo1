@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import org.example.viaje.client.dto.response.UsuarioViajesDTO;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
-import org.example.viaje.dto.response.MonopatinViajesDTO;
-import org.example.viaje.dto.response.PausaResponseDTO;
-import org.example.viaje.dto.response.TotalFacturadoDTO;
-import org.example.viaje.dto.response.ViajeResponseDTO;
+import org.example.viaje.dto.response.*;
 import org.example.viaje.service.ViajeService;
 import org.example.viaje.utils.usuario.Rol;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -103,6 +100,16 @@ public class ViajeController {
             @RequestParam("tipo-usuario") Rol tipoUsuario){
         List<UsuarioViajesDTO> usuariosActivos = service.obtenerUsuariosMasActivos(inicio, fin, tipoUsuario);
         return ResponseEntity.ok(usuariosActivos);
+    }
+
+    @GetMapping("/usuarios/{id}/cantidad-viajes")
+    public ResponseEntity<UsoMonopatinUsuarioDTO> getCantidadViajesUsuario(
+            @PathVariable("id") Long idUsuario,
+            @RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin) {
+
+        UsoMonopatinUsuarioDTO resultado = service.obtenerCantidadViajesUsuario(idUsuario, inicio, fin);
+        return ResponseEntity.ok(resultado);
     }
 
 }

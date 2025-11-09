@@ -2,6 +2,7 @@ package org.example.viaje.repository;
 
 import org.example.viaje.client.dto.UsuarioViajesCountDTO;
 import org.example.viaje.dto.response.MonopatinViajesDTO;
+import org.example.viaje.dto.response.UsoMonopatinUsuarioDTO;
 import org.example.viaje.entity.Viaje;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -40,4 +41,21 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
     GROUP BY v.idCliente
     """)
     List<UsuarioViajesCountDTO> contarViajesPorUsuario( @Param("inicio")LocalDate inicio, @Param("fin") LocalDate fin);
+
+    @Query("""
+    SELECT new org.example.viaje.dto.response.UsoMonopatinUsuarioDTO(
+        v.idCliente,
+        COUNT(v)
+    )
+    FROM Viaje v
+    WHERE v.idCliente = :idCliente
+      AND v.fechaHoraInicio BETWEEN :inicio AND :fin
+    GROUP BY v.idCliente
+""")
+    UsoMonopatinUsuarioDTO contarViajesPorUsuarioYRango(
+            @Param("idCliente") Long idCliente,
+            @Param("inicio") LocalDateTime inicio,
+            @Param("fin") LocalDateTime fin
+    );
+
 }

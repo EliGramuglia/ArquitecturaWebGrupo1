@@ -8,7 +8,7 @@ TODO:
 
 MARI:
 - Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
-  otros usuarios relacionados a mi cuenta los han usado.
+  otros usuarios relacionados a mi cuenta los han usado. (FALTA PROBAR)
 
 
 

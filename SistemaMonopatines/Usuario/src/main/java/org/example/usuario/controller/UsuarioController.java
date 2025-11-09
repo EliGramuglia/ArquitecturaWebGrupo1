@@ -10,6 +10,7 @@ import org.example.usuario.service.UsuarioService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -63,5 +64,15 @@ public class UsuarioController {
     ) {
         List<MonopatinResponseDTO> cercanos = service.buscarMonopatinesCercanos(latitud, longitud);
         return ResponseEntity.ok(cercanos);
+    }
+
+    @GetMapping("/{id}/viajes")
+    public ResponseEntity<Long> getCantidadViajesUsuario(
+            @PathVariable Long id,
+            @RequestParam LocalDate inicio,
+            @RequestParam LocalDate fin
+    ) {
+        Long cantidad = service.obtenerCantidadViajes(id, inicio, fin);
+        return ResponseEntity.ok(cantidad);
     }
 }
