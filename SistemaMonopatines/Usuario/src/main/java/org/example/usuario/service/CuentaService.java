@@ -1,7 +1,6 @@
 package org.example.usuario.service;
 
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.usuario.dto.request.CuentaRequestDTO;
@@ -13,13 +12,14 @@ import org.example.usuario.repository.CuentaRepository;
 import org.example.usuario.repository.UsuarioRepository;
 import org.example.usuario.utils.cuenta.EstadoCuenta;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class CuentaService {
     private final CuentaRepository cuentaRepository;
     private final CuentaMapper cuentaMapper;
@@ -56,6 +56,7 @@ public class CuentaService {
         return CuentaMapper.convertToDTO(cuenta);
     }
 
+    @Transactional
     public CuentaResponseDTO update(Long nroCuenta, CuentaRequestDTO cuenta) {
         Cuenta cuentaEditar = cuentaRepository.findById(nroCuenta)
                 .orElseThrow(() -> new IllegalArgumentException("No existe el usuario con id: " + nroCuenta));
@@ -80,6 +81,7 @@ public class CuentaService {
         return CuentaMapper.convertToDTO(cuentaEditar);
     }
 
+    @Transactional
     public void delete(Long nroCuenta) {
         Cuenta cuenta = cuentaRepository.findById(nroCuenta)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró una cuenta con el id: "+ nroCuenta));
@@ -87,6 +89,7 @@ public class CuentaService {
     }
 
     /** Verifica si debe renovarse el cupo mensual de 100 km */
+    @Transactional
     public CuentaResponseDTO verificarYRnovarCupo(Long nroCuenta) {
         Cuenta cuenta = cuentaRepository.findById(nroCuenta)
                 .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
@@ -106,8 +109,8 @@ public class CuentaService {
 
         return CuentaMapper.convertToDTO(cuenta);
     }
-    /*-------------------------- METODOS PARA SERVICIOS --------------------------*/
-
+    /*------------------------ ENDPOINTS PARA LOS SERVICIOS ------------------------*/
+    @Transactional
     public CuentaResponseDTO anularCuenta(Long nroCuenta, String estado) {
         Cuenta cuenta = cuentaRepository.findById(nroCuenta)
                 .orElseThrow(() -> new EntityNotFoundException("Cuenta no encontrada"));

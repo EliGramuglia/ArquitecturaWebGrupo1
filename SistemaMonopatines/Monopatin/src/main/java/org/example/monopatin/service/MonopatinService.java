@@ -16,6 +16,7 @@ import org.example.monopatin.mapper.MonopatinMapper;
 import org.example.monopatin.repository.MonopatinRepository;
 import org.example.monopatin.utils.EstadoMonopatin;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.util.ArrayList;
@@ -23,14 +24,15 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class MonopatinService {
-
     private final MonopatinRepository monopatinRepository;
     private final ParadaFeignClient paradaFeignClient;
     private final ViajeFeignClient viajeFeignClient;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
-    public MonopatinResponseDTO save(@Valid MonopatinRequestDTO request) {
+    @Transactional
+    public MonopatinResponseDTO save(MonopatinRequestDTO request) {
         Monopatin nuevo = MonopatinMapper.convertToEntity(request);
         Monopatin creado = monopatinRepository.save(nuevo);
         return MonopatinMapper.convertToDTO(creado);
@@ -49,6 +51,7 @@ public class MonopatinService {
         return MonopatinMapper.convertToDTO(monopatin);
     }
 
+    @Transactional
     public MonopatinResponseDTO update(String id, MonopatinRequestDTO monopatin) {
         Monopatin monopatinEditar = monopatinRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con id: " + id));
@@ -65,6 +68,7 @@ public class MonopatinService {
         return MonopatinMapper.convertToDTO(monopatinEditar);
     }
 
+    @Transactional
     public void delete(String id) {
         Monopatin monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No se encontró un Monopatin con el id: "+ id));
@@ -72,6 +76,7 @@ public class MonopatinService {
     }
 
     /*-------------------------- ENDPOINTS SERVICIOS --------------------------*/
+    @Transactional
     public MonopatinResponseDTO cambiarEstadoMonopatin(String id, String estado) {
         Monopatin monopatin = monopatinRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con id: " + id));
@@ -91,6 +96,7 @@ public class MonopatinService {
         return MonopatinMapper.convertToDTO(monopatin);
     }
 
+    @Transactional
     public MonopatinResponseDTO ubicarEnParada(String monopatinId, Long paradaId) {
         Monopatin monopatin = monopatinRepository.findById(monopatinId)
                 .orElseThrow(() -> new IllegalArgumentException("No existe el monopatín con id: " + monopatinId));
@@ -130,7 +136,6 @@ public class MonopatinService {
     }
 
     public ReporteUsoResponseDTO generarReporteUso(ReporteUsoRequestDTO request) {
-
         // Definimos el umbral de km que determina si un monopatín requiere mantenimiento.
         // Si el cliente no lo envía en el request, usamos un valor por defecto (1000 km).
         double umbral = request.getUmbralKmMantenimiento() != null

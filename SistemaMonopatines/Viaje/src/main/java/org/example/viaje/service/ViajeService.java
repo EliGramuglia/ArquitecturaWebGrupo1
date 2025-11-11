@@ -20,7 +20,6 @@ import org.example.viaje.repository.ViajeRepository;
 import org.example.viaje.utils.usuario.Rol;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +61,7 @@ public class ViajeService {
         Viaje viajePersistido = viajeRepository.save(viajeNuevo);
         return ViajeMapper.convertToDTO(viajePersistido);
     }
+
     //al asignar el cobro de un viaje si el usuario es premium debemos restarle los km
     //disponibles que tiene y cobrarle 50% de la tarifa una vez que ya no tenga
 
@@ -141,6 +141,7 @@ public class ViajeService {
                 .orElseThrow(() -> new IllegalArgumentException("No existe viaje con id: " + id));
         return ViajeMapper.convertToDTO(viaje);
     }
+
     @Transactional
     public ViajeResponseDTO update(Long id, ViajeRequestDTO viajeDTO) {
         Viaje viajeEditar = viajeRepository.findById(id)
@@ -163,6 +164,7 @@ public class ViajeService {
         Viaje viajePersistido = viajeRepository.save(viajeEditar);
         return ViajeMapper.convertToDTO(viajePersistido);
     }
+
     @Transactional
     public void delete(Long id) {
         viajeRepository.deleteById(id);
@@ -258,7 +260,7 @@ public class ViajeService {
         return resultado;
     }
 
-    //cuantas veces use los monopatines en el periodo y usuarios relacionados a mi cuenta
+    // Cuantas veces use los monopatines en el periodo y usuarios relacionados a mi cuenta
     public UsoMonopatinUsuarioDTO contarViajesPorUsuario(Long idUsuario, LocalDate inicio, LocalDate fin) {
         LocalDateTime fechaInicio = inicio.atStartOfDay();
         LocalDateTime fechaFin = fin.atTime(23, 59, 59);

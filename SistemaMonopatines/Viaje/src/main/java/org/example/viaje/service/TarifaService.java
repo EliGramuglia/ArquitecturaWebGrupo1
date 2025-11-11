@@ -1,6 +1,5 @@
 package org.example.viaje.service;
 
-import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.viaje.dto.request.TarifaRequestDTO;
@@ -9,17 +8,18 @@ import org.example.viaje.entity.Tarifa;
 import org.example.viaje.mapper.TarifaMapper;
 import org.example.viaje.repository.TarifaRepository;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class TarifaService {
-
     private TarifaRepository tarifaRepository;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
+    @Transactional
     public TarifaResponseDTO save(@Valid TarifaRequestDTO request) {
         Tarifa nuevaTarifa = TarifaMapper.convertToEntity(request);
 
