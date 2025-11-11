@@ -6,16 +6,38 @@ TODO:
   microservicios.
 
 
-MARI:
-- Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
-  otros usuarios relacionados a mi cuenta los han usado. (FALTA PROBAR)
+MARI: DONE!
+- Como usuario quiero saber cuánto he usado los monopatines en un período
+- AHORA DEVUELVO ALGO ASI
+{
+  "idUsuario": 7,
+  "cantidadViajes": 5,
+  "cuentaCompartida": [1, 2] (devolver los usuarios que usaron los monopatines)
+}
+
+- , y opcionalmente si otros usuarios relacionados a mi cuenta los han usado.  (devolver los usuarios que usaron los monopatines)
+YO SOY USUARIO 7 Y TENGO LA CUENTA 2....TODOS LOS QUE TENGAN CUENTA 2 DEBO CONTAR CUANTAS VECES 
+USUARON LOS MONOPATINES EN ESE PERIODO? O CON UN BOOLEANO YA ALCANZA
 
 
 
 
-
+-en updateCuenta deberia poder asignar otros usuarios a la misma cuenta
 
 DONE:
+-El usuario deberia mostrar que cuentas posee asignadas /GET
+{
+    "id": 2,
+    "nombre": "Thresh",
+    "apellido": "Cabrera",
+    "email": "assdfsdfdfgl@example.com",
+    "nroCelular": 123557890,
+    "rol": "CLIENTE",
+    "idCuentas": [
+        1,
+        2
+    ]
+}
 - En una cuenta premium, el usuario paga un valor mensual fijo,
   y tienen recorridos ilimitados hasta 100 km por mes, y luego de eso paga el 50% de la tarifa,....
 - La cuenta puede ser básica o premium.

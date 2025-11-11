@@ -102,13 +102,15 @@ public class ViajeController {
         return ResponseEntity.ok(usuariosActivos);
     }
 
-    @GetMapping("/usuarios/{id}/cantidad-viajes")
-    public ResponseEntity<UsoMonopatinUsuarioDTO> getCantidadViajesUsuario(
-            @PathVariable("id") Long idUsuario,
-            @RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
-            @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin) {
-
-        UsoMonopatinUsuarioDTO resultado = service.obtenerCantidadViajesUsuario(idUsuario, inicio, fin);
+    //h)Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
+    //otros usuarios relacionados a mi cuenta los han usado.
+    @GetMapping("/uso-monopatin/cantidad")
+    public ResponseEntity<UsoMonopatinUsuarioDTO> contarViajesPorUsuario(
+            @RequestParam Long idUsuario,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin
+    ) {
+        UsoMonopatinUsuarioDTO resultado = service.contarViajesPorUsuario(idUsuario, inicio, fin);
         return ResponseEntity.ok(resultado);
     }
 

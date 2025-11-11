@@ -1,9 +1,10 @@
 {
 	"info": {
-		"_postman_id": "a01f7ae7-4182-4ddc-86c6-06674cda2ea9",
+		"_postman_id": "16700bc3-fcf5-4228-a541-37ef9b0e0d05",
 		"name": "ServiciosViaje",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "31094389"
+		"_exporter_id": "49340244",
+		"_collection_link": "https://mcabreranieto-8990535.postman.co/workspace/Mar%C3%ADa-de-los-Angeles-Cabrera-Ni~1ada464d-e390-4470-8c1a-404254d31fbc/collection/49340244-16700bc3-fcf5-4228-a541-37ef9b0e0d05?action=share&source=collection_link&creator=49340244"
 	},
 	"item": [
 		{
@@ -370,10 +371,75 @@
 			"response": []
 		},
 		{
-			"name": "New Request",
+			"name": "GetUsoMonopatinXperiodo(solo-de-ese-usuario)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
-				"header": []
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-06T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-06T11:30:00\",\r\n  \"kmRecorridos\": 5.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": 1,\r\n  \"idCliente\": 1,\r\n  \"pausas\": []\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/viajes/uso-monopatin/cantidad?idUsuario=1&inicio=2025-11-06&fin=2025-11-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"viajes",
+						"uso-monopatin",
+						"cantidad"
+					],
+					"query": [
+						{
+							"key": "idUsuario",
+							"value": "1"
+						},
+						{
+							"key": "inicio",
+							"value": "2025-11-06"
+						},
+						{
+							"key": "fin",
+							"value": "2025-11-30"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UsoMonopatinYusuariosRelacionados",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/1/uso-monopatines?inicio=2025-11-06&fin=2025-11-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"1",
+						"uso-monopatines"
+					],
+					"query": [
+						{
+							"key": "inicio",
+							"value": "2025-11-06"
+						},
+						{
+							"key": "fin",
+							"value": "2025-11-30"
+						}
+					]
+				}
 			},
 			"response": []
 		},
@@ -430,14 +496,6 @@
 						"usuarios"
 					]
 				}
-			},
-			"response": []
-		},
-		{
-			"name": "New Request",
-			"request": {
-				"method": "GET",
-				"header": []
 			},
 			"response": []
 		}

@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
+import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
 import org.example.usuario.service.UsuarioService;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -66,13 +68,13 @@ public class UsuarioController {
         return ResponseEntity.ok(cercanos);
     }
 
-    @GetMapping("/{id}/viajes")
-    public ResponseEntity<Long> getCantidadViajesUsuario(
-            @PathVariable Long id,
-            @RequestParam LocalDate inicio,
-            @RequestParam LocalDate fin
+    @GetMapping("/{idUsuario}/uso-monopatines")
+    public ResponseEntity<UsoMonopatinCuentaDTO> obtenerUsoMonopatines(
+            @PathVariable Long idUsuario,
+            @RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
+            @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin
     ) {
-        Long cantidad = service.obtenerCantidadViajes(id, inicio, fin);
-        return ResponseEntity.ok(cantidad);
+        UsoMonopatinCuentaDTO resultado = service.obtenerUsoMonopatines(idUsuario, inicio, fin);
+        return ResponseEntity.ok(resultado);
     }
 }

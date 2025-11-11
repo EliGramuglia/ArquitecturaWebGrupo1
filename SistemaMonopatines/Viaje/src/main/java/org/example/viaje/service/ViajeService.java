@@ -1,6 +1,5 @@
 package org.example.viaje.service;
 
-import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.example.viaje.client.CuentaFeignClient;
 import org.example.viaje.client.cuenta.dto.response.CuentaResponseDTO;
@@ -20,6 +19,8 @@ import org.example.viaje.repository.TarifaRepository;
 import org.example.viaje.repository.ViajeRepository;
 import org.example.viaje.utils.usuario.Rol;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class ViajeService {
     private final ViajeRepository viajeRepository;
     private final TarifaRepository tarifaRepository;
@@ -37,6 +39,7 @@ public class ViajeService {
     private final UsuarioFeignClient usuarioFeignClient;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
+    @Transactional
     public ViajeResponseDTO save(ViajeRequestDTO viaje) {
         // Validación: la fecha de fin no puede ser anterior a la de inicio
         if (viaje.getFechaHoraFin().isBefore(viaje.getFechaHoraInicio())) {
@@ -138,7 +141,7 @@ public class ViajeService {
                 .orElseThrow(() -> new IllegalArgumentException("No existe viaje con id: " + id));
         return ViajeMapper.convertToDTO(viaje);
     }
-
+    @Transactional
     public ViajeResponseDTO update(Long id, ViajeRequestDTO viajeDTO) {
         Viaje viajeEditar = viajeRepository.findById(id)
                 .orElseThrow(() -> new IllegalArgumentException("No existe viaje con id: " + id));
@@ -160,11 +163,9 @@ public class ViajeService {
         Viaje viajePersistido = viajeRepository.save(viajeEditar);
         return ViajeMapper.convertToDTO(viajePersistido);
     }
-
+    @Transactional
     public void delete(Long id) {
-        Viaje viajeEliminar = viajeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe viaje con id: "+ id));
-        viajeRepository.delete(viajeEliminar);
+        viajeRepository.deleteById(id);
     }
 
     /*-------------------- ENDPOINTS ANIDADOS PARA PAUSAR EL VIAJE -----------------------*/
@@ -257,19 +258,16 @@ public class ViajeService {
         return resultado;
     }
 
+    //cuantas veces use los monopatines en el periodo y usuarios relacionados a mi cuenta
+    public UsoMonopatinUsuarioDTO contarViajesPorUsuario(Long idUsuario, LocalDate inicio, LocalDate fin) {
+        LocalDateTime fechaInicio = inicio.atStartOfDay();
+        LocalDateTime fechaFin = fin.atTime(23, 59, 59);
 
-    public UsoMonopatinUsuarioDTO obtenerCantidadViajesUsuario(Long idCliente, LocalDate inicio, LocalDate fin) {
-        // Convertimos el LocalDate a LocalDateTime:
-        LocalDateTime inicioDT = inicio.atStartOfDay();               // 2025-11-01T00:00:00
-        LocalDateTime finDT = fin.plusDays(1).atStartOfDay().minusNanos(1); // 2025-11-09T23:59:59.999999999
-
-        UsoMonopatinUsuarioDTO resultado = viajeRepository.contarViajesPorUsuarioYRango(idCliente, inicioDT, finDT);
-
+        UsoMonopatinUsuarioDTO resultado = viajeRepository.contarViajesPorUsuarioYRango(idUsuario, fechaInicio, fechaFin);
         if (resultado == null) {
-            return new UsoMonopatinUsuarioDTO(idCliente, 0L);
+            return new UsoMonopatinUsuarioDTO(idUsuario, 0L); // Si no hizo viajes, devolver 0
         }
         return resultado;
     }
-
 
 }

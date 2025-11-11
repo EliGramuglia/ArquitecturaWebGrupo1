@@ -1,17 +1,21 @@
 package org.example.usuario.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.usuario.dto.request.CuentaRequestDTO;
 import org.example.usuario.dto.response.CuentaResponseDTO;
 import org.example.usuario.entity.Cuenta;
+import org.example.usuario.entity.Usuario;
 import org.example.usuario.mapper.CuentaMapper;
 import org.example.usuario.repository.CuentaRepository;
+import org.example.usuario.repository.UsuarioRepository;
 import org.example.usuario.utils.cuenta.EstadoCuenta;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,13 +23,24 @@ import java.util.List;
 public class CuentaService {
     private final CuentaRepository cuentaRepository;
     private final CuentaMapper cuentaMapper;
+    private final UsuarioRepository usuarioRepository;
 
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
+    @Transactional
     public CuentaResponseDTO save(@Valid CuentaRequestDTO request) {
         Cuenta nuevo = CuentaMapper.convertToEntity(request);
-        Cuenta creado = cuentaRepository.save(nuevo);
-        return CuentaMapper.convertToDTO(creado);
+        Cuenta cuentaCreada = cuentaRepository.save(nuevo);
+
+        for(Long idUsuario: request.getIdUsuario()){
+            Usuario usuario = usuarioRepository.findById(idUsuario)
+                    .orElseThrow(() -> new RuntimeException("No hay un Usuario con el id: " + idUsuario));
+            usuario.getCuentas().add(cuentaCreada);
+            cuentaCreada.getClientes().add(usuario);
+            usuarioRepository.save(usuario);
+        }
+        cuentaRepository.save(cuentaCreada);
+        return CuentaMapper.convertToDTO(cuentaCreada);
     }
 
     public List<CuentaResponseDTO> findAll() {
@@ -49,8 +64,19 @@ public class CuentaService {
         cuentaEditar.setFecha_alta(cuenta.getFecha_alta());
         cuentaEditar.setEstadoCuenta(cuenta.getEstadoCuenta());
         cuentaEditar.setMonto(cuenta.getMonto());
-        cuentaRepository.save(cuentaEditar);
+        cuentaEditar.setPremium(cuenta.getPremium());
+        for (Long idUsuario : cuenta.getIdUsuario()) {
+            Usuario usuario = usuarioRepository.findById(idUsuario)
+                    .orElseThrow(() -> new RuntimeException("No hay un Usuario con el id: " + idUsuario));
 
+            if(!cuentaEditar.getClientes().contains(usuario)){
+                cuentaEditar.getClientes().add(usuario);
+                usuario.getCuentas().add(cuentaEditar);
+                usuarioRepository.save(usuario);
+
+            }
+        }
+        cuentaRepository.save(cuentaEditar);
         return CuentaMapper.convertToDTO(cuentaEditar);
     }
 
@@ -100,4 +126,18 @@ public class CuentaService {
         return cuentaMapper.convertToDTO(cuenta);
     }
 
+    public CuentaResponseDTO obtenerCuentaPorUsuario(Long idUsuario) {
+        // Buscamos todas las cuentas del usuario
+        List<Cuenta> cuentas = cuentaRepository.findCuentasByUsuarioId(idUsuario);
+
+        if (cuentas.isEmpty()) {
+            throw new RuntimeException("No se encontró una cuenta para el usuario con ID: " + idUsuario);
+        }
+
+        // Tomamos la primera cuenta asociada (como si fuera la principal para decirdir si es o no premium)
+        Cuenta cuenta = cuentas.get(0);
+
+        // Mapeamos a DTO
+        return CuentaMapper.convertToDTO(cuenta);
+    }
 }

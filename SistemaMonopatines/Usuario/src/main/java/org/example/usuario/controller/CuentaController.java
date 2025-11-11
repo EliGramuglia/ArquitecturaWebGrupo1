@@ -17,7 +17,7 @@ public class CuentaController {
     private final CuentaService service;
 
     /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
-    @PostMapping("/{id}")
+    @PostMapping("")
     public ResponseEntity<CuentaResponseDTO> create(@RequestBody CuentaRequestDTO cuenta){
         CuentaResponseDTO nuevo = service.save(cuenta);
         return ResponseEntity.ok(nuevo);
@@ -57,6 +57,12 @@ public class CuentaController {
     @GetMapping("/{nroCuenta}/verificar-cupo")
     public ResponseEntity<CuentaResponseDTO> verificarCupo(@PathVariable Long nroCuenta) {
         CuentaResponseDTO cuenta = service.verificarYRnovarCupo(nroCuenta);
+        return ResponseEntity.ok(cuenta);
+    }
+
+    @GetMapping("/usuario/{idUsuario}")
+    public ResponseEntity<CuentaResponseDTO> obtenerCuentaPorUsuario(@PathVariable Long idUsuario) {
+        CuentaResponseDTO cuenta = service.obtenerCuentaPorUsuario(idUsuario);
         return ResponseEntity.ok(cuenta);
     }
 

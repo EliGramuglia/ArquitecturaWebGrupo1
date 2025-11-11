@@ -9,6 +9,7 @@ import lombok.Setter;
 import org.example.usuario.utils.cuenta.EstadoCuenta;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,4 +28,6 @@ public class CuentaRequestDTO {
     @NotNull(message = "El tipo de cuenta es obligatorio")
     private Boolean premium;
 
+    @NotNull(message = "El usuario es obligatorio")
+    private List<Long> idUsuario;
 }

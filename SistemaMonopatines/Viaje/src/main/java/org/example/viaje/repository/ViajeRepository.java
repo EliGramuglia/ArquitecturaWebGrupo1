@@ -42,18 +42,19 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
     """)
     List<UsuarioViajesCountDTO> contarViajesPorUsuario( @Param("inicio")LocalDate inicio, @Param("fin") LocalDate fin);
 
+    //cantidad de viajes del usuario en el periodo
     @Query("""
-    SELECT new org.example.viaje.dto.response.UsoMonopatinUsuarioDTO(
-        v.idCliente,
-        COUNT(v)
-    )
-    FROM Viaje v
-    WHERE v.idCliente = :idCliente
-      AND v.fechaHoraInicio BETWEEN :inicio AND :fin
-    GROUP BY v.idCliente
-""")
+        SELECT new org.example.viaje.dto.response.UsoMonopatinUsuarioDTO(
+            v.idCliente,
+            COUNT(v)
+        )
+        FROM Viaje v
+        WHERE v.idCliente = :idUsuario
+          AND v.fechaHoraInicio BETWEEN :inicio AND :fin
+        GROUP BY v.idCliente
+    """)
     UsoMonopatinUsuarioDTO contarViajesPorUsuarioYRango(
-            @Param("idCliente") Long idCliente,
+            @Param("idUsuario") Long idUsuario,
             @Param("inicio") LocalDateTime inicio,
             @Param("fin") LocalDateTime fin
     );

@@ -1,5 +1,6 @@
 package org.example.usuario.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.example.usuario.client.MonopatinFeignClient;
 import org.example.usuario.client.ViajeFeignClient;
@@ -7,15 +8,20 @@ import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.usuario.client.viaje.dto.UsoMonopatinUsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
+import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
+import org.example.usuario.entity.Cuenta;
 import org.example.usuario.entity.Usuario;
+import org.example.usuario.mapper.CuentaMapper;
 import org.example.usuario.mapper.UsuarioMapper;
+import org.example.usuario.repository.CuentaRepository;
 import org.example.usuario.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -57,8 +63,9 @@ public class UsuarioService {
         usuarioEditar.setNombre(usuario.getNombre());
         usuarioEditar.setApellido(usuario.getApellido());
         usuarioEditar.setNroCelular(usuario.getNroCelular());
-        Usuario usuarioPersistido = usuarioRepository.save(usuarioEditar);
-        return UsuarioMapper.convertToDTO(usuarioPersistido);
+        usuarioEditar.setRol(usuario.getRol());
+        usuarioRepository.save(usuarioEditar);
+        return UsuarioMapper.convertToDTO(usuarioEditar);
     }
 
     public void delete(Long id) {
@@ -77,8 +84,33 @@ public class UsuarioService {
         return monopatinFeignClient.getMonopatinesCercanos(latitud, longitud);
     }
 
-    public Long obtenerCantidadViajes(Long idUsuario, LocalDate inicio, LocalDate fin) {
-        UsoMonopatinUsuarioDTO respuesta = viajeFeignClient.getCantidadViajesUsuario(idUsuario, inicio, fin);
-        return respuesta.getCantidadViajes();
+    public UsoMonopatinCuentaDTO obtenerUsoMonopatines(Long idUsuario, LocalDate inicio, LocalDate fin) {
+
+        // Buscar usuario principal
+        Usuario usuario = usuarioRepository.findById(idUsuario)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+
+        // Obtener los IDs de las cuentas del usuario
+        List<Long> cuentasIds = usuario.getCuentas().stream()
+                .map(c -> c.getNroCuenta())
+                .collect(Collectors.toList());
+
+        // Obtener los IDs de los usuarios que comparten esas cuentas
+        List<Long> usuariosRelacionados = usuarioRepository.findIdsByCuentasIdExcepto(cuentasIds, idUsuario);
+
+        // Consultar al microservicio "viaje" para contar los viajes del usuario
+        UsoMonopatinUsuarioDTO viajesUsuario =
+                viajeFeignClient.contarViajesPorUsuario(
+                        idUsuario,
+                        inicio.toString(), // convierte "2025-11-06"
+                        fin.toString()     // convierte "2025-11-30"
+                );
+
+        // Armar DTO final
+        return new UsoMonopatinCuentaDTO(
+                idUsuario,
+                viajesUsuario.getCantidadViajes(),
+                usuariosRelacionados
+        );
     }
 }

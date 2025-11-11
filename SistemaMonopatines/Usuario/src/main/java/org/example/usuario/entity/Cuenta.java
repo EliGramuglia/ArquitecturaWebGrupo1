@@ -10,6 +10,7 @@ import org.example.usuario.utils.cuenta.EstadoCuenta;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -40,8 +41,8 @@ public class Cuenta {
     @Column
     private LocalDate ultimaRenovacionCupo;
 
-    @ManyToMany
-    private List<Usuario> clientes;
+    @ManyToMany(mappedBy = "cuentas")
+    private List<Usuario> clientes = new ArrayList<>();
 
     public Cuenta(LocalDate fechaAlta, EstadoCuenta estadoCuenta, Integer monto, Boolean premium) {
         this.fecha_alta = fechaAlta;
@@ -51,3 +52,6 @@ public class Cuenta {
     }
 
 }
+
+//    @Column (columnDefinition = "varchar(2)")
+//    private String estadoCuenta;

@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "8125a4f0-57ca-4b65-b3e1-d8c704d909fa",
+		"name": "CuentaCRUD",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49340244",
+		"_collection_link": "https://mcabreranieto-8990535.postman.co/workspace/Mar%C3%ADa-de-los-Angeles-Cabrera-Ni~1ada464d-e390-4470-8c1a-404254d31fbc/collection/49340244-8125a4f0-57ca-4b65-b3e1-d8c704d909fa?action=share&source=collection_link&creator=49340244"
+	},
+	"item": [
+		{
+			"name": "PostCuentaOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_alta\" :\"2025-10-12\",\r\n    \"estadoCuenta\": \"ACTIVO\",\r\n    \"monto\": 150,\r\n    \"premium\": true\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostCuentaOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_alta\" :\"2025-10-12\",\r\n    \"estadoCuenta\": \"ACTIVO\",\r\n    \"monto\": 20000,\r\n    \"premium\": true,\r\n    \"idUsuario\" : 1\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateCuentaok",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_alta\": \"2025-10-12\",\r\n    \"estadoCuenta\": \"ACTIVO\",\r\n    \"monto\": 5000,\r\n    \"premium\": true,\r\n    \"idUsuarios\": [\r\n        2\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/usuarios/cuentas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"cuentas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAllCuentas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/usuarios/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"usuarios",
+						"cuentas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
