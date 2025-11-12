@@ -1,10 +1,10 @@
 {
 	"info": {
-		"_postman_id": "05532621-4c72-424b-82aa-3083fa740869",
+		"_postman_id": "de4cee99-375c-4f73-b2a7-39d55a98ef9f",
 		"name": "MonopatinCRUD",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "49340244",
-		"_collection_link": "https://mcabreranieto-8990535.postman.co/workspace/Mar%C3%ADa-de-los-Angeles-Cabrera-Ni~1ada464d-e390-4470-8c1a-404254d31fbc/collection/49340244-05532621-4c72-424b-82aa-3083fa740869?action=share&source=collection_link&creator=49340244"
+		"_collection_link": "https://mcabreranieto-8990535.postman.co/workspace/Mar%C3%ADa-de-los-Angeles-Cabrera-Ni~1ada464d-e390-4470-8c1a-404254d31fbc/collection/49340244-de4cee99-375c-4f73-b2a7-39d55a98ef9f?action=share&source=collection_link&creator=49340244"
 	},
 	"item": [
 		{
@@ -114,6 +114,14 @@
 						"monopatines"
 					]
 				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReporteUso",
+			"request": {
+				"method": "GET",
+				"header": []
 			},
 			"response": []
 		}
