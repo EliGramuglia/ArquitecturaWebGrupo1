@@ -35,7 +35,7 @@ public class Viaje {
     private Long idParadaFinal;
 
     @Column(name="id_monopatin", nullable = false)
-    private Long idMonopatin;
+    private String idMonopatin;
 
     @Column(name="id_cliente", nullable = false)
     private Long idCliente;
@@ -50,7 +50,7 @@ public class Viaje {
     @Column(name = "costo_total")
     private Double costoTotal;
 
-    public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, Long idMonopatin, Long idCliente) {
+    public Viaje(LocalDateTime fechaHoraInicio, LocalDateTime fechaHoraFin, Double kmRecorridos, Long idParadaInicio, Long idParadaFinal, Tarifa tarifa, String idMonopatin, Long idCliente) {
         this.fechaHoraInicio = fechaHoraInicio;
         this.fechaHoraFin = fechaHoraFin;
         this.kmRecorridos = kmRecorridos;

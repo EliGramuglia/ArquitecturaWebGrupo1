@@ -273,7 +273,7 @@ public class ViajeService {
         return resultado;
     }
 
-    public List<ViajeMonopatinResponseDTO> getByMonopatin(Long monopatinId) {
+    public List<ViajeMonopatinResponseDTO> getByMonopatin(String monopatinId) {
         List<Viaje> viajes = viajeRepository.findByIdMonopatin(monopatinId);
         List<ViajeMonopatinResponseDTO> out = new ArrayList<>();
 

@@ -31,7 +31,7 @@ public class ViajeRequestDTO {
     private Long idParadaFinal;
 
     @NotNull(message = "El monopatin utilizado es obligatorio")
-    private Long idMonopatin;
+    private String idMonopatin;
 
     @NotNull(message = "El cliente que hizo uso del monopatin es obligatorio")
     private Long idCliente;

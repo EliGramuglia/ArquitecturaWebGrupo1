@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MonopatinViajesDTO {
-    private Long idMonopatin;
+    private String idMonopatin;
     private Long totalViajes;
 
 

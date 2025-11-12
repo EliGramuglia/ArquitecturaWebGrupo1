@@ -18,7 +18,7 @@ public class ViajeResponseDTO {
     private Double kmRecorridos;
     private Long idParadaInicio;
     private Long idParadaFinal;
-    private Long idMonopatin;
+    private String idMonopatin;
     private Long idCliente;
     private List<PausaResponseDTO> pausas;
     private TarifaResponseDTO tarifa;
