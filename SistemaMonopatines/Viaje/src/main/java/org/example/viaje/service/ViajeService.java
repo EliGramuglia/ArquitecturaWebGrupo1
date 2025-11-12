@@ -278,7 +278,7 @@ public class ViajeService {
         List<ViajeMonopatinResponseDTO> out = new ArrayList<>();
 
         for (Viaje v : viajes) {
-            long minutosPausa = calcularMinutosPausa(v); // ← clave
+            long minutosPausa = calcularMinutosPausa(v);
 
             out.add(new ViajeMonopatinResponseDTO(
                     v.getId(),
