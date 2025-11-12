@@ -1,6 +1,7 @@
 package org.example.viaje.repository;
 
 import org.example.viaje.client.dto.UsuarioViajesCountDTO;
+import org.example.viaje.client.dto.response.ViajeMonopatinResponseDTO;
 import org.example.viaje.dto.response.MonopatinViajesDTO;
 import org.example.viaje.dto.response.UsoMonopatinUsuarioDTO;
 import org.example.viaje.entity.Viaje;

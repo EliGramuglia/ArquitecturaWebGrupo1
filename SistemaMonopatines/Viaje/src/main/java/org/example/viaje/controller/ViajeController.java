@@ -3,6 +3,7 @@ package org.example.viaje.controller;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.viaje.client.dto.response.UsuarioViajesDTO;
+import org.example.viaje.client.dto.response.ViajeMonopatinResponseDTO;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.*;

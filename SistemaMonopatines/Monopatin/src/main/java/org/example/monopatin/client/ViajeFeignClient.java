@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "viaje-service", url = "http://localhost:8083/viajes") // cambiar por puerto que vamos a utilizar para viajes
+@FeignClient(name = "viaje-service", url = "http://localhost:8084/viajes") // cambiar por puerto que vamos a utilizar para viajes
 public interface ViajeFeignClient {
 
     @PostMapping
