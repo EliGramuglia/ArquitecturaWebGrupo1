@@ -115,5 +115,10 @@ public class ViajeController {
         return ResponseEntity.ok(resultado);
     }
 
+    @GetMapping("/monopatin/{monopatinId}")
+    public ResponseEntity<List<ViajeMonopatinResponseDTO>> getByMonopatin(@PathVariable Long monopatinId) {
+        return ResponseEntity.ok(service.getByMonopatin(monopatinId));
+    }
+
 }
 

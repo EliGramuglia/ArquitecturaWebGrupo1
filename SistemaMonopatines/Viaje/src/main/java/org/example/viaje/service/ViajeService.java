@@ -273,4 +273,34 @@ public class ViajeService {
         return resultado;
     }
 
+    public List<ViajeMonopatinResponseDTO> getByMonopatin(Long monopatinId) {
+        List<Viaje> viajes = viajeRepository.findByIdMonopatin(monopatinId);
+        List<ViajeMonopatinResponseDTO> out = new ArrayList<>();
+
+        for (Viaje v : viajes) {
+            long minutosPausa = calcularMinutosPausa(v); // ← clave
+
+            out.add(new ViajeMonopatinResponseDTO(
+                    v.getId(),
+                    v.getKmRecorridos(),
+                    v.getFechaHoraInicio(),
+                    v.getFechaHoraFin(),
+                    minutosPausa
+            ));
+        }
+        return out;
+    }
+
+    private long calcularMinutosPausa(Viaje v) {
+        if (v.getPausas() == null || v.getPausas().isEmpty()) return 0L;
+
+        long total = 0L;
+        for (Pausa p : v.getPausas()) {
+            if (p.getInicio() != null && p.getFin() != null) {
+                total += java.time.Duration.between(p.getInicio(), p.getFin()).toMinutes();
+            }
+        }
+        return Math.max(total, 0L);
+    }
+
 }

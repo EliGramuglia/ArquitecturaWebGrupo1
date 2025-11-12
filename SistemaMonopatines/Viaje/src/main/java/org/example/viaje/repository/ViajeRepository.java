@@ -60,4 +60,6 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
             @Param("fin") LocalDateTime fin
     );
 
+    List<Viaje> findByIdMonopatin(Long idMonopatin);
+
 }
