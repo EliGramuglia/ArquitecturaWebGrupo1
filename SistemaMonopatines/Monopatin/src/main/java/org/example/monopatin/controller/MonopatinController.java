@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/monopatines")
+@RequestMapping("/api/monopatines")
 public class MonopatinController {
 
     private final MonopatinService service;

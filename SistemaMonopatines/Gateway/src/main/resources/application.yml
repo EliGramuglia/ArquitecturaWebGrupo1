@@ -6,6 +6,17 @@ server:
 spring:
   application:
     name: gateway-service
+  datasource:
+    url: jdbc:mysql://localhost:3305/gateway?createDatabaseIfNotExist=true
+    username: root
+    password: ""
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true       # opcional, para ver las queries en consola
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
   cloud:
     gateway:
       routes:

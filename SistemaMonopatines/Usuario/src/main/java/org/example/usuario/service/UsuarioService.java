@@ -34,7 +34,8 @@ public class UsuarioService {
         if (usuario.isPresent()) {
             throw new IllegalArgumentException("Ya hay un usuario registrado con ese email");
         }
-
+        // modificar la password del request -> hashear y guardar
+        // request.setPassword(encode.get(request.getPassword()));
         Usuario nuevo = UsuarioMapper.convertToEntity(request);
         Usuario creado = usuarioRepository.save(nuevo);
         return UsuarioMapper.convertToDTO(creado);

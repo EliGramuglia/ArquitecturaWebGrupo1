@@ -1,7 +1,9 @@
 package org.example.usuario.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +12,9 @@ import lombok.Setter;
 import org.example.usuario.utils.Rol;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -45,6 +49,18 @@ public class Usuario {
 
     @Column(nullable = false)
     private Rol rol;
+
+    @Column( nullable = false )
+    private String password;
+
+    @JsonIgnore
+    @ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.PERSIST )
+    @JoinTable(
+            name = "user_authority",
+            joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
+            inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
+    )
+    private Set<Authority> authorities = new HashSet<>();
 
     public Usuario(String nombre, String apellido,String email, Integer nroCelular, Rol rol, List<Cuenta> cuentasId) {
         this.nombre = nombre;

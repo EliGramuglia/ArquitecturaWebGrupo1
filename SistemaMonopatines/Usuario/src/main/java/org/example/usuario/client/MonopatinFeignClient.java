@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "monopatin-service", url = "http://localhost:8082/monopatines")
+@FeignClient(name = "monopatin-service", url = "http://localhost:8082/api/monopatines")
 @Component
 public interface MonopatinFeignClient {
 
