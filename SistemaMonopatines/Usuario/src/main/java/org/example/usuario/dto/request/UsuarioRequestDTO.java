@@ -1,10 +1,8 @@
 package org.example.usuario.dto.request;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.example.usuario.utils.Rol;
 
 import java.util.Set;
 

@@ -47,14 +47,14 @@ public class Usuario {
     )
     private List<Cuenta> cuentas = new ArrayList<>();
 
-    @Column(nullable = false)
-    private Rol rol;
+    /*@Column(nullable = false)
+    private Rol rol;*/
 
     @Column( nullable = false )
     private String password;
 
     @JsonIgnore
-    @ManyToMany( fetch = FetchType.LAZY, cascade = CascadeType.PERSIST )
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "user_authority",
             joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
@@ -62,12 +62,14 @@ public class Usuario {
     )
     private Set<Authority> authorities = new HashSet<>();
 
-    public Usuario(String nombre, String apellido,String email, Integer nroCelular, Rol rol, List<Cuenta> cuentasId) {
+    public Usuario(String nombre, String apellido, String email, Integer nroCelular, Set<Authority> authorities, String password, List<Cuenta> cuentasId) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.nroCelular = nroCelular;
-        this.rol = rol;
+        this.authorities = authorities;
         this.cuentas = cuentasId;
+        this.password = password;
     }
+
 }

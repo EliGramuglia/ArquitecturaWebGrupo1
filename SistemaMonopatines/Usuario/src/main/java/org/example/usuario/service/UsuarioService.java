@@ -9,35 +9,64 @@ import org.example.usuario.client.viaje.dto.UsoMonopatinUsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
 import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
+import org.example.usuario.entity.Authority;
 import org.example.usuario.entity.Usuario;
 import org.example.usuario.mapper.UsuarioMapper;
+import org.example.usuario.repository.AuthorityRepository;
 import org.example.usuario.repository.UsuarioRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
 @Transactional(readOnly = true)
 public class UsuarioService {
+
     private final UsuarioRepository usuarioRepository;
     private final MonopatinFeignClient monopatinFeignClient;
-    private final ViajeFeignClient  viajeFeignClient;
+    private final ViajeFeignClient viajeFeignClient;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthorityRepository authorityRepository;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     @Transactional
     public UsuarioResponseDTO save(UsuarioRequestDTO request) {
-        Optional<Usuario> usuario = usuarioRepository.findByEmail(request.getEmail());
-        if (usuario.isPresent()) {
-            throw new IllegalArgumentException("Ya hay un usuario registrado con ese email");
+        usuarioRepository.findByEmail(request.getEmail())
+                .ifPresent(u -> {
+                    throw new IllegalArgumentException("Ya hay un usuario registrado con ese email");
+                });
+
+        // 1) encriptar password
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+        request.setPassword(encodedPassword);
+
+        // 2) obtener los nombres de las authorities desde el request
+        Set<String> authorityNames = request.getAuthorities();
+
+        // 3) buscar las Authority en la BD
+        List<Authority> authorities = authorityRepository.findAllById(authorityNames);
+
+        if (authorities.isEmpty()) {
+            throw new IllegalArgumentException("No se encontraron authorities para: " + authorityNames);
         }
-        // modificar la password del request -> hashear y guardar
-        // request.setPassword(encode.get(request.getPassword()));
+
+        // 4) mapear DTO -> Entity (sin authorities todavía)
         Usuario nuevo = UsuarioMapper.convertToEntity(request);
+
+        // 5) setear el Set<Authority> en la entidad
+        nuevo.setAuthorities(new HashSet<>(authorities));
+
+        // 6) persistir
         Usuario creado = usuarioRepository.save(nuevo);
+
+        // 7) devolver DTO
         return UsuarioMapper.convertToDTO(creado);
     }
 
@@ -63,7 +92,7 @@ public class UsuarioService {
         usuarioEditar.setNombre(usuario.getNombre());
         usuarioEditar.setApellido(usuario.getApellido());
         usuarioEditar.setNroCelular(usuario.getNroCelular());
-        usuarioEditar.setRol(usuario.getRol());
+        //usuarioEditar.setAuthorities(usuario.getAuthorities());
         usuarioRepository.save(usuarioEditar);
         return UsuarioMapper.convertToDTO(usuarioEditar);
     }
