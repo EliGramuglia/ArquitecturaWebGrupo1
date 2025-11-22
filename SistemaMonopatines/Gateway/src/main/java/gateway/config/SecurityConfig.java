@@ -42,7 +42,7 @@ public class SecurityConfig {
             .securityMatcher("/api/**" )
             .authorizeHttpRequests( authz -> authz
                     .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
-                    //.requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll() // no chequea que tenga autenticación el usuario
+                    .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
                     //.requestMatchers(HttpMethod.GET,"/api/monopatines/cercanos").hasAuthority(AuthorityConstant.CLIENTE)
                     //.requestMatchers(HttpMethod.GET,"/api/usuarios/monopatines-cercanos").hasAuthority(AuthorityConstant.CLIENTE)
 //                    .requestMatchers(HttpMethod.GET,"/api/usuarios/*/uso-monopatines").hasAuthority(AuthorityConstant.CLIENTE)

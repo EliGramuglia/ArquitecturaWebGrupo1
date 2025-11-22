@@ -11,9 +11,9 @@ import org.example.usuario.service.UsuarioService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -23,9 +23,15 @@ public class UsuarioController {
 
     /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
     @PostMapping("")
-    public ResponseEntity<UsuarioResponseDTO> create(@Valid @RequestBody UsuarioRequestDTO usuario){
-        UsuarioResponseDTO nuevo = service.save(usuario);
-        return ResponseEntity.ok(nuevo);
+    public ResponseEntity<?> create(@Valid @RequestBody UsuarioRequestDTO usuario){
+        try {
+            UsuarioResponseDTO nuevo = service.save(usuario);
+            return ResponseEntity.ok(nuevo);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Map.of("error", e.getMessage()));
+        }
     }
 
     @GetMapping("")

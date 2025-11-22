@@ -2,6 +2,7 @@ package org.example.usuario.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
@@ -9,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @Setter
 @Getter
+@NoArgsConstructor
 public class UsuarioTokenResponseDTO {
     private Long id;
     private String usuario;
