@@ -31,4 +31,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     """)
     Optional<Usuario> findOneWithAuthoritiesByEmailIgnoreCase( String email );
 
+
 }

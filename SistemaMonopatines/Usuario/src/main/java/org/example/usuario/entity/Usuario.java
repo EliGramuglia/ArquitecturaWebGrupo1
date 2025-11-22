@@ -3,13 +3,10 @@ package org.example.usuario.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.usuario.utils.Rol;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -60,9 +57,9 @@ public class Usuario {
             joinColumns = { @JoinColumn(name = "user_id", referencedColumnName = "id") },
             inverseJoinColumns = { @JoinColumn(name = "authority_name", referencedColumnName = "name") }
     )
-    private Set<Authority> authorities = new HashSet<>();
+    private List<Authority> authorities;
 
-    public Usuario(String nombre, String apellido, String email, Integer nroCelular, Set<Authority> authorities, String password, List<Cuenta> cuentasId) {
+    public Usuario(String nombre, String apellido, String email, Integer nroCelular, List<Authority> authorities, String password, List<Cuenta> cuentasId) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;

@@ -7,21 +7,21 @@ import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.usuario.client.viaje.dto.UsoMonopatinUsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
+import org.example.usuario.dto.response.AuthorityResponseDTO;
 import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
+import org.example.usuario.dto.response.UsuarioTokenResponseDTO;
 import org.example.usuario.entity.Authority;
 import org.example.usuario.entity.Usuario;
 import org.example.usuario.mapper.UsuarioMapper;
 import org.example.usuario.repository.AuthorityRepository;
 import org.example.usuario.repository.UsuarioRepository;
+import org.hibernate.annotations.NotFound;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -48,24 +48,19 @@ public class UsuarioService {
         request.setPassword(encodedPassword);
 
         // 2) obtener los nombres de las authorities desde el request
-        Set<String> authorityNames = request.getAuthorities();
-
+        List<String> authorityNames = request.getAuthorities();
         // 3) buscar las Authority en la BD
         List<Authority> authorities = authorityRepository.findAllById(authorityNames);
 
         if (authorities.isEmpty()) {
             throw new IllegalArgumentException("No se encontraron authorities para: " + authorityNames);
         }
-
         // 4) mapear DTO -> Entity (sin authorities todavía)
         Usuario nuevo = UsuarioMapper.convertToEntity(request);
-
-        // 5) setear el Set<Authority> en la entidad
-        nuevo.setAuthorities(new HashSet<>(authorities));
-
+        // 5) setear la List<Authority> en la entidad
+        nuevo.setAuthorities(new ArrayList<>(authorities));
         // 6) persistir
         Usuario creado = usuarioRepository.save(nuevo);
-
         // 7) devolver DTO
         return UsuarioMapper.convertToDTO(creado);
     }
@@ -141,5 +136,13 @@ public class UsuarioService {
                 viajesUsuario.getCantidadViajes(),
                 usuariosRelacionados
         );
+    }
+
+    // Método que devuelve un usuario con sus autoridades (roles)
+    public UsuarioTokenResponseDTO findOneWithAuthoritiesByEmailIgnoreCase(String email) {
+        // Busco el usuario con el mail que viene por param (devuelve un opcional de usuario con su lista de roles)
+        Usuario usuario = usuarioRepository.findOneWithAuthoritiesByEmailIgnoreCase(email)
+                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+        return UsuarioMapper.convertToUsuarioTokenResponse(usuario);
     }
 }

@@ -23,19 +23,19 @@ spring:
         - id: usuario-service
           uri: http://localhost:8081
           predicates:
-            - Path=/usuarios/**
+            - Path=/api/usuarios/**
         - id: monopatin-service
           uri: http://localhost:8082
           predicates:
-            - Path=/monopatines/**
+            - Path=/api/monopatines/**
         - id: parada-service
           uri: http://localhost:8083
           predicates:
-            - Path=/paradas/**
+            - Path=/api/paradas/**
         - id: viaje-service
           uri: http://localhost:8084
           predicates:
-            - Path=/viajes/**
+            - Path=/api/viajes/**
       globalcors:
         corsConfigurations:
           '[/**]':

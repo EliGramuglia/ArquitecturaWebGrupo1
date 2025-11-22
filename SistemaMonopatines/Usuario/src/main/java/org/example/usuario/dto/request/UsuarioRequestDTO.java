@@ -3,8 +3,7 @@ package org.example.usuario.dto.request;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-
-import java.util.Set;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -34,5 +33,5 @@ public class UsuarioRequestDTO {
 
     @NotNull( message = "Los roles son un campo requerido." )
     @NotEmpty( message = "Los roles son un campo requerido." )
-    private Set<String> authorities;
+    private List<String> authorities;
 }

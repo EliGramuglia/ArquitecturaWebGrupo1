@@ -1,7 +1,9 @@
 package org.example.usuario.mapper;
 
 import org.example.usuario.dto.request.UsuarioRequestDTO;
+import org.example.usuario.dto.response.AuthorityResponseDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
+import org.example.usuario.dto.response.UsuarioTokenResponseDTO;
 import org.example.usuario.entity.Authority;
 import org.example.usuario.entity.Cuenta;
 import org.example.usuario.entity.Usuario;
@@ -34,7 +36,7 @@ public class UsuarioMapper {
 
     public static Usuario convertToEntity(UsuarioRequestDTO usuarioRequestDTO) {
         List<Cuenta> cuentas = new ArrayList<>();
-        Set<Authority> authorities = new HashSet<>();
+        List<Authority> authorities = new ArrayList<>();
         usuarioRequestDTO.getAuthorities().stream().map(Authority::new).forEach(authorities::add);
         return new Usuario(
                 usuarioRequestDTO.getNombre(),
@@ -44,6 +46,19 @@ public class UsuarioMapper {
                 authorities,
                 usuarioRequestDTO.getPassword(),
                 cuentas
+        );
+    }
+
+    public static UsuarioTokenResponseDTO convertToUsuarioTokenResponse(Usuario usuario) {
+        List<AuthorityResponseDTO> authoritiesDTO = new ArrayList<>();
+        for(Authority authority : usuario.getAuthorities()) {
+            authoritiesDTO.add(new AuthorityResponseDTO(authority.getName()));
+        }
+        return new UsuarioTokenResponseDTO(
+                usuario.getId(),
+                usuario.getEmail(),
+                usuario.getPassword(),
+                authoritiesDTO
         );
     }
 }

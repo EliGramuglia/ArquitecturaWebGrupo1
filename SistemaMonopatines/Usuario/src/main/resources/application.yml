@@ -5,37 +5,15 @@ spring:
     url: jdbc:mysql://localhost:3303/usuarios?createDatabaseIfNotExist=true
     username: root
     password: ""
-  cloud:
-    gateway:
-      mvc:
-        routes:
-          - id: usuario-service
-            uri: http://localhost:8081/api
-            predicates:
-            - Path=/usuarios/**
-          - id: monopatin-service
-            uri: http://localhost:8082/api
-            predicates:
-              - Path=/monopatines/**
-          - id: parada-service
-            uri: http://localhost:8083/api
-            predicates:
-              - Path=/paradas/**
-          - id: viaje-service
-            uri: http://localhost:8084/api
-            predicates:
-              - Path=/viajes/**
-      globalcors:
-        corsConfigurations:
-          '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
 
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
     show-sql: true       # opcional, para ver las queries en consola
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+  main:
+    allow-bean-definition-overriding: true
+server:
+    port: 8081

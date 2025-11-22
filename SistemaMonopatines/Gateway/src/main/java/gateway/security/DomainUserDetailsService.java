@@ -1,8 +1,9 @@
 package gateway.security;
 
-import gateway.entity.Authority;
-import gateway.entity.User;
-import gateway.repository.UserRepository;
+import gateway.client.UsuarioClient;
+import gateway.client.dto.user.AuthorityResponseDTO;
+import gateway.client.dto.user.UsuarioTokenResponseDTO;
+import lombok.AllArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,40 +17,34 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@AllArgsConstructor
 @Component("userDetailsService")
 public class DomainUserDetailsService implements UserDetailsService {
-
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
+    private final UsuarioClient usuarioClient;
 
-    private final UserRepository userRepository;
-
-    public DomainUserDetailsService( UserRepository userRepository ) {
-        this.userRepository = userRepository;
-    }
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(final String username ) {
         log.debug("Authenticating {}", username);
 
-        //final var user = this.userRepository.findOneWithAuthoritiesByUsernameIgnoreCase( username ).orElseThrow();
-        //return this.createSpringSecurityUser( user );
-
-        return userRepository
-            .findOneWithAuthoritiesByUsernameIgnoreCase( username.toLowerCase() )
-            .map( this::createSpringSecurityUser )
+        return usuarioClient
+            .findOneWithAuthoritiesByEmailIgnoreCase(username.toLowerCase())
+            .map(this::createSpringSecurityUser)
             .orElseThrow( () -> new UsernameNotFoundException( "El usuario " + username + " no existe" ) );
     }
 
-    private UserDetails createSpringSecurityUser( User user ) {
+
+    private UserDetails createSpringSecurityUser(UsuarioTokenResponseDTO user) {
         List<GrantedAuthority> grantedAuthorities = user
-                .getAuthorities()
+                .getRoles()
                 .stream()
-                .map( Authority::getName )
+                .map(AuthorityResponseDTO::getName)
                 .map( SimpleGrantedAuthority::new )
                 .collect( Collectors.toList() );
 
-        return new org.springframework.security.core.userdetails.User( user.getUsername(), user.getPassword(), grantedAuthorities );
+        return new org.springframework.security.core.userdetails.User(user.getUsuario(), user.getPassword(), grantedAuthorities);
     }
 
 }

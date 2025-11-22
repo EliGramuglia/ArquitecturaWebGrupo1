@@ -56,7 +56,7 @@ public class UsuarioController {
     @PostMapping("/monopatines/create")
     public ResponseEntity<MonopatinResponseDTO> create(@RequestBody MonopatinRequestDTO monopatin){
         MonopatinResponseDTO nuevo = service.saveMonopatin(monopatin);
-        return ResponseEntity.ok(nuevo); // CHEQUEARRRRRRRRRRRRRR
+        return ResponseEntity.ok(nuevo);
     }
 
     @GetMapping("/monopatines-cercanos")
@@ -77,4 +77,5 @@ public class UsuarioController {
         UsoMonopatinCuentaDTO resultado = service.obtenerUsoMonopatines(idUsuario, inicio, fin);
         return ResponseEntity.ok(resultado);
     }
+
 }

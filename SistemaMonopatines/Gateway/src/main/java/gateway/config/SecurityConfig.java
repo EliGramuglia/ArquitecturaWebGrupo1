@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
-
     private final TokenProvider tokenProvider;
 
     public SecurityConfig( TokenProvider tokenProvider ) {
@@ -42,8 +41,8 @@ public class SecurityConfig {
         http
             .securityMatcher("/api/**" )
             .authorizeHttpRequests( authz -> authz
-                    .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll() // no chequea que tenga autenticación el usuario
                     .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
+                    .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll() // no chequea que tenga autenticación el usuario
                     .requestMatchers(HttpMethod.GET,"/api/monopatines/cercanos").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/usuarios/monopatines-cercanos").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/usuarios/*/uso-monopatines").hasAuthority(AuthorityConstant.CLIENTE)
@@ -51,7 +50,7 @@ public class SecurityConfig {
 
                     .requestMatchers( "/api/monopatines/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
                     .requestMatchers( "/api/paradas/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
-                    .requestMatchers( "/api/usuarios/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
+                    //.requestMatchers( "/api/usuarios/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
                     .requestMatchers( "/api/viajes/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
 
                     .anyRequest().authenticated()
