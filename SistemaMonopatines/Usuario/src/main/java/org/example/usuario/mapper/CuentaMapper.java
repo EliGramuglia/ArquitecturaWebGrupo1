@@ -21,7 +21,8 @@ public class CuentaMapper {
                 cuenta.getPremium(),
                 cuenta.getClientes().stream()
                         .map(Usuario::getId)
-                        .collect(Collectors.toList())
+                        .collect(Collectors.toList()),
+                cuenta.getKmAcumuladosMes()
         );
     }//aca es donde decido si devolver el id del usuario y no la entidad
 

@@ -66,6 +66,7 @@ public class CuentaService {
         cuentaEditar.setEstadoCuenta(cuenta.getEstadoCuenta());
         cuentaEditar.setMonto(cuenta.getMonto());
         cuentaEditar.setPremium(cuenta.getPremium());
+        cuentaEditar.setKmAcumuladosMes(cuenta.getKmAcumuladosMes());
         for (Long idUsuario : cuenta.getIdUsuario()) {
             Usuario usuario = usuarioRepository.findById(idUsuario)
                     .orElseThrow(() -> new RuntimeException("No hay un Usuario con el id: " + idUsuario));

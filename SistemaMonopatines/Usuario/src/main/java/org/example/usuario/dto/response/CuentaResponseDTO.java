@@ -18,4 +18,5 @@ public class CuentaResponseDTO {
     private Integer monto;
     private Boolean premium;
     private List<Long> idUsuarios;
+    private Double kmAcumuladosMes;
 }

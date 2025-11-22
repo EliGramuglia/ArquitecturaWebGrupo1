@@ -1,5 +1,6 @@
 package org.example.viaje.client;
 
+import org.example.viaje.client.cuenta.dto.request.CuentaRequestDTO;
 import org.example.viaje.client.cuenta.dto.response.CuentaResponseDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
@@ -12,7 +13,7 @@ public interface CuentaFeignClient {
     CuentaResponseDTO obtenerCuentaPorUsuario(@PathVariable Long idUsuario);
 
     @PutMapping("/{nroCuenta}")
-    void update(@RequestBody CuentaResponseDTO cuenta, @RequestParam Long nroCuenta);
+    void update(@RequestBody CuentaRequestDTO cuenta, @RequestParam Long nroCuenta);
 
     // verificar y renovar cupo
     @GetMapping("/{nroCuenta}/verificar-cupo")

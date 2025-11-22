@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/ArquitecturaWebGrupo1.iml" filepath="$PROJECT_DIR$/.idea/ArquitecturaWebGrupo1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjercicioIntegrador1/EjercicioIntegrador1.iml" filepath="$PROJECT_DIR$/EjercicioIntegrador1/EjercicioIntegrador1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EjercicioIntegrador2/EjercicioIntegrador2.iml" filepath="$PROJECT_DIR$/EjercicioIntegrador2/EjercicioIntegrador2.iml" />
     </modules>
   </component>
 </project>

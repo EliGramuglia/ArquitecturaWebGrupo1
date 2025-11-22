@@ -2,6 +2,7 @@ package org.example.viaje.service;
 
 import lombok.AllArgsConstructor;
 import org.example.viaje.client.CuentaFeignClient;
+import org.example.viaje.client.cuenta.dto.request.CuentaRequestDTO;
 import org.example.viaje.client.cuenta.dto.response.CuentaResponseDTO;
 import org.example.viaje.client.UsuarioFeignClient;
 import org.example.viaje.client.dto.UsuarioViajesCountDTO;
@@ -74,13 +75,15 @@ public class ViajeService {
         CuentaResponseDTO cuenta = cuentaFeignClient.obtenerCuentaPorUsuario(viaje.getIdCliente());
         cuenta = cuentaFeignClient.verificarCupo(cuenta.getNroCuenta());
         Boolean isPremium = cuenta.getPremium();
-//        Double kmAcobrar = kmAcobrar(isPremium, cuenta, km);
+        CuentaRequestDTO obtenerCuenta = new CuentaRequestDTO(cuenta);
+
+        Double kmAcobrar = kmAcobrar(isPremium, obtenerCuenta, km, cuenta.getNroCuenta());
 
         // Si el viaje no tuvo pausas, multiplico los km por el precio normal (precioBase)
         if(pausas == null || pausas.isEmpty()) {
-//            if(isPremium) {
-//               return kmAcobrar * tarifa.getPrecioBase()*descuento;
-//            }
+            if(isPremium) {
+               return kmAcobrar * tarifa.getPrecioBase()*descuento;
+            }
             return km * tarifa.getPrecioBase();
         }
 
@@ -98,37 +101,37 @@ public class ViajeService {
 
         // Decido el tipo de tarifa que se va a aplicar
         if(minutosTotales >= 15){
-//            if(isPremium) {
-//                return kmAcobrar * tarifa.getPrecioRecargaPorPausa() *  descuento;
-//            }
+            if(isPremium) {
+                return kmAcobrar * tarifa.getPrecioRecargaPorPausa() *  descuento;
+            }
             return km * tarifa.getPrecioRecargaPorPausa();
         }
 
-//        if(isPremium) {
-//            return kmAcobrar * tarifa.getPrecioBase()*descuento;
-//        }
+        if(isPremium) {
+            return kmAcobrar * tarifa.getPrecioBase()*descuento;
+        }
         return km * tarifa.getPrecioBase();
     }
 
     /**Metodo para determinar cantidad de km a cobrar segun que tipo de usuario es  */
-//    private Double kmAcobrar(Boolean isPremium,  CuentaResponseDTO cuenta, Double kmRecorridos){
-//        if(isPremium) {
-//            Double kmDisponibles = cuenta.getKmAcumuladosMes();
-//            if(kmDisponibles >= kmRecorridos) {
-//                Double total = kmDisponibles - kmRecorridos;
-//                cuenta.setKmAcumuladosMes(total);
-//                cuentaFeignClient.update(cuenta, cuenta.getNroCuenta());
-//                return 0.0;
-//            }
-//            else {
-//                Double kmAcobrar = kmRecorridos - kmDisponibles;
-//                cuenta.setKmAcumuladosMes(0.0);
-//                cuentaFeignClient.update(cuenta, cuenta.getNroCuenta());
-//                return kmAcobrar;
-//            }
-//        }
-//        return kmRecorridos;
-//    }
+    private Double kmAcobrar(Boolean isPremium, CuentaRequestDTO cuenta, Double kmRecorridos, Long nroCuenta) {
+        if(isPremium) {
+            Double kmDisponibles = cuenta.getKmAcumuladosMes();
+            if(kmDisponibles >= kmRecorridos) {
+                Double total = kmDisponibles - kmRecorridos;
+                cuenta.setKmAcumuladosMes(total);
+                cuentaFeignClient.update(cuenta, nroCuenta);
+                return 0.0;
+            }
+            else {
+                Double kmAcobrar = kmRecorridos - kmDisponibles;
+                cuenta.setKmAcumuladosMes(0.0);
+                cuentaFeignClient.update(cuenta, nroCuenta);
+                return kmAcobrar;
+            }
+        }
+        return kmRecorridos;
+    }
 
     public List<ViajeResponseDTO> findAll() {
         return viajeRepository.findAll()

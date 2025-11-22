@@ -30,4 +30,6 @@ public class CuentaRequestDTO {
 
     @NotNull(message = "El usuario es obligatorio")
     private List<Long> idUsuario;
+
+    private Double kmAcumuladosMes;
 }

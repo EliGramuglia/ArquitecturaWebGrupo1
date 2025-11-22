@@ -36,7 +36,7 @@ public class Cuenta {
     private Boolean premium;
 
     @Column
-    private Double kmAcumuladosMes;
+    private Double kmAcumuladosMes=100.00;
 
     @Column
     private LocalDate ultimaRenovacionCupo;
