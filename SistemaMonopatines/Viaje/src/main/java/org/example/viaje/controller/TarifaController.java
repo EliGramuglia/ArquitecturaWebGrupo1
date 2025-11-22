@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/viajes/tarifas")
+@RequestMapping("/api/viajes/tarifas")
 public class TarifaController {
     private final TarifaService service;
 

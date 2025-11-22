@@ -5,7 +5,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "parada-service", url = "http://localhost:8082/paradas")
+@FeignClient(name = "parada-service", url = "http://localhost:8082/api/paradas")
 public interface ParadaFeignClient {
 
     @GetMapping("/{id}")

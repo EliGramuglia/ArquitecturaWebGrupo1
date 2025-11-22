@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
-@FeignClient(name = "usuario-service", url = "http://localhost:8081/usuarios/cuentas")
+@FeignClient(name = "usuario-service", url = "http://localhost:8081/api/usuarios/cuentas")
 @Component
 public interface CuentaFeignClient {
     @GetMapping("/usuario/{idUsuario}")

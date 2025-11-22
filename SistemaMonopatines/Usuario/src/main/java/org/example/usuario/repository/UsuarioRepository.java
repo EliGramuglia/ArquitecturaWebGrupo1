@@ -24,4 +24,11 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
             @Param("cuentasIds") List<Long> cuentasIds,
             @Param("idUsuario") Long idUsuario
     );
+
+    @Query("""
+        FROM Usuario u JOIN FETCH u.authorities
+        WHERE lower(u.email) =  ?1
+    """)
+    Optional<Usuario> findOneWithAuthoritiesByEmailIgnoreCase( String email );
+
 }

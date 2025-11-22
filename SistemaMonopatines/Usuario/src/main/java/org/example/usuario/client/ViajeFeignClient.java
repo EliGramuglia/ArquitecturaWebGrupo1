@@ -9,7 +9,7 @@ import java.time.LocalDate;
 
 //Como necesitás la cantidad de viajes del usuario, el microservicio usuario consulta a viaje
 
-@FeignClient(name = "viaje-service", url = "http://localhost:8084/viajes")
+@FeignClient(name = "viaje-service", url = "http://localhost:8084/api/viajes")
 public interface ViajeFeignClient {
     @GetMapping("/uso-monopatin/cantidad")
     UsoMonopatinUsuarioDTO contarViajesPorUsuario(

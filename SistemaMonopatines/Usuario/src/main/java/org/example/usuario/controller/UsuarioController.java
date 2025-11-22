@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/api/usuarios")
 @AllArgsConstructor
 public class UsuarioController {
     private final UsuarioService service;
@@ -52,11 +52,11 @@ public class UsuarioController {
        return ResponseEntity.noContent().build();
     }
 
-    /*-------------------------- ENDPOINTS PARA EL CRUD --------------------------*/
+    /*-------------------------- ENDPOINTS PARA LOS SERVICIOS --------------------------*/
     @PostMapping("/monopatines/create")
     public ResponseEntity<MonopatinResponseDTO> create(@RequestBody MonopatinRequestDTO monopatin){
         MonopatinResponseDTO nuevo = service.saveMonopatin(monopatin);
-        return ResponseEntity.ok(nuevo);
+        return ResponseEntity.ok(nuevo); // CHEQUEARRRRRRRRRRRRRR
     }
 
     @GetMapping("/monopatines-cercanos")

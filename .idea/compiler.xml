@@ -13,10 +13,6 @@
         <module name="EjercicioIntegrador3" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="EjercicioIntegrador1" target="1.8" />
-      <module name="EjercicioIntegrador2" target="1.8" />
-    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
