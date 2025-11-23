@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
+import org.example.usuario.client.viaje.dto.UsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
 import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
@@ -82,6 +83,12 @@ public class UsuarioController {
     ) {
         UsoMonopatinCuentaDTO resultado = service.obtenerUsoMonopatines(idUsuario, inicio, fin);
         return ResponseEntity.ok(resultado);
+    }
+
+    // Endpoint que necesita el feigClient que esta en viaje
+    @GetMapping("/feign/{id}")
+    public ResponseEntity<UsuarioDTO> findByIdFeign(@PathVariable Long id) {
+        return ResponseEntity.ok(service.obtenerUsuarioDTO(id));
     }
 
 }

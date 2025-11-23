@@ -6,7 +6,8 @@ import org.example.viaje.client.cuenta.dto.request.CuentaRequestDTO;
 import org.example.viaje.client.cuenta.dto.response.CuentaResponseDTO;
 import org.example.viaje.client.UsuarioFeignClient;
 import org.example.viaje.client.dto.UsuarioViajesCountDTO;
-import org.example.viaje.client.dto.response.UsuarioViajesDTO;
+import org.example.viaje.client.dto.response.UsuarioDTO;
+import org.example.viaje.dto.response.UsuariosConMasViajesDTO;
 import org.example.viaje.client.dto.response.ViajeMonopatinResponseDTO;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
@@ -19,7 +20,6 @@ import org.example.viaje.mapper.ViajeMapper;
 import org.example.viaje.repository.PausaRepository;
 import org.example.viaje.repository.TarifaRepository;
 import org.example.viaje.repository.ViajeRepository;
-import org.example.viaje.utils.usuario.Rol;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.*;
@@ -241,27 +241,39 @@ public class ViajeService {
         return viajeRepository.findMonopatinesConMasViajes(anio, cantidadMinima);
     }
 
-    // Consultar los usuarios que más utilizan los monopatines, filtrando por período y por tipo de usuario.
-    public List<UsuarioViajesDTO> obtenerUsuariosMasActivos(LocalDate inicio, LocalDate fin, Rol tipoUsuario) {
-        List<UsuarioViajesCountDTO> viajesPorUsuario = viajeRepository.contarViajesPorUsuario(inicio, fin);
+    // e) Consultar los usuarios que más utilizan los monopatines, filtrando por período y por tipo de usuario.
+    public List<UsuariosConMasViajesDTO> obtenerUsuariosMasActivos(LocalDate inicio, LocalDate fin, Boolean tipoUsuario) {
+        LocalDateTime inicioDT = inicio.atStartOfDay();
+        LocalDateTime finDT = fin.atTime(23, 59, 59);
 
-        List<UsuarioViajesDTO> resultado = new ArrayList<>();
+        // Busco los viajes filtrando por periodo, y me guardo el id del usuario que los uso
+        // yla cantidad de viajes que hizo
+        List<UsuarioViajesCountDTO> viajesPorUsuario = viajeRepository.contarViajesPorUsuario(inicioDT, finDT);
+
+        // Creo el array que voy a devolver en el metodo
+        List<UsuariosConMasViajesDTO> resultado = new ArrayList<>();
 
         for(UsuarioViajesCountDTO dtoCount: viajesPorUsuario) {
-            UsuarioViajesDTO usuario = usuarioFeignClient.findById(dtoCount.getUsuarioId());
+            UsuarioDTO usuario = usuarioFeignClient.findByIdFeign(dtoCount.getUsuarioId());
 
-            if(usuario.getRol().equals(tipoUsuario)) {
-                resultado.add(new UsuarioViajesDTO(
+            // Filtro por tipo de usuario (premium/no premium)
+            if(Boolean.TRUE.equals(usuario.getPremium()) == tipoUsuario) {
+                resultado.add(new UsuariosConMasViajesDTO(
                         usuario.getId(),
                         usuario.getNombre(),
                         usuario.getApellido(),
                         usuario.getEmail(),
-                        usuario.getRol(),
+                        usuario.getPremium(),
                         dtoCount.getCantidadViajes()
                 ));
             }
         }
-        return resultado;
+
+        // Ordeno y me quedo con el top 3
+        return resultado.stream()
+                .sorted((u1, u2) -> u2.getCantidadViajes().compareTo(u1.getCantidadViajes()))
+                .limit(3)
+                .toList();
     }
 
     // Cuantas veces use los monopatines en el periodo y usuarios relacionados a mi cuenta

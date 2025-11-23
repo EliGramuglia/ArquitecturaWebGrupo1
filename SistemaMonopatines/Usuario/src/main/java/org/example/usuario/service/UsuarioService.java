@@ -6,6 +6,7 @@ import org.example.usuario.client.ViajeFeignClient;
 import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.usuario.client.viaje.dto.UsoMonopatinUsuarioDTO;
+import org.example.usuario.client.viaje.dto.UsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
 import org.example.usuario.dto.response.AuthorityResponseDTO;
 import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
@@ -144,5 +145,25 @@ public class UsuarioService {
         Usuario usuario = usuarioRepository.findOneWithAuthoritiesByEmailIgnoreCase(email)
                 .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
         return UsuarioMapper.convertToUsuarioTokenResponse(usuario);
+    }
+
+    //Método que devuelve la info. de un usuario, incluyendo si es premium o no
+    // (el MSV de Viaje me lo está pidiendo desde un feignClient)
+    public UsuarioDTO obtenerUsuarioDTO(Long id) {
+        Usuario usuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        // Acá calculamos si es premium desde las cuentas
+        boolean esPremium = usuario.getCuentas() != null &&
+                usuario.getCuentas().stream()
+                        .anyMatch(c -> Boolean.TRUE.equals(c.getPremium()));
+
+        return new UsuarioDTO(
+                usuario.getId(),
+                usuario.getNombre(),
+                usuario.getApellido(),
+                usuario.getEmail(),
+                esPremium
+        );
     }
 }

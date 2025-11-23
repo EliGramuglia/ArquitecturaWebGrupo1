@@ -2,13 +2,12 @@ package org.example.viaje.controller;
 
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
-import org.example.viaje.client.dto.response.UsuarioViajesDTO;
+import org.example.viaje.dto.response.UsuariosConMasViajesDTO;
 import org.example.viaje.client.dto.response.ViajeMonopatinResponseDTO;
 import org.example.viaje.dto.request.PausaRequestDTO;
 import org.example.viaje.dto.request.ViajeRequestDTO;
 import org.example.viaje.dto.response.*;
 import org.example.viaje.service.ViajeService;
-import org.example.viaje.utils.usuario.Rol;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -93,17 +92,17 @@ public class ViajeController {
     }
 
     // e) Como administrador quiero ver los usuarios que más utilizan los monopatines,
-    // filtrando por período y por tipo de usuario.
+    // filtrando por período y por tipo de usuario (pemium/no premium)
     @GetMapping("/usuarios/mas-activos")
-    public ResponseEntity<List<UsuarioViajesDTO>> getUsuariosMasActivos(
+    public ResponseEntity<List<UsuariosConMasViajesDTO>> getUsuariosMasActivos(
             @RequestParam("inicio") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate inicio,
             @RequestParam("fin") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fin,
-            @RequestParam("tipo-usuario") Rol tipoUsuario){
-        List<UsuarioViajesDTO> usuariosActivos = service.obtenerUsuariosMasActivos(inicio, fin, tipoUsuario);
+            @RequestParam("premium") Boolean tipoUsuario){
+        List<UsuariosConMasViajesDTO> usuariosActivos = service.obtenerUsuariosMasActivos(inicio, fin, tipoUsuario);
         return ResponseEntity.ok(usuariosActivos);
     }
 
-    //h)Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
+    // h)Como usuario quiero saber cuánto he usado los monopatines en un período, y opcionalmente si
     //otros usuarios relacionados a mi cuenta los han usado.
     @GetMapping("/uso-monopatin/cantidad")
     public ResponseEntity<UsoMonopatinUsuarioDTO> contarViajesPorUsuario(

@@ -2,18 +2,17 @@ package org.example.viaje.client.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.viaje.utils.usuario.Rol;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-public class UsuarioViajesDTO {
+public class UsuarioDTO {
     private Long id;
     private String nombre;
     private String apellido;
     private String email;
-    private Rol rol;
-    private Long cantidadViajes;
-
+    private Boolean premium;
 }

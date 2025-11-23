@@ -1,7 +1,6 @@
 package org.example.viaje.repository;
 
 import org.example.viaje.client.dto.UsuarioViajesCountDTO;
-import org.example.viaje.client.dto.response.ViajeMonopatinResponseDTO;
 import org.example.viaje.dto.response.MonopatinViajesDTO;
 import org.example.viaje.dto.response.UsoMonopatinUsuarioDTO;
 import org.example.viaje.entity.Viaje;
@@ -34,14 +33,18 @@ public interface ViajeRepository extends JpaRepository<Viaje, Long> {
             @Param("cantidadMinima") long cantidadMinima
     );
 
-    // Consultar los usuarios que más utilizan los monopatines, filtrando por período y por tipo de usuario.
+    // e) Consultar los usuarios que más utilizan los monopatines, filtrando por período y por tipo de usuario.
     @Query("""
     SELECT new org.example.viaje.client.dto.UsuarioViajesCountDTO(v.idCliente, COUNT(v))
     FROM Viaje v
     WHERE v.fechaHoraInicio BETWEEN :inicio AND :fin
     GROUP BY v.idCliente
+    ORDER BY COUNT(v) DESC
     """)
-    List<UsuarioViajesCountDTO> contarViajesPorUsuario( @Param("inicio")LocalDate inicio, @Param("fin") LocalDate fin);
+    List<UsuarioViajesCountDTO> contarViajesPorUsuario(@Param("inicio")LocalDateTime inicio,
+                                                       @Param("fin") LocalDateTime fin);
+
+
 
     //cantidad de viajes del usuario en el periodo
     @Query("""
