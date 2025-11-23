@@ -1,0 +1,886 @@
+{
+	"info": {
+		"_postman_id": "87e30801-ddfe-44a9-bd30-4788b109fc64",
+		"name": "Coleccion Final Sistema Monopatines",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31094389"
+	},
+	"item": [
+		{
+			"name": "PostUsuarioOk",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Arturo\",\r\n  \"apellido\": \"Gramuglia\",\r\n  \"email\": \"asdfgl@example.com\",\r\n  \"nroCelular\": 1234567890,\r\n  \"password\": 1234,\r\n  \"authorities\": [\"ADMINISTRADOR\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostUsuarioCuentaNoPremium",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Thresh\",\r\n  \"apellido\": \"Cabrera\",\r\n  \"email\": \"cabrera@example.com\",\r\n  \"nroCelular\": 1234555890,\r\n  \"password\": 1235,\r\n  \"authorities\": [\"CLIENTE\"]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"username\": \"asdfgl@example.com\",\r\n  \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/authenticate",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"authenticate"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostCuentaOk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzMzU2OCwiaWF0IjoxNzYzODQ3MTY4fQ._5fDFumycntV0GzzcsOmnLWuUAJfA6zPpaHjvgnfKiysB849CAE1857GlxbUwMnr0plMxiVmwYG0l0EhLWvT5A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_alta\" :\"2025-11-22\",\r\n    \"estadoCuenta\": \"ACTIVO\",\r\n    \"monto\": 1250,\r\n    \"premium\": true,\r\n    \"idUsuario\" : [1]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostCuentaNoPremium",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_alta\" :\"2025-11-22\",\r\n    \"estadoCuenta\": \"ACTIVO\",\r\n    \"monto\": 1250,\r\n    \"premium\": false,\r\n    \"idUsuario\" : [2]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MonopatinesPostOk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"latitud\": 100,\r\n  \"longitud\": 90,\r\n  \"kmRecorridos\": 40,\r\n  \"estadoMonopatin\": \"DISPONIBLE\",\r\n  \"horasUso\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/monopatines",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monopatines"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostParadaOk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"nombre\": \"Alem\",\r\n  \"latitud\": 100,\r\n  \"longitud\": 90\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/paradas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"paradas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostViajeSinTarifaCreada",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-04T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-04T11:30:00\",\r\n  \"kmRecorridos\": 5.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": 1,\r\n  \"idCliente\": 1,\r\n  \"pausas\": []\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/viajes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostTarifaActivaOk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 10.0,\r\n  \"precioRecargaPorPausa\": 15.0,\r\n  \"fechaInicioVigencia\": \"2025-11-22\",\r\n  \"fechaFinVigencia\": \"2025-11-30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/tarifas/ajustar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"tarifas",
+						"ajustar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostNoSolapamiento(F)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 10.0,\r\n  \"precioRecargaPorPausa\": 15.0,\r\n  \"fechaInicioVigencia\": \"2025-11-25\",\r\n  \"fechaFinVigencia\": \"2025-11-30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/tarifas/ajustar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"tarifas",
+						"ajustar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateFinDeVigencia",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/tarifas/fecha-fin?fecha-fin=2025-11-28",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"tarifas",
+						"fecha-fin"
+					],
+					"query": [
+						{
+							"key": "fecha-fin",
+							"value": "2025-11-28"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostTarifaFutura(F)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"precioBase\": 20.0,\r\n  \"precioRecargaPorPausa\": 25.0,\r\n  \"fechaInicioVigencia\": \"2025-11-28\",\r\n  \"fechaFinVigencia\": \"2025-11-30\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/tarifas/ajustar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"tarifas",
+						"ajustar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostViajeOk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-09T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-09T11:30:00\",\r\n  \"kmRecorridos\": 5.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": 1,\r\n  \"idCliente\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/viajes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostViajeNoPremium",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"fechaHoraInicio\": \"2025-11-09T10:00:00\",\r\n  \"fechaHoraFin\": \"2025-11-09T11:30:00\",\r\n  \"kmRecorridos\": 10.0,\r\n  \"idParadaInicio\": 1,\r\n  \"idParadaFinal\": 2,\r\n  \"idMonopatin\": \"690fb976bbdef65ead79c685\",\r\n  \"idCliente\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/viajes",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PostPausaParaViajeOk",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\r\n      \"inicio\": \"11:15:00\",\r\n      \"fin\": \"11:35:00\"\r\n    }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/2/pausas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"2",
+						"pausas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindByIdViaje",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Total-Facturado(D)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/total-facturado?anio=2025&mesInicio=11&mesFin=11",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"total-facturado"
+					],
+					"query": [
+						{
+							"key": "anio",
+							"value": "2025"
+						},
+						{
+							"key": "mesInicio",
+							"value": "11"
+						},
+						{
+							"key": "mesFin",
+							"value": "11"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MonopatinesConMasDeXViajes(C)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/monopatines-mas-viajes?anio=2025&cantidadMinima=1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"monopatines-mas-viajes"
+					],
+					"query": [
+						{
+							"key": "anio",
+							"value": "2025"
+						},
+						{
+							"key": "cantidadMinima",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ReporteMonopatinesMantenimiento(A)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"incluirPausas\": true,\r\n  \"umbralKmMantenimiento\": 5.0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/monopatines/reporte-uso",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"monopatines",
+						"reporte-uso"
+					],
+					"query": [
+						{
+							"key": "incluirPausas",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AnularCuenta(B)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_alta\" :\"2025-10-12\",\r\n    \"estadoCuenta\": \"ANULADO\",\r\n    \"monto\": 20000,\r\n    \"premium\": true,\r\n    \"idUsuario\" : [1]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/cuentas/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"cuentas",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FindAllCuentas(Cuenta Anulada)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk0MTU4MSwiaWF0IjoxNzYzODU1MTgxfQ._ofQDhFlCrtjgrUYDNHCVcuLev7TvcUIv0i5WJw5cvqFGWDs0q-xtFqpSFqpxwtjTJ6WdZIV5Ib8OwuIlhUZuQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/cuentas",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"cuentas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MonopatinesCercanosAUsuario(G)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjM5NDQwNzUsImlhdCI6MTc2Mzg1NzY3NX0.HUIUeKe7lOzD045h_JoFQgU9oK_8U-Aoy9izGpgSDzMaB058eYf0s14hkaAUMZKItEIxy3W6ru4Kwa0Ien8O8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/monopatines-cercanos?latitud=100&longitud=90",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"monopatines-cercanos"
+					],
+					"query": [
+						{
+							"key": "latitud",
+							"value": "100"
+						},
+						{
+							"key": "longitud",
+							"value": "90"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UsoMonopatinYusuariosRelacionados(H)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjM5NDQwNzUsImlhdCI6MTc2Mzg1NzY3NX0.HUIUeKe7lOzD045h_JoFQgU9oK_8U-Aoy9izGpgSDzMaB058eYf0s14hkaAUMZKItEIxy3W6ru4Kwa0Ien8O8A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios/1/uso-monopatines?inicio=2025-11-06&fin=2025-11-30",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios",
+						"1",
+						"uso-monopatines"
+					],
+					"query": [
+						{
+							"key": "inicio",
+							"value": "2025-11-06"
+						},
+						{
+							"key": "fin",
+							"value": "2025-11-30"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

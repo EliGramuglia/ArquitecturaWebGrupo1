@@ -16,7 +16,6 @@ public class MonopatinResponseDTO {
     private Integer latitud;
     private Integer longitud;
     private Integer kmRecorridos;
-    private Long viajeId;
     private EstadoMonopatin estadoMonopatin;
 
 }

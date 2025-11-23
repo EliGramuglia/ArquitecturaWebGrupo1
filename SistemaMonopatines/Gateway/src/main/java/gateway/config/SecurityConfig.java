@@ -43,15 +43,16 @@ public class SecurityConfig {
             .authorizeHttpRequests( authz -> authz
                     .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
-                    //.requestMatchers(HttpMethod.GET,"/api/monopatines/cercanos").hasAuthority(AuthorityConstant.CLIENTE)
-                    //.requestMatchers(HttpMethod.GET,"/api/usuarios/monopatines-cercanos").hasAuthority(AuthorityConstant.CLIENTE)
-//                    .requestMatchers(HttpMethod.GET,"/api/usuarios/*/uso-monopatines").hasAuthority(AuthorityConstant.CLIENTE)
-//                    .requestMatchers(HttpMethod.GET,"/api/viajes/uso-monopatin/cantidad").hasAuthority(AuthorityConstant.CLIENTE)
 
-//                    .requestMatchers( "/api/monopatines/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
-//                    .requestMatchers( "/api/paradas/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
-                    //.requestMatchers( "/api/usuarios/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
-//                    .requestMatchers( "/api/viajes/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
+                    .requestMatchers(HttpMethod.GET,"/api/monopatines/cercanos").hasAuthority(AuthorityConstant.CLIENTE)
+                    .requestMatchers(HttpMethod.GET,"/api/usuarios/monopatines-cercanos").hasAuthority(AuthorityConstant.CLIENTE)
+                    .requestMatchers(HttpMethod.GET,"/api/usuarios/*/uso-monopatines").hasAuthority(AuthorityConstant.CLIENTE)
+                    .requestMatchers(HttpMethod.GET,"/api/viajes/uso-monopatin/cantidad").hasAuthority(AuthorityConstant.CLIENTE)
+
+                    .requestMatchers( "/api/monopatines/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
+                    .requestMatchers( "/api/paradas/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
+                    .requestMatchers( "/api/usuarios/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
+                    .requestMatchers( "/api/viajes/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
 
                     .anyRequest().authenticated()
             )

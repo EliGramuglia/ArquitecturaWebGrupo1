@@ -1,6 +1,5 @@
 package org.example.monopatin.service;
 
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.monopatin.client.ParadaFeignClient;
 import org.example.monopatin.client.ViajeFeignClient;
@@ -60,7 +59,6 @@ public class MonopatinService {
         monopatinEditar.setLatitud(monopatin.getLatitud());
         monopatinEditar.setLongitud(monopatin.getLongitud());
         monopatinEditar.setKmRecorridos(monopatin.getKmRecorridos());
-        monopatinEditar.setViajeId(monopatin.getViajeId());
         monopatinEditar.setEstadoMonopatin(monopatin.getEstadoMonopatin());
         monopatinEditar.setHorasUso(monopatin.getHorasUso());
         monopatinRepository.save(monopatinEditar);

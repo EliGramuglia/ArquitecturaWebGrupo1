@@ -15,7 +15,6 @@ public class MonopatinRequestDTO {
     private Integer latitud;
     private Integer longitud;
     private Integer kmRecorridos;
-    private Long viajeId; // Debemos enviar un id de viaje a la hora de crear un nuevo monopatín?
     private EstadoMonopatin estadoMonopatin;
     private Integer horasUso;
 

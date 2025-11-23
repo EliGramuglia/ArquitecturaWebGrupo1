@@ -13,7 +13,6 @@ public class MonopatinMapper {
                 dto.getLatitud(),
                 dto.getLongitud(),
                 dto.getKmRecorridos(),
-                dto.getViajeId(),
                 dto.getEstadoMonopatin()
         );
     }
@@ -24,7 +23,6 @@ public class MonopatinMapper {
                 entity.getLatitud(),
                 entity.getLongitud(),
                 entity.getKmRecorridos(),
-                entity.getViajeId(),
                 entity.getEstadoMonopatin()
         );
     }
