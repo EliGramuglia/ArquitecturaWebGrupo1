@@ -133,11 +133,11 @@ public class MonopatinService {
                 .toList();
     }
 
-    public ReporteUsoResponseDTO generarReporteUso(ReporteUsoRequestDTO request) {
+    public ReporteUsoResponseDTO generarReporteUso(boolean incluirPausas, Double umbralKmMantenimiento) {
         // Definimos el umbral de km que determina si un monopatín requiere mantenimiento.
         // Si el cliente no lo envía en el request, usamos un valor por defecto (1000 km).
-        double umbral = request.getUmbralKmMantenimiento() != null
-                ? request.getUmbralKmMantenimiento()
+        double umbral = umbralKmMantenimiento != null
+                ? umbralKmMantenimiento
                 : 1000.0;
 
         // Obtenemos todos los monopatines registrados en la base de datos.
@@ -176,7 +176,7 @@ public class MonopatinService {
 
                 // Si el reporte incluye pausas, sumamos el tiempo total del viaje.
                 // Si no las incluye, restamos los minutos de pausa (sin permitir valores negativos).
-                if (request.isIncluirPausas()) {
+                if (incluirPausas) {
                     totalMinutos += minutosViaje;
                 } else {
                     long minutosSinPausa = minutosViaje - minutosPausa;

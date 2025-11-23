@@ -70,9 +70,9 @@ public class MonopatinController {
         return ResponseEntity.ok(monopatinesCercanos);
     }
 
-    @PostMapping("/reporte-uso")
-    public ResponseEntity<ReporteUsoResponseDTO> generarReporteUso(@RequestBody ReporteUsoRequestDTO request) {
-        ReporteUsoResponseDTO reporte = service.generarReporteUso(request);
+    @GetMapping("/reporte-uso")
+    public ResponseEntity<ReporteUsoResponseDTO> generarReporteUso(@RequestParam boolean incluirPausas, @RequestParam Double umbralKmMantenimiento) {
+        ReporteUsoResponseDTO reporte = service.generarReporteUso(incluirPausas, umbralKmMantenimiento);
         return ResponseEntity.ok(reporte);
     }
 
