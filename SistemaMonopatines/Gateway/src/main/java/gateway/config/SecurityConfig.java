@@ -44,11 +44,13 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
 
+                    .requestMatchers(HttpMethod.POST, "/api/usuarios/cuentas").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/monopatines/cercanos").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/usuarios/monopatines-cercanos").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/usuarios/*/uso-monopatines").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/viajes/uso-monopatin/cantidad").hasAuthority(AuthorityConstant.CLIENTE)
 
+                    .requestMatchers("/api/chat-ia/**").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers( "/api/monopatines/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
                     .requestMatchers( "/api/paradas/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
                     .requestMatchers( "/api/usuarios/**").hasAuthority(AuthorityConstant.ADMINISTRADOR)
