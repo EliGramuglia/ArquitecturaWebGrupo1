@@ -1,5 +1,6 @@
 package org.example.viaje.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.example.viaje.client.CuentaFeignClient;
 import org.example.viaje.client.cuenta.dto.request.CuentaRequestDTO;
@@ -51,7 +52,7 @@ public class ViajeService {
 
         // Buscamos la tarifa activa
         Tarifa tarifaActual = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()
-                .orElseThrow(() -> new RuntimeException("No hay una tarifa activa configurada"));
+                .orElseThrow(() -> new IllegalStateException("No hay una tarifa activa configurada"));
 
         // Asignamos la tarifa actual al viaje
         viajeNuevo.setTarifa(tarifaActual);
@@ -142,14 +143,14 @@ public class ViajeService {
 
     public ViajeResponseDTO findById(Long id) {
         Viaje viaje = viajeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe viaje con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe viaje con id: " + id));
         return ViajeMapper.convertToDTO(viaje);
     }
 
     @Transactional
     public ViajeResponseDTO update(Long id, ViajeRequestDTO viajeDTO) {
         Viaje viajeEditar = viajeRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe viaje con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe viaje con id: " + id));
         viajeEditar.setFechaHoraInicio(viajeDTO.getFechaHoraInicio());
         viajeEditar.setFechaHoraFin(viajeDTO.getFechaHoraFin());
         viajeEditar.setIdMonopatin(viajeDTO.getIdMonopatin());
@@ -160,7 +161,7 @@ public class ViajeService {
 
         // Recalcular el costo total con la tarifa actual (por si cambió)
         Tarifa tarifaActual = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()
-                .orElseThrow(() -> new RuntimeException("No hay una tarifa activa configurada"));
+                .orElseThrow(() -> new IllegalStateException("No hay una tarifa activa configurada"));
         viajeEditar.setTarifa(tarifaActual);
         Double costoViaje = calcularCostoTotal(viajeEditar, tarifaActual);
         viajeEditar.setCostoTotal(costoViaje);
@@ -178,7 +179,7 @@ public class ViajeService {
     @Transactional // Si cualquier error ocurre dentro del método, toda la transacción se revierte automáticamente y la base de datos queda como estaba antes de llamar ese método.
     public PausaResponseDTO createPausa(Long viajeId, PausaRequestDTO dto) {
         Viaje viaje = viajeRepository.findById(viajeId)
-                .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Viaje no encontrado"));
 
         Pausa pausa = PausaMapper.convertToEntity(dto);
         pausa.setViaje(viaje);
@@ -211,7 +212,7 @@ public class ViajeService {
 
     public List<PausaResponseDTO> getPausas(Long viajeId) {
         Viaje viaje = viajeRepository.findById(viajeId)
-                .orElseThrow(() -> new RuntimeException("Viaje no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Viaje no encontrado"));
 
         return viaje.getPausas().stream()
                 .map(PausaMapper::convertToDTO)

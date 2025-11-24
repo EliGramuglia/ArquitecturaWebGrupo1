@@ -1,5 +1,6 @@
 package org.example.monopatin.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.example.monopatin.client.ParadaFeignClient;
 import org.example.monopatin.client.ViajeFeignClient;
@@ -46,14 +47,14 @@ public class MonopatinService {
 
     public MonopatinResponseDTO findById(String id) {
         Monopatin monopatin = monopatinRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con el id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe el Monopatin con el id: " + id));
         return MonopatinMapper.convertToDTO(monopatin);
     }
 
     @Transactional
     public MonopatinResponseDTO update(String id, MonopatinRequestDTO monopatin) {
         Monopatin monopatinEditar = monopatinRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe el Monopatin con id: " + id));
 
         monopatinEditar.setId(id);
         monopatinEditar.setLatitud(monopatin.getLatitud());
@@ -69,7 +70,7 @@ public class MonopatinService {
     @Transactional
     public void delete(String id) {
         Monopatin monopatin = monopatinRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró un Monopatin con el id: "+ id));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró un Monopatin con el id: "+ id));
         monopatinRepository.delete(monopatin);
     }
 
@@ -77,7 +78,7 @@ public class MonopatinService {
     @Transactional
     public MonopatinResponseDTO cambiarEstadoMonopatin(String id, String estado) {
         Monopatin monopatin = monopatinRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el Monopatin con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe el Monopatin con id: " + id));
 
         // Convierte el string a enum, validando el valor
         EstadoMonopatin estadoMonopatinEnum;
@@ -97,12 +98,12 @@ public class MonopatinService {
     @Transactional
     public MonopatinResponseDTO ubicarEnParada(String monopatinId, Long paradaId) {
         Monopatin monopatin = monopatinRepository.findById(monopatinId)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el monopatín con id: " + monopatinId));
+                .orElseThrow(() -> new EntityNotFoundException("No existe el monopatín con id: " + monopatinId));
 
         // Le pido al MS de parada la info de la parada con el id recibido por parámetro
         ParadaResponseDTO parada = paradaFeignClient.getById(paradaId).getBody();
         if (parada == null) {
-            throw new IllegalArgumentException("No existe la parada con id: " + paradaId);
+            throw new EntityNotFoundException("No existe la parada con id: " + paradaId);
         }
 
         // Le seteo la misma latitud y longitud de la parada al monopatín

@@ -1,5 +1,6 @@
 package org.example.parada.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.example.parada.dto.request.ParadaRequestDTO;
 import org.example.parada.dto.response.ParadaResponseDTO;
@@ -35,14 +36,14 @@ public class ParadaService {
 
     public ParadaResponseDTO getById(Long id) {
         Parada parada = paradaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró la parada con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la parada con id: " + id));
         return ParadaMapper.convertToDTO(parada);
     }
 
     @Transactional
     public ParadaResponseDTO update(Long id, ParadaRequestDTO dto) {
         Parada parada = paradaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró la parada con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la parada con id: " + id));
 
         parada.setNombre(dto.getNombre());
         parada.setLatitud(dto.getLatitud());
@@ -56,7 +57,7 @@ public class ParadaService {
     @Transactional
     public void delete(Long id) {
         Parada parada = paradaRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró la parada con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró la parada con id: " + id));
         paradaRepository.delete(parada);
     }
 }

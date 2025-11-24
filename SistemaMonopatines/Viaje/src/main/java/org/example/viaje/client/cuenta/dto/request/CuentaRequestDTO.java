@@ -1,14 +1,12 @@
 package org.example.viaje.client.cuenta.dto.request;
 
-
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.usuario.entity.Cuenta;
-import org.example.usuario.utils.cuenta.EstadoCuenta;
 import org.example.viaje.client.cuenta.dto.response.CuentaResponseDTO;
+import org.example.viaje.utils.usuario.EstadoCuenta;
 
 import java.time.LocalDate;
 import java.util.List;

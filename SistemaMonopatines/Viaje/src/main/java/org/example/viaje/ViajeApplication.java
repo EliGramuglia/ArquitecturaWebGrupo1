@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 
 //para poder accerde al swagger hay que activar este en vez del otro!!!
-//@SpringBootApplication(exclude = {
-//        org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
-//})
+/*@SpringBootApplication(exclude = {
+       org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration.class
+})*/
 @SpringBootApplication
 @EnableFeignClients // anotación que le dice a Spring que busque las interfaces que tengan @FeignClient.
 public class ViajeApplication {

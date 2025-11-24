@@ -30,7 +30,7 @@ public class TarifaService {
                 .ifPresent(ultimaTarifa -> {
                     if (ultimaTarifa.getFechaFinVigencia() != null &&
                             nuevaTarifa.getFechaInicioVigencia().isBefore(ultimaTarifa.getFechaFinVigencia())) {
-                        throw new RuntimeException("La nueva tarifa no puede comenzar antes de que finalice la anterior");
+                        throw new IllegalArgumentException("La nueva tarifa no puede comenzar antes de que finalice la anterior");
                     }
                 });
 
@@ -62,7 +62,7 @@ public class TarifaService {
 
     public TarifaResponseDTO getTarifaActiva() {
         Tarifa tarifaActiva = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()
-                .orElseThrow(() -> new RuntimeException("No hay una tarifa activa configurada"));
+                .orElseThrow(() -> new IllegalStateException("No hay una tarifa activa configurada"));
         return TarifaMapper.convertToDTO(tarifaActiva);
     }
 
@@ -71,7 +71,7 @@ public class TarifaService {
     public TarifaResponseDTO updateFechaFinTarifaActiva(LocalDate nuevaFechaFin) {
         // Buscar la tarifa activa actual
         Tarifa tarifaActiva = tarifaRepository.findFirstByActivaTrueOrderByFechaInicioVigenciaDesc()
-                .orElseThrow(() -> new RuntimeException("No hay una tarifa activa para actualizar"));
+                .orElseThrow(() -> new IllegalStateException("No hay una tarifa activa para actualizar"));
 
         validarFechasTarifa(tarifaActiva);
 
@@ -80,7 +80,7 @@ public class TarifaService {
                 .ifPresent(tarifaFutura -> {
                     // Verificar que la nueva fecha no se solape
                     if (!nuevaFechaFin.isBefore(tarifaFutura.getFechaInicioVigencia())) {
-                        throw new RuntimeException("La nueva fecha de fin se solapa con una tarifa futura programada (empieza el "
+                        throw new IllegalArgumentException("La nueva fecha de fin se solapa con una tarifa futura programada (empieza el "
                                 + tarifaFutura.getFechaInicioVigencia() + ").");
                     }
                 });
@@ -100,12 +100,12 @@ public class TarifaService {
     private void validarFechasTarifa(Tarifa nuevaTarifa) {
         // Validar que la fecha de fin de vigencia no sea antes que la del inicio
         if (nuevaTarifa.getFechaFinVigencia().isBefore(nuevaTarifa.getFechaInicioVigencia())) {
-            throw new RuntimeException("La fecha de fin de vigencia no puede ser anterior a la fecha de inicio.");
+            throw new IllegalArgumentException("La fecha de fin de vigencia no puede ser anterior a la fecha de inicio.");
         }
 
         // Validar que no sea anterior a hoy
         if (nuevaTarifa.getFechaInicioVigencia().isBefore(LocalDate.now())) {
-            throw new RuntimeException("La fecha de inicio de vigencia no puede ser anterior a la fecha actual.");
+            throw new IllegalArgumentException("La fecha de inicio de vigencia no puede ser anterior a la fecha actual.");
         }
     }
 

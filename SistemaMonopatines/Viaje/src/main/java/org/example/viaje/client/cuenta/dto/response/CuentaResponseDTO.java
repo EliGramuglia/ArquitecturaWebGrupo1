@@ -3,7 +3,7 @@ package org.example.viaje.client.cuenta.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import org.example.usuario.utils.cuenta.EstadoCuenta;
+import org.example.viaje.utils.usuario.EstadoCuenta;
 
 import java.time.LocalDate;
 import java.util.List;
