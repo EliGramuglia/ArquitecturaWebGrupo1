@@ -881,6 +881,177 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "UsuariosConMasViajes(filtrado por premium) (E)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2Mzk5MDk5MSwiaWF0IjoxNzYzOTA0NTkxfQ.XnElkt9h-98m93Sia-dA_icQ9e8-nCOLPP1WgJZHXN7wJdG58IXP6U_GGtuBnivyNK4UrColFYsoC9ORZZ321g",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/viajes/usuarios/mas-activos?inicio=2025-11-23&fin=2025-11-24&premium=false",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"viajes",
+						"usuarios",
+						"mas-activos"
+					],
+					"query": [
+						{
+							"key": "inicio",
+							"value": "2025-11-23"
+						},
+						{
+							"key": "fin",
+							"value": "2025-11-24"
+						},
+						{
+							"key": "premium",
+							"value": "false"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "FIndAllUsuarios",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzMzU2OCwiaWF0IjoxNzYzODQ3MTY4fQ._5fDFumycntV0GzzcsOmnLWuUAJfA6zPpaHjvgnfKiysB849CAE1857GlxbUwMnr0plMxiVmwYG0l0EhLWvT5A",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"fecha_alta\" :\"2025-11-22\",\r\n    \"estadoCuenta\": \"ACTIVO\",\r\n    \"monto\": 1250,\r\n    \"premium\": true,\r\n    \"idUsuario\" : [1]\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/usuarios",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"usuarios"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta IA (10)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjQwMjAxNzIsImlhdCI6MTc2MzkzMzc3Mn0.SmL22O1i_VeY4VtYCnhPlk3LgHlHSEXnhMvm83mvT-8F1oGQ8U2naVApzTIgrJL7wCi8QssmLmqpxYUVsuHG2Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"idUsuario\": 4,\r\n  \"pregunta\": \"¿Cuántas veces usé los monopatines este mes?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/chat-ia/preguntar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"chat-ia",
+						"preguntar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Consulta IA (10)",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0cmVzaEBleGFtcGxlLmNvbSIsImF1dGgiOiJDTElFTlRFIiwiZXhwIjoxNzY0MDI4MjMxLCJpYXQiOjE3NjM5NDE4MzF9.2sqz7lN285jjPDpthddNyMnOqepvWkTGGaURl82j7DGqhkvD3vuE6u58Qvgh7gigclh3LsfU1ihjBNKKXCTdEw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"idUsuario\": 3,\r\n  \"pregunta\": \"¿Hay monopatines cerca de mi ubicación actual, latitud 100.50 longitud 90.02?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/chat-ia/preguntar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"chat-ia",
+						"preguntar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "New Request",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
 		}
 	]
 }
