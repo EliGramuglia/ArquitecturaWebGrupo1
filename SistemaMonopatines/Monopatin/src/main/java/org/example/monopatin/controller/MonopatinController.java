@@ -51,7 +51,8 @@ public class MonopatinController {
             @ApiResponse(responseCode = "404", description = "No se encontró el monopatín")
     })
     @GetMapping("/{id}")
-    public ResponseEntity<MonopatinResponseDTO> getById(@PathVariable String id){
+    public ResponseEntity<MonopatinResponseDTO> getById(
+            @Parameter(description = "ID del monopatín") @PathVariable String id){
         MonopatinResponseDTO monopatin = service.findById(id);
         return ResponseEntity.ok(monopatin);
     }
@@ -70,7 +71,8 @@ public class MonopatinController {
             @ApiResponse(responseCode = "404", description = "Monopatín no encontrado")
     })
     @DeleteMapping("/{id}")
-    public ResponseEntity<MonopatinResponseDTO> delete(@PathVariable String id){
+    public ResponseEntity<MonopatinResponseDTO> delete(
+            @Parameter(description = "ID del monopatín a eliminar") @PathVariable String id){
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -86,8 +88,9 @@ public class MonopatinController {
 
     @Operation(summary = "Ubicar monopatín en una parada")
     @PutMapping("/{id}/parada/{paradaId}")
-    public ResponseEntity<MonopatinResponseDTO> ubicarEnParada(@PathVariable String id,
-                                                               @PathVariable Long paradaId) {
+    public ResponseEntity<MonopatinResponseDTO> ubicarEnParada(
+            @PathVariable String id,
+            @Parameter(description = "ID de la parada") @PathVariable Long paradaId) {
         MonopatinResponseDTO dto = service.ubicarEnParada(id, paradaId);
         return ResponseEntity.ok(dto);
     }
