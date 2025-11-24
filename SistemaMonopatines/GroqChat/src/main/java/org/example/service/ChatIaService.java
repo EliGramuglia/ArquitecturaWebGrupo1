@@ -3,28 +3,25 @@ package org.example.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
-import org.apache.coyote.BadRequestException;
 import org.example.client.GroqClient;
 import org.example.client.UsuarioClient;
-import org.example.client.ViajeClient;
 import org.example.dto.request.ChatRequestDTO;
 import org.example.dto.response.ChatResponseDTO;
+import org.example.dto.response.MonopatinResponseDTO;
 import org.example.dto.response.UsoMonopatinCuentaDTO;
-import org.example.dto.response.UsoMonopatinUsuarioResponseDTO;
 import org.example.dto.response.UsuarioResponseDTO;
 import org.example.exception.UsuarioNoPremiumException;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class ChatIaService {
-
     private final GroqClient groqClient;
     private final UsuarioClient usuarioClient;
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -73,9 +70,22 @@ public class ChatIaService {
                 );
             }
 
-            case "consultarTarifaActual" -> {
-                // TODO: acá llamás por Feign al micro de Viaje/Tarifa cuando tengas un endpoint tipo /tarifas/activa
-                respuestaNatural = "La consulta de tarifas aún no está implementada en el microservicio, pero el tool fue seleccionado correctamente.";
+            case "consultarMonopatinesCercanos" -> {
+                double latitud = argsNode.path("latitud").asDouble();
+                double longitud = argsNode.path("longitud").asDouble();
+
+                List<MonopatinResponseDTO> monopatinesCercanos = usuarioClient.getMonopatinesCercanos(latitud, longitud);
+
+                if (monopatinesCercanos.isEmpty()) {
+                    respuestaNatural = "No hay monopatines cercanos a tu ubicación.";
+                } else {
+                    StringBuilder sb = new StringBuilder("Monopatines cercanos a tu ubicación:");
+                    for (MonopatinResponseDTO m : monopatinesCercanos) {
+                        sb.append(String.format("- ID: %s, Latitud: %s , Longitud: %s", m.getId(), m.getLatitud(), m.getLongitud()));
+                        // Adaptar según los campos que tengas en MonopatinResponseDTO
+                    }
+                    respuestaNatural = sb.toString();
+                }
             }
 
             default -> throw new ResponseStatusException(
@@ -98,8 +108,8 @@ public class ChatIaService {
                 REGLAS MUY IMPORTANTES:
                 - NO inventes datos que el usuario NO proporcionó.
                 - Si la pregunta habla de "este mes":
-                       * inicio = primer día del mes actual (estamos en el año 2025) en formato yyyy-MM-dd
-                       * fin = último día del mes actual (estamos en el año 2025) en formato yyyy-MM-dd
+                       * inicio = primer día del mes actual (estamos en el año 2025, mes de Noviembre) en formato yyyy-MM-dd
+                       * fin = último día del mes actual (estamos en el año 2025, , mes de Noviembre) en formato yyyy-MM-dd
                 - Si la pregunta NO menciona fechas:
                        * usar por defecto el mes actual (inicio y fin como arriba).
                 - Siempre usar el idUsuario que te paso abajo.
@@ -115,10 +125,11 @@ public class ChatIaService {
                         - inicio: string con fecha en formato "yyyy-MM-dd"
                         - fin: string con fecha en formato "yyyy-MM-dd"
 
-                2) consultarTarifaActual
-                   - descripción: devuelve la tarifa actual por km de los monopatines.
-                   - argumentos:
-                        - ninguno
+                2) consultarMonopatinesCercanos
+                    - descripción: devuelve un listado de monopatines cercanos a una ubicación.
+                    - argumentos:
+                       - latitud: número decimal
+                       - longitud: número decimal
 
                 FORMATO DE RESPUESTA (MUY IMPORTANTE):
                 Devolvé ÚNICAMENTE un JSON como este:
