@@ -134,67 +134,60 @@ public class MonopatinService {
     }
 
     public ReporteUsoResponseDTO generarReporteUso(boolean incluirPausas, Double umbralKmMantenimiento) {
-        // Definimos el umbral de km que determina si un monopatín requiere mantenimiento.
-        // Si el cliente no lo envía en el request, usamos un valor por defecto (1000 km).
-        double umbral = umbralKmMantenimiento != null
-                ? umbralKmMantenimiento
-                : 1000.0;
 
-        // Obtenemos todos los monopatines registrados en la base de datos.
-        List<Monopatin> monopatinesTotales = monopatinRepository.findAll();
+        double umbral = (umbralKmMantenimiento != null) ? umbralKmMantenimiento : 1000.0;
 
+        List<Monopatin> monopatines = monopatinRepository.findAll();
         List<MonopatinUsoResponseDTO> resultados = new ArrayList<>();
 
-        // Recorremos cada monopatín para calcular su reporte individual.
-        for (Monopatin monopatin : monopatinesTotales) {
+        for (Monopatin monopatin : monopatines) {
 
-            List<ViajeMonopatinResponseDTO> viajes = viajeFeignClient.getViajesByMonopatin(monopatin.getId());
+            List<ViajeMonopatinResponseDTO> viajes =
+                    viajeFeignClient.getViajesByMonopatin(monopatin.getId());
 
-            double totalKm = 0.0;             // suma total de kilómetros recorridos
-            long totalMinutosConPausa = 0L;   // tiempo total de uso incluyendo pausas
-            long totalMinutos = 0L;           // tiempo total ajustado según la configuración "incluirPausas"
+            double totalKm = 0.0;
+
+            long minutosUsoConPausa = 0L; // duración real
+            long minutosUsoSinPausa = 0L; // descontando pausas
 
             for (ViajeMonopatinResponseDTO viaje : viajes) {
 
-                // Si el viaje tiene un valor de kilómetros, lo sumamos al total.
                 if (viaje.getKmRecorridos() != null) {
                     totalKm += viaje.getKmRecorridos();
                 }
 
-                long minutosViaje = 0L;
-                // Si las fechas de inicio y fin existen, calculamos la duración en minutos.
+                long duracionMin = 0L;
                 if (viaje.getFechaHoraInicio() != null && viaje.getFechaHoraFin() != null) {
-                    Duration duracion = Duration.between(viaje.getFechaHoraInicio(), viaje.getFechaHoraFin());
-                    minutosViaje = duracion.toMinutes();
+                    duracionMin = Duration.between(
+                            viaje.getFechaHoraInicio(),
+                            viaje.getFechaHoraFin()
+                    ).toMinutes();
                 }
 
-                // Si el viaje tiene pausas registradas, las usamos. Si no, es 0
-                long minutosPausa = viaje.getMinutosPausa() != null ? viaje.getMinutosPausa() : 0L;
+                long pausaMin = viaje.getMinutosPausa() != null
+                        ? viaje.getMinutosPausa()
+                        : 0L;
 
-                // Siempre acumulamos el tiempo total con pausas (tiempo real de uso).
-                totalMinutosConPausa += minutosViaje;
+                minutosUsoConPausa += duracionMin;
 
-                // Si el reporte incluye pausas, sumamos el tiempo total del viaje.
-                // Si no las incluye, restamos los minutos de pausa (sin permitir valores negativos).
-                if (incluirPausas) {
-                    totalMinutos += minutosViaje;
-                } else {
-                    long minutosSinPausa = minutosViaje - minutosPausa;
-                    if (minutosSinPausa < 0) {
-                        minutosSinPausa = 0;
-                    }
-                    totalMinutos += minutosSinPausa;
-                }
+                long usoSinPausa = duracionMin - pausaMin;
+                if (usoSinPausa < 0) usoSinPausa = 0;
+
+                minutosUsoSinPausa += usoSinPausa;
             }
 
-            // Si el total de kilómetros supera el umbral configurado, el monopatín requiere mantenimiento.
+            // Este es el campo que depende de la config
+            long totalMinutosReporte = incluirPausas
+                    ? minutosUsoConPausa
+                    : minutosUsoSinPausa;
+
             boolean requiereMantenimiento = totalKm >= umbral;
 
             MonopatinUsoResponseDTO dto = new MonopatinUsoResponseDTO(
                     monopatin.getId(),
                     totalKm,
-                    totalMinutos,
-                    totalMinutosConPausa,
+                    totalMinutosReporte,
+                    minutosUsoConPausa,
                     requiereMantenimiento
             );
 
