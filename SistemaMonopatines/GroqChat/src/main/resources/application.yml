@@ -6,6 +6,6 @@ spring:
     name: chat-ia-service
 
 groq:
-  # api-keasdfghjkly:
+
   base-url: https://api.groq.com/openai
   model: llama-3.1-8b-instant
