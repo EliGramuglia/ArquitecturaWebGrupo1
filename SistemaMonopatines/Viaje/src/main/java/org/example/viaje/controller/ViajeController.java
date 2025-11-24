@@ -34,7 +34,7 @@ public class ViajeController {
     )
     @ApiResponse(responseCode = "200", description = "Viaje creado correctamente")
     @PostMapping("")
-    public ResponseEntity<ViajeResponseDTO> create(@Valid @RequestBody ViajeRequestDTO viaje){
+    public ResponseEntity<ViajeResponseDTO> create(@RequestBody ViajeRequestDTO viaje){
         ViajeResponseDTO viajeNuevo = service.save(viaje);
         return ResponseEntity.ok(viajeNuevo);
     }

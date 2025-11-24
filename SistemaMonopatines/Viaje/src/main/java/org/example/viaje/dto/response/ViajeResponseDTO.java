@@ -1,5 +1,6 @@
 package org.example.viaje.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,9 @@ import java.util.List;
 @NoArgsConstructor
 public class ViajeResponseDTO {
     private Long id;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaHoraInicio;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime fechaHoraFin;
     private Double kmRecorridos;
     private Long idParadaInicio;

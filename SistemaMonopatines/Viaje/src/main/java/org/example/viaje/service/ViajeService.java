@@ -1,6 +1,7 @@
 package org.example.viaje.service;
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.viaje.client.CuentaFeignClient;
 import org.example.viaje.client.cuenta.dto.request.CuentaRequestDTO;
@@ -42,12 +43,7 @@ public class ViajeService {
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     @Transactional
-    public ViajeResponseDTO save(ViajeRequestDTO viaje) {
-        // Validación: la fecha de fin no puede ser anterior a la de inicio
-        if (viaje.getFechaHoraFin().isBefore(viaje.getFechaHoraInicio())) {
-            throw new IllegalArgumentException("La fecha de fin del viaje no puede ser anterior a la fecha de inicio");
-        }
-
+    public ViajeResponseDTO save(@Valid ViajeRequestDTO viaje) {
         Viaje viajeNuevo = ViajeMapper.convertToEntity(viaje);
 
         // Buscamos la tarifa activa

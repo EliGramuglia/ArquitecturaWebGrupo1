@@ -2,7 +2,9 @@ package org.example.viaje;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jackson.Jackson2ObjectMapperBuilderCustomizer;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
 
 //para poder accerde al swagger hay que activar este en vez del otro!!!
 /*@SpringBootApplication(exclude = {
@@ -16,4 +18,8 @@ public class ViajeApplication {
 		SpringApplication.run(ViajeApplication.class, args);
 	}
 
+	@Bean
+	public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
+		return builder -> builder.findModulesViaServiceLoader(true);
+	}
 }
