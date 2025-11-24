@@ -1,0 +1,11 @@
+server:
+  port: 8085   # o el que quieras
+
+spring:
+  application:
+    name: chat-ia-service
+
+groq:
+
+  base-url: https://api.groq.com/openai
+  model: llama-3.1-8b-instant
