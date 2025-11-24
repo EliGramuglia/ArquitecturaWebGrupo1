@@ -1,5 +1,6 @@
 package org.example.usuario.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.example.usuario.client.MonopatinFeignClient;
 import org.example.usuario.client.ViajeFeignClient;
@@ -8,7 +9,6 @@ import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
 import org.example.usuario.client.viaje.dto.UsoMonopatinUsuarioDTO;
 import org.example.usuario.client.viaje.dto.UsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
-import org.example.usuario.dto.response.AuthorityResponseDTO;
 import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
 import org.example.usuario.dto.response.UsuarioResponseDTO;
 import org.example.usuario.dto.response.UsuarioTokenResponseDTO;
@@ -17,7 +17,6 @@ import org.example.usuario.entity.Usuario;
 import org.example.usuario.mapper.UsuarioMapper;
 import org.example.usuario.repository.AuthorityRepository;
 import org.example.usuario.repository.UsuarioRepository;
-import org.hibernate.annotations.NotFound;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,14 +74,14 @@ public class UsuarioService {
 
     public UsuarioResponseDTO findById(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el usuario con el id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe el usuario con el id: " + id));
         return UsuarioMapper.convertToDTO(usuario);
     }
 
     @Transactional
     public UsuarioResponseDTO update(Long id, UsuarioRequestDTO usuario) {
         Usuario usuarioEditar = usuarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el usuario con id: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("No existe el usuario con id: " + id));
 
         usuarioEditar.setEmail(usuario.getEmail());
         usuarioEditar.setNombre(usuario.getNombre());
@@ -96,7 +95,7 @@ public class UsuarioService {
     @Transactional
     public void delete(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró un usuario con el id: "+ id));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró un usuario con el id: "+ id));
         usuarioRepository.delete(usuario);
     }
 
@@ -113,7 +112,7 @@ public class UsuarioService {
     public UsoMonopatinCuentaDTO obtenerUsoMonopatines(Long idUsuario, LocalDate inicio, LocalDate fin) {
         // Buscar usuario principal
         Usuario usuario = usuarioRepository.findById(idUsuario)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
         // Obtener los IDs de las cuentas del usuario
         List<Long> cuentasIds = usuario.getCuentas().stream()
@@ -143,7 +142,7 @@ public class UsuarioService {
     public UsuarioTokenResponseDTO findOneWithAuthoritiesByEmailIgnoreCase(String email) {
         // Busco el usuario con el mail que viene por param (devuelve un opcional de usuario con su lista de roles)
         Usuario usuario = usuarioRepository.findOneWithAuthoritiesByEmailIgnoreCase(email)
-                .orElseThrow(() -> new IllegalArgumentException("Usuario no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
         return UsuarioMapper.convertToUsuarioTokenResponse(usuario);
     }
 
@@ -151,7 +150,7 @@ public class UsuarioService {
     // (el MSV de Viaje me lo está pidiendo desde un feignClient)
     public UsuarioDTO obtenerUsuarioDTO(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado"));
 
         // Acá calculamos si es premium desde las cuentas
         boolean esPremium = usuario.getCuentas() != null &&

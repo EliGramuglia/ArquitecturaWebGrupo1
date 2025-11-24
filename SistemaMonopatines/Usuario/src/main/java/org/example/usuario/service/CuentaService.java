@@ -13,7 +13,6 @@ import org.example.usuario.repository.UsuarioRepository;
 import org.example.usuario.utils.cuenta.EstadoCuenta;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -34,7 +33,7 @@ public class CuentaService {
 
         for(Long idUsuario: request.getIdUsuario()){
             Usuario usuario = usuarioRepository.findById(idUsuario)
-                    .orElseThrow(() -> new RuntimeException("No hay un Usuario con el id: " + idUsuario));
+                    .orElseThrow(() -> new EntityNotFoundException("No hay un Usuario con el id: " + idUsuario));
             usuario.getCuentas().add(cuentaCreada);
             cuentaCreada.getClientes().add(usuario);
             usuarioRepository.save(usuario);
@@ -52,14 +51,14 @@ public class CuentaService {
 
     public CuentaResponseDTO findById(Long nroCuenta) {
         Cuenta cuenta = cuentaRepository.findById(nroCuenta)
-                .orElseThrow(() -> new IllegalArgumentException("No existe la cuenta con el id: " + nroCuenta));
+                .orElseThrow(() -> new EntityNotFoundException("No existe la cuenta con el id: " + nroCuenta));
         return CuentaMapper.convertToDTO(cuenta);
     }
 
     @Transactional
     public CuentaResponseDTO update(Long nroCuenta, CuentaRequestDTO cuenta) {
         Cuenta cuentaEditar = cuentaRepository.findById(nroCuenta)
-                .orElseThrow(() -> new IllegalArgumentException("No existe el usuario con id: " + nroCuenta));
+                .orElseThrow(() -> new EntityNotFoundException("No existe el usuario con id: " + nroCuenta));
 
         cuentaEditar.setNroCuenta(nroCuenta);
         cuentaEditar.setFecha_alta(cuenta.getFecha_alta());
@@ -69,7 +68,7 @@ public class CuentaService {
         cuentaEditar.setKmAcumuladosMes(cuenta.getKmAcumuladosMes());
         for (Long idUsuario : cuenta.getIdUsuario()) {
             Usuario usuario = usuarioRepository.findById(idUsuario)
-                    .orElseThrow(() -> new RuntimeException("No hay un Usuario con el id: " + idUsuario));
+                    .orElseThrow(() -> new EntityNotFoundException("No hay un Usuario con el id: " + idUsuario));
 
             if(!cuentaEditar.getClientes().contains(usuario)){
                 cuentaEditar.getClientes().add(usuario);
@@ -85,7 +84,7 @@ public class CuentaService {
     @Transactional
     public void delete(Long nroCuenta) {
         Cuenta cuenta = cuentaRepository.findById(nroCuenta)
-                .orElseThrow(() -> new IllegalArgumentException("No se encontró una cuenta con el id: "+ nroCuenta));
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró una cuenta con el id: "+ nroCuenta));
         cuentaRepository.delete(cuenta);
     }
 
@@ -93,7 +92,7 @@ public class CuentaService {
     @Transactional
     public CuentaResponseDTO verificarYRnovarCupo(Long nroCuenta) {
         Cuenta cuenta = cuentaRepository.findById(nroCuenta)
-                .orElseThrow(() -> new RuntimeException("Cuenta no encontrada"));
+                .orElseThrow(() -> new EntityNotFoundException("Cuenta no encontrada"));
 
         if (Boolean.TRUE.equals(cuenta.getPremium())) {
             LocalDate hoy = LocalDate.now();
@@ -135,7 +134,7 @@ public class CuentaService {
         List<Cuenta> cuentas = cuentaRepository.findCuentasByUsuarioId(idUsuario);
 
         if (cuentas.isEmpty()) {
-            throw new RuntimeException("No se encontró una cuenta para el usuario con ID: " + idUsuario);
+            throw new EntityNotFoundException("No se encontró una cuenta para el usuario con ID: " + idUsuario);
         }
 
         // Tomamos la primera cuenta asociada (como si fuera la principal para decirdir si es o no premium)
