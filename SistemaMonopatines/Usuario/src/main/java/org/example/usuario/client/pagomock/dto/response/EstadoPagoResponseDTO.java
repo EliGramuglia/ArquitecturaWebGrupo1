@@ -9,6 +9,6 @@ import lombok.Setter;
 public class EstadoPagoResponseDTO {
 
     private String pagoId;
-    private String status; // "approved", "pending", "rejected"
+    private String status; //
 
 }

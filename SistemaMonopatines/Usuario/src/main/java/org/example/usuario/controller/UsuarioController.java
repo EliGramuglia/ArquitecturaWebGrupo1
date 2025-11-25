@@ -11,6 +11,8 @@ import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
+import org.example.usuario.client.pagomock.dto.response.CrearPagoResponseDTO;
+import org.example.usuario.client.pagomock.dto.response.EstadoPagoResponseDTO;
 import org.example.usuario.client.viaje.dto.UsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
 import org.example.usuario.dto.response.UsoMonopatinCuentaDTO;
@@ -155,6 +157,21 @@ public class UsuarioController {
             @Parameter(description = "ID del usuario", example = "5")
             @PathVariable Long id) {
         return ResponseEntity.ok(service.obtenerUsuarioDTO(id));
+    }
+
+    @Operation(
+            summary = "Recarga de saldo",
+            description = "Endpoint utilizado para la recarga de saldo en la cuenta de un usuario determinado"
+    )
+    @ApiResponse(responseCode = "200", description = "Pago realizado correctamente")
+    @PostMapping("/cargar-saldo")
+    public CrearPagoResponseDTO cargarSaldo(@RequestParam Long idUsuario, @RequestParam Double monto, @RequestParam String descripcion) {
+        return service.cargarSaldo(idUsuario, monto, descripcion);
+    }
+
+    @GetMapping("/{pagoId}/estado-carga")
+    public EstadoPagoResponseDTO obtenerEstado(@PathVariable Long pagoId) {
+        return service.consultarEstado(pagoId);
     }
 
 }

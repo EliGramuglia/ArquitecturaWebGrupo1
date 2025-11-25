@@ -1,0 +1,1054 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Coleccion Final Sistema Monopatines
+meta:
+  id: wrk_8a760dee115148d58ad8be6a589ea5ba
+  created: 1763991495226
+  modified: 1763991495226
+  description: ""
+collection:
+  - name: Coleccion Final Sistema Monopatines
+    meta:
+      id: fld_51534c42b36a44bfbbffcc0b29e27fa9
+      created: 1763991495228
+      modified: 1763991495228
+      sortKey: -1763991493962
+      description: ""
+    children:
+      - url: http://localhost:8080/api/usuarios
+        name: PostUsuarioOk
+        meta:
+          id: req_b92d1628dd29406cbca4eda7d79dd9e8
+          created: 1763991495231
+          modified: 1763991495231
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493961
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"nombre\": \"Arturo\",\r
+
+            \  \"apellido\": \"Gramuglia\",\r
+
+            \  \"email\": \"asdfgl@example.com\",\r
+
+            \  \"nroCelular\": 1234567890,\r
+
+            \  \"password\": 1234,\r
+
+            \  \"authorities\": [\"ADMINISTRADOR\"]\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios
+        name: PostUsuarioCuentaNoPremium
+        meta:
+          id: req_670ea18cb21d41b890cf39493c4bbe6f
+          created: 1763991495234
+          modified: 1764030418125
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493960
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Thresh",
+              "apellido": "Cabrera",
+              "email": "cabreraaa@example.com",
+              "nroCelular": 1234555890,
+              "password": 1235,
+              "authorities": ["CLIENTE"]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/authenticate
+        name: Login
+        meta:
+          id: req_9cc2c9345e844fe38b24a4ce476fd665
+          created: 1763991495236
+          modified: 1764029537670
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493959
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "username": "cabreraa@example.com",
+              "password": "1235"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/cuentas
+        name: PostCuentaOk
+        meta:
+          id: req_02fd476d46924773a33931d3b1dc4386
+          created: 1763991495238
+          modified: 1764023977586
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493958
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \    \"fecha_alta\" :\"2025-11-22\",\r
+
+            \    \"estadoCuenta\": \"ACTIVO\",\r
+
+            \    \"monto\": 1250,\r
+
+            \    \"premium\": true,\r
+
+            \    \"idUsuario\" : [1]\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjQxMTAzNzAsImlhdCI6MTc2NDAyMzk3MH0.bI-zNozD8ahp19Aq9tUkXclprlVAwgpy7-W6_Zycs_SR6m2QYCdR15AO7XAxeG546yN8VofPR1JDfQP-MkdXDg
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/cuentas
+        name: PostCuentaNoPremium
+        meta:
+          id: req_f6f04c8f6d5441928a3afaac1556e866
+          created: 1763991495240
+          modified: 1764030430889
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493957
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "fecha_alta" :"2025-11-22",
+                "estadoCuenta": "ACTIVO",
+                "monto": 1250,
+                "premium": false,
+                "idUsuario" : [4]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjQxMDk1ODUsImlhdCI6MTc2NDAyMzE4NX0.kE1WVhcmec86nBsKlWjNS9vR8vXugiaFQ471m0zLb5lm06OhusmmtvBibtTN7RNG4as9a3vBSXDQa2zJHU1UdQ
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/monopatines
+        name: MonopatinesPostOk
+        meta:
+          id: req_5bc30ef8ccfd4fedb830a60b31be6847
+          created: 1763991495242
+          modified: 1764029645479
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493956
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"latitud\": 100,\r
+
+            \  \"longitud\": 90,\r
+
+            \  \"kmRecorridos\": 40,\r
+
+            \  \"estadoMonopatin\": \"DISPONIBLE\",\r
+
+            \  \"horasUso\": 5\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/paradas
+        name: PostParadaOk
+        meta:
+          id: req_b241b15628ca4d468df831ff6f889a6e
+          created: 1763991495244
+          modified: 1764024007929
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493955
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "nombre": "Paz",
+              "latitud": 100,
+              "longitud": 90
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExMDM4OSwiaWF0IjoxNzY0MDIzOTg5fQ.fe6iX_YLyYvajJM2PvLqMBMpCRM451HJeR01LdJD0cJCeBaEAur-W3CsXnPBBVRNIxO1nY3bZT9oO6OYu-HcAg
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes
+        name: PostViajeSinTarifaCreada
+        meta:
+          id: req_1d9fcc37760b4f768f0fbbef851ed3ae
+          created: 1763991495246
+          modified: 1763991730080
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493954
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"fechaHoraInicio\": \"2025-11-04T10:00:00\",\r
+
+            \  \"fechaHoraFin\": \"2025-11-04T11:30:00\",\r
+
+            \  \"kmRecorridos\": 5.0,\r
+
+            \  \"idParadaInicio\": 1,\r
+
+            \  \"idParadaFinal\": 2,\r
+
+            \  \"idMonopatin\": 1,\r
+
+            \  \"idCliente\": 1,\r
+
+            \  \"pausas\": []\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDA3Nzk2MiwiaWF0IjoxNzYzOTkxNTYyfQ.erdDWS8Dbn5DOFSpwIq-EKhP4_0R7BLPzyU5NCliCOL8g-VMEf2ypA3Ve510vhsrxB39yyjkYOfexnvUbV4y8g
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/tarifas/ajustar
+        name: PostTarifaActivaOk
+        meta:
+          id: req_cf43b0f30c844d97870ecbfa82898a6e
+          created: 1763991495249
+          modified: 1764024248477
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493953
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "precioBase": 10.0,
+              "precioRecargaPorPausa": 15.0,
+              "fechaInicioVigencia": "2025-11-24",
+              "fechaFinVigencia": "2025-11-30"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExMDM4OSwiaWF0IjoxNzY0MDIzOTg5fQ.fe6iX_YLyYvajJM2PvLqMBMpCRM451HJeR01LdJD0cJCeBaEAur-W3CsXnPBBVRNIxO1nY3bZT9oO6OYu-HcAg
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/tarifas/ajustar
+        name: PostNoSolapamiento(F)
+        meta:
+          id: req_5bc58877a00a4168a29f1ec36430f5ab
+          created: 1763991495250
+          modified: 1764029732786
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493952
+        method: POST
+        body:
+          mimeType: application/json
+          text: "{\r
+
+            \  \"precioBase\": 10.0,\r
+
+            \  \"precioRecargaPorPausa\": 15.0,\r
+
+            \  \"fechaInicioVigencia\": \"2025-11-25\",\r
+
+            \  \"fechaFinVigencia\": \"2025-11-30\"\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/tarifas/fecha-fin
+        name: UpdateFinDeVigencia
+        meta:
+          id: req_725fb87d0386415e8f19d20614c5dda4
+          created: 1763991495252
+          modified: 1763991495252
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493951
+        method: PUT
+        parameters:
+          - name: fecha-fin
+            value: 2025-11-28
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2MzkzODE3OCwiaWF0IjoxNzYzODUxNzc4fQ.YQVAmraynO8eqMwxWvG1QQCBqjHYQ9rTkcJAPTXCPR2iLiTZI3f8bpRIJCoE136RIMSSRoKB4uGxsauc3EW8ow
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/tarifas/ajustar
+        name: PostTarifaFutura(F)
+        meta:
+          id: req_81294ef41f7a40dba0ac50352c0a831d
+          created: 1763991495253
+          modified: 1764029772018
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493950
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "precioBase": 20.0,
+              "precioRecargaPorPausa": 25.0,
+              "fechaInicioVigencia": "2025-11-30",
+              "fechaFinVigencia": "2025-11-30"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes
+        name: PostViajeOk
+        meta:
+          id: req_fa876eb9d75840e49b3b52367bd2c8d1
+          created: 1763991495255
+          modified: 1764025382239
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493949
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "fechaHoraInicio": "2025-11-09T10:00:00",
+              "fechaHoraFin": "2025-11-09T11:30:00",
+              "kmRecorridos": 15.0,
+              "idParadaInicio": 1,
+              "idParadaFinal": 2,
+              "idMonopatin": "6924cb9956961f526a9cb229",
+              "idCliente": 1
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExMDM4OSwiaWF0IjoxNzY0MDIzOTg5fQ.fe6iX_YLyYvajJM2PvLqMBMpCRM451HJeR01LdJD0cJCeBaEAur-W3CsXnPBBVRNIxO1nY3bZT9oO6OYu-HcAg
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes
+        name: PostViajeNoPremium
+        meta:
+          id: req_85663752a706470d895773088dbe346b
+          created: 1763991495256
+          modified: 1764029830884
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493948
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "fechaHoraInicio": "2025-11-09T10:00:00",
+              "fechaHoraFin": "2025-11-09T11:30:00",
+              "kmRecorridos": 10.0,
+              "idParadaInicio": 1,
+              "idParadaFinal": 2,
+              "idMonopatin": "690fb976bbdef65ead79c685",
+              "idCliente": 2
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/1/pausas
+        name: PostPausaParaViajeOk
+        meta:
+          id: req_abd7a67cd0af4723ba5ee1dd6c8f1f03
+          created: 1763991495258
+          modified: 1764025081139
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493947
+        method: POST
+        body:
+          mimeType: application/json
+          text: " {\r
+
+            \      \"inicio\": \"11:15:00\",\r
+
+            \      \"fin\": \"11:35:00\"\r
+
+            \    }"
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExMDM4OSwiaWF0IjoxNzY0MDIzOTg5fQ.fe6iX_YLyYvajJM2PvLqMBMpCRM451HJeR01LdJD0cJCeBaEAur-W3CsXnPBBVRNIxO1nY3bZT9oO6OYu-HcAg
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/2
+        name: FindByIdViaje
+        meta:
+          id: req_b44c0adfb00748e8ac7f892d4726d80e
+          created: 1763991495259
+          modified: 1764015734301
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493946
+        method: GET
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDEwMTIxMCwiaWF0IjoxNzY0MDE0ODEwfQ.VmhWLQLSYOG0LZ4BLdiFfgRicSAirhLjnDH_eK4-Vtft9CewrdNR1sgqKWfXZoPbCqpYxp7pi8LiVeXJphbJTA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/total-facturado
+        name: Total-Facturado(D)
+        meta:
+          id: req_b84cf61427a947c08e0b93531f43b903
+          created: 1763991495261
+          modified: 1764029891970
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493945
+        method: GET
+        parameters:
+          - name: anio
+            value: "2025"
+            disabled: false
+          - name: mesInicio
+            value: "11"
+            disabled: false
+          - name: mesFin
+            value: "11"
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/monopatines-mas-viajes
+        name: MonopatinesConMasDeXViajes(C)
+        meta:
+          id: req_6a851aaa05c9403b8e4c2191bb09e3ba
+          created: 1763991495263
+          modified: 1764029951479
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493944
+        method: GET
+        parameters:
+          - name: anio
+            value: "2025"
+            disabled: false
+          - name: cantidadMinima
+            value: "1"
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/monopatines/reporte-uso
+        name: ReporteMonopatinesMantenimiento(A)
+        meta:
+          id: req_28c5cd20a8a14092ac2cea68883295d9
+          created: 1763991495264
+          modified: 1764030004639
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493943
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        parameters:
+          - name: incluirPausas
+            value: "false"
+            disabled: false
+          - name: umbralKmMantenimiento
+            value: "10"
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/cuentas/1
+        name: AnularCuenta(B)
+        meta:
+          id: req_79709c8ca3a54eb9a55783f3b9c299d9
+          created: 1763991495266
+          modified: 1764030026475
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493942
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+                "fecha_alta" :"2025-10-12",
+                "estadoCuenta": "ANULADO",
+                "monto": 20000,
+                "premium": true,
+                "idUsuario" : [2]
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/cuentas
+        name: FindAllCuentas(Cuenta Anulada)
+        meta:
+          id: req_c824d0b1c877475e94a8db7463e6f098
+          created: 1763991495267
+          modified: 1764030046262
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493941
+        method: GET
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/monopatines-cercanos
+        name: MonopatinesCercanosAUsuario(G)
+        meta:
+          id: req_4ac8a19ca829437e99cf2ee454423211
+          created: 1763991495269
+          modified: 1764030124097
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493940
+        method: GET
+        parameters:
+          - name: latitud
+            value: "100.33"
+            disabled: false
+          - name: longitud
+            value: "90.01"
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjQxMTU5MDEsImlhdCI6MTc2NDAyOTUwMX0.4lZ3nvJx9HCaSqIaaoVvVdTduirYFlKuMIF0xyxSQD0j2tXE6TNTJz-FIbjrPYuAIN3HfA4foIQZQLpwt5mRPw
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/1/uso-monopatines
+        name: UsoMonopatinYusuariosRelacionados(H)
+        meta:
+          id: req_9b3793f98d5a4108ab33989e3e418b5f
+          created: 1763991495270
+          modified: 1764030189940
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493939
+        method: GET
+        parameters:
+          - name: inicio
+            value: 2025-11-06
+            disabled: false
+          - name: fin
+            value: 2025-11-30
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjQxMTU5MDEsImlhdCI6MTc2NDAyOTUwMX0.4lZ3nvJx9HCaSqIaaoVvVdTduirYFlKuMIF0xyxSQD0j2tXE6TNTJz-FIbjrPYuAIN3HfA4foIQZQLpwt5mRPw
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/viajes/usuarios/mas-activos
+        name: UsuariosConMasViajes(filtrado por premium) (E)
+        meta:
+          id: req_0664e4b30d9b4585be8c7c7b02c5ee7b
+          created: 1763991495271
+          modified: 1764030265531
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493938
+        method: GET
+        parameters:
+          - name: inicio
+            value: 2025-11-09
+            disabled: false
+          - name: fin
+            value: 2025-11-09
+            disabled: false
+          - name: premium
+            value: "true"
+            disabled: false
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios
+        name: FIndAllUsuarios
+        meta:
+          id: req_d4f818e3a9b84bc78cd235b75740998b
+          created: 1763991495274
+          modified: 1764030278982
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493937
+        method: GET
+        body:
+          mimeType: text/plain
+          text: "{\r
+
+            \    \"fecha_alta\" :\"2025-11-22\",\r
+
+            \    \"estadoCuenta\": \"ACTIVO\",\r
+
+            \    \"monto\": 1250,\r
+
+            \    \"premium\": true,\r
+
+            \    \"idUsuario\" : [1]\r
+
+            }"
+        headers:
+          - name: Content-Type
+            value: text/plain
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/chat-ia/preguntar
+        name: Consulta IA (10)
+        meta:
+          id: req_4f4b1462762549e6b9e9d0ef30deebfb
+          created: 1763991495275
+          modified: 1764030446746
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493936
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+              "idUsuario": 4,
+              "pregunta": "¿Cuántas veces usé los monopatines este mes?"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjQxMTU5MDEsImlhdCI6MTc2NDAyOTUwMX0.4lZ3nvJx9HCaSqIaaoVvVdTduirYFlKuMIF0xyxSQD0j2tXE6TNTJz-FIbjrPYuAIN3HfA4foIQZQLpwt5mRPw
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/chat-ia/preguntar
+        name: Consulta IA (10)
+        meta:
+          id: req_ff76f7821a2344cc890093d0b22c7748
+          created: 1763991495277
+          modified: 1764030520914
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493935
+        method: POST
+        body:
+          mimeType: application/json
+          text: >-
+            {
+              "idUsuario": 3,
+              "pregunta": "¿Hay monopatines cerca de mi ubicación actual, latitud 100.50 longitud 90.02?"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+        authentication:
+          type: bearer
+          disabled: false
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjYWJyZXJhQGV4YW1wbGUuY29tIiwiYXV0aCI6IkNMSUVOVEUiLCJleHAiOjE3NjQxMTU5MDEsImlhdCI6MTc2NDAyOTUwMX0.4lZ3nvJx9HCaSqIaaoVvVdTduirYFlKuMIF0xyxSQD0j2tXE6TNTJz-FIbjrPYuAIN3HfA4foIQZQLpwt5mRPw
+          prefix: ""
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: ""
+        name: New Request
+        meta:
+          id: req_151c65a6c2f3472dbba0c4610c74a417
+          created: 1763991495278
+          modified: 1763991495278
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493934
+        method: GET
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/1/estado-carga
+        name: MockEstadoCarga
+        meta:
+          id: req_de56d65dce704d16b7da3ce800d4b5c7
+          created: 1764024056737
+          modified: 1764029367711
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493934.5
+        method: GET
+        body:
+          mimeType: application/json
+          text: ""
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://localhost:8080/api/usuarios/cargar-saldo
+        name: MockCargaPendiente
+        meta:
+          id: req_eb5af61d426645ff816742277e9f5849
+          created: 1764028914680
+          modified: 1764030866405
+          isPrivate: false
+          description: ""
+          sortKey: -1763991493934.25
+        method: POST
+        body:
+          mimeType: application/json
+          text: ""
+        parameters:
+          - name: idUsuario
+            value: "1"
+            description: ""
+            disabled: false
+          - name: monto
+            value: "150000"
+            description: ""
+            disabled: false
+          - name: descripcion
+            value: pagoviaje
+            description: ""
+            disabled: false
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/12.1.0
+            description: ""
+            disabled: false
+        authentication:
+          type: bearer
+          token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhc2RmZ2xAZXhhbXBsZS5jb20iLCJhdXRoIjoiQURNSU5JU1RSQURPUiIsImV4cCI6MTc2NDExNDg3NywiaWF0IjoxNzY0MDI4NDc3fQ.Xm08ySMAhySfNgaye0zWKygmHvg2zcHeSPh-jBmciiiMLLkrehDUrjwkny8ZyEHFl_8PbnsZcP44ubGEHmPPfA
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_127555065229f1606737f5bb797e937cfdbab344
+    created: 1763991495285
+    modified: 1764012878386
+  cookies:
+    - id: b1b635ff-de27-481a-b30b-48690665f93a
+      key: JSESSIONID
+      value: 44FE60850FB7777778083A045858C9D5
+      domain: localhost
+      path: /
+      secure: false
+      httpOnly: true
+      hostOnly: true
+environments:
+  name: Base Environment
+  meta:
+    id: env_127555065229f1606737f5bb797e937cfdbab344
+    created: 1763991495280
+    modified: 1763991495280
+    isPrivate: false

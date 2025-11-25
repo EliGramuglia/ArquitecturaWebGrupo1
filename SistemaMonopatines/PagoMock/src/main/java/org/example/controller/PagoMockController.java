@@ -11,21 +11,21 @@ import java.util.UUID;
 @RequestMapping("/api/pagos-mock")
 public class PagoMockController {
 
-    @PostMapping("/crear")
-    public ResponseEntity<CrearPagoResponseDTO> crearPago(@RequestBody CrearPagoRequestDTO request) {
+    @PostMapping("/cargar-saldo")
+    public ResponseEntity<CrearPagoResponseDTO> cargarSaldo(@RequestParam Long idUsuario, @RequestParam Double monto, @RequestParam String descripcion) {
         CrearPagoResponseDTO resp = new CrearPagoResponseDTO();
         resp.setPagoId(UUID.randomUUID().toString());
-        resp.setStatus("pending");
-        resp.setInitPoint("https://mock.mercadopago.com/pagar/" + resp.getPagoId());
+        resp.setStatus("Carga pendiente");
+        resp.setInitPoint("https://mock.mercadopago.com/cargar-saldo/" + resp.getPagoId());
         return ResponseEntity.ok(resp);
     }
 
     @GetMapping("/{pagoId}/estado")
-    public ResponseEntity<EstadoPagoResponseDTO> obtenerEstado(@PathVariable String pagoId) {
+    public ResponseEntity<EstadoPagoResponseDTO> obtenerEstado(@PathVariable Long pagoId) {
         EstadoPagoResponseDTO resp = new EstadoPagoResponseDTO();
         resp.setPagoId(pagoId);
         // lógica mock: siempre approved
-        resp.setStatus("approved");
+        resp.setStatus("Carga aprobada.");
         return ResponseEntity.ok(resp);
     }
 }

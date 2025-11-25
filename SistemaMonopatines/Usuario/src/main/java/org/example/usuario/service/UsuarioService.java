@@ -6,6 +6,8 @@ import org.example.usuario.client.MonopatinFeignClient;
 import org.example.usuario.client.ViajeFeignClient;
 import org.example.usuario.client.monopatin.dto.request.MonopatinRequestDTO;
 import org.example.usuario.client.monopatin.dto.response.MonopatinResponseDTO;
+import org.example.usuario.client.pagomock.dto.response.CrearPagoResponseDTO;
+import org.example.usuario.client.pagomock.dto.response.EstadoPagoResponseDTO;
 import org.example.usuario.client.viaje.dto.UsoMonopatinUsuarioDTO;
 import org.example.usuario.client.viaje.dto.UsuarioDTO;
 import org.example.usuario.dto.request.UsuarioRequestDTO;
@@ -17,6 +19,7 @@ import org.example.usuario.entity.Usuario;
 import org.example.usuario.mapper.UsuarioMapper;
 import org.example.usuario.repository.AuthorityRepository;
 import org.example.usuario.repository.UsuarioRepository;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +37,7 @@ public class UsuarioService {
     private final ViajeFeignClient viajeFeignClient;
     private final PasswordEncoder passwordEncoder;
     private final AuthorityRepository authorityRepository;
+    private final PagoService pagoService;
 
     /*-------------------------- MÉTODOS PARA EL CRUD --------------------------*/
     @Transactional
@@ -164,5 +168,13 @@ public class UsuarioService {
                 usuario.getEmail(),
                 esPremium
         );
+    }
+
+    public CrearPagoResponseDTO cargarSaldo(Long idUsuario, Double monto, String descripcion) {
+        return pagoService.cargarSaldo(idUsuario, monto, descripcion);
+    }
+
+    public EstadoPagoResponseDTO consultarEstado(Long pagoId) {
+        return pagoService.consultarEstado(pagoId);
     }
 }

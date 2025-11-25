@@ -13,16 +13,16 @@ public class PagoService {
 
     private final PagoMockClient pagoMockClient;
 
-    public CrearPagoResponseDTO iniciarPago(Long idUsuario, Double monto, String descripcion) {
+    public CrearPagoResponseDTO cargarSaldo(Long idUsuario, Double monto, String descripcion) {
         CrearPagoRequestDTO req = new CrearPagoRequestDTO();
         req.setIdUsuario(idUsuario);
         req.setMonto(monto);
         req.setDescripcion(descripcion);
 
-        return pagoMockClient.crearPago(req);
+        return pagoMockClient.cargarSaldo(idUsuario, monto, descripcion);
     }
 
-    public EstadoPagoResponseDTO consultarEstado(String pagoId) {
+    public EstadoPagoResponseDTO consultarEstado(Long pagoId) {
         return pagoMockClient.obtenerEstado(pagoId);
     }
 

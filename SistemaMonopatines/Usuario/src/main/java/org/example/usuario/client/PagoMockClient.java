@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.*;
 )
 public interface PagoMockClient {
 
-    @PostMapping("/crear")
-    CrearPagoResponseDTO crearPago(@RequestBody CrearPagoRequestDTO request);
+    @PostMapping("/cargar-saldo")
+    CrearPagoResponseDTO cargarSaldo(@RequestParam Long idUsuario, @RequestParam Double monto, @RequestParam String descripcion);
 
     @GetMapping("/{pagoId}/estado")
-    EstadoPagoResponseDTO obtenerEstado(@PathVariable("pagoId") String pagoId);
+    EstadoPagoResponseDTO obtenerEstado(@PathVariable("pagoId") Long pagoId);
 
 }

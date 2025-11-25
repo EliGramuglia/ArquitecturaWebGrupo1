@@ -44,6 +44,9 @@ public class SecurityConfig {
                     .requestMatchers(HttpMethod.POST, "/api/usuarios").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/authenticate").permitAll()
 
+                    // Pago mock
+                    .requestMatchers(HttpMethod.POST, "/api/pagos-mock/**").permitAll()
+
                     .requestMatchers(HttpMethod.POST, "/api/usuarios/cuentas").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/monopatines/cercanos").hasAuthority(AuthorityConstant.CLIENTE)
                     .requestMatchers(HttpMethod.GET,"/api/usuarios/monopatines-cercanos").hasAuthority(AuthorityConstant.CLIENTE)

@@ -8,7 +8,7 @@ import lombok.Setter;
 @Setter
 public class EstadoPagoResponseDTO {
 
-    private String pagoId;
+    private Long pagoId;
     private String status; // "approved", "pending", "rejected"
 
 }

@@ -18,8 +18,4 @@ public class ViajeApplication {
 		SpringApplication.run(ViajeApplication.class, args);
 	}
 
-	@Bean
-	public Jackson2ObjectMapperBuilderCustomizer jsonCustomizer() {
-		return builder -> builder.findModulesViaServiceLoader(true);
-	}
 }
